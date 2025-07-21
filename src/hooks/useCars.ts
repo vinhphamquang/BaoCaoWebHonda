@@ -19,8 +19,10 @@ export function useCars(params: CarListParams = {}, immediate: boolean = true) {
 
 // Hook để lấy xe nổi bật
 export function useFeaturedCars(limit?: number, immediate: boolean = true) {
+  const apiFunction = useCallback(() => carsService.getFeaturedCars(limit), [limit]);
+
   return useApi(
-    () => carsService.getFeaturedCars(limit),
+    apiFunction,
     [limit],
     immediate
   );
@@ -28,8 +30,10 @@ export function useFeaturedCars(limit?: number, immediate: boolean = true) {
 
 // Hook để lấy chi tiết xe
 export function useCar(id: string, immediate: boolean = true) {
+  const apiFunction = useCallback(() => carsService.getCar(id), [id]);
+
   return useApi(
-    () => carsService.getCar(id),
+    apiFunction,
     [id],
     immediate
   );
@@ -43,7 +47,7 @@ export function useSearchCars() {
 
   const search = useCallback(async (query: string, filters?: Omit<CarListParams, 'search'>) => {
     return await searchMutation.mutate({ query, filters });
-  }, [searchMutation]);
+  }, [searchMutation.mutate]);
 
   return {
     search,
@@ -95,8 +99,10 @@ export function useUploadCarImages() {
 
 // Hook để lấy thương hiệu
 export function useBrands(immediate: boolean = true) {
+  const apiFunction = useCallback(() => carsService.getBrands(), []);
+
   return useApi(
-    () => carsService.getBrands(),
+    apiFunction,
     [],
     immediate
   );
@@ -104,8 +110,10 @@ export function useBrands(immediate: boolean = true) {
 
 // Hook để lấy năm sản xuất
 export function useYears(immediate: boolean = true) {
+  const apiFunction = useCallback(() => carsService.getYears(), []);
+
   return useApi(
-    () => carsService.getYears(),
+    apiFunction,
     [],
     immediate
   );
@@ -120,19 +128,19 @@ export function useCarManagement() {
 
   const handleCreateCar = useCallback(async (data: CreateCarRequest) => {
     return await createCar.mutate(data);
-  }, [createCar]);
+  }, [createCar.mutate]);
 
   const handleUpdateCar = useCallback(async (id: string, data: Partial<CreateCarRequest>) => {
     return await updateCar.mutate({ id, data });
-  }, [updateCar]);
+  }, [updateCar.mutate]);
 
   const handleDeleteCar = useCallback(async (id: string) => {
     return await deleteCar.mutate(id);
-  }, [deleteCar]);
+  }, [deleteCar.mutate]);
 
   const handleUploadImages = useCallback(async (id: string, images: File[]) => {
     return await uploadImages.mutate({ id, images });
-  }, [uploadImages]);
+  }, [uploadImages.mutate]);
 
   return {
     createCar: {

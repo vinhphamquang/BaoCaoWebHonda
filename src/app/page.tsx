@@ -1,11 +1,13 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
-import { getFeaturedCars } from '@/data/cars';
 import ProductCard from '@/components/ProductCard';
 import { ArrowRight, Zap, Shield, Award, Users } from 'lucide-react';
+import { useFeaturedCars } from '@/hooks/useCars';
 
 export default function Home() {
-  const featuredCars = getFeaturedCars();
+  const { data: featuredCars, loading, error } = useFeaturedCars(6);
 
   return (
     <div>
@@ -123,9 +125,37 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredCars.map((car) => (
-              <ProductCard key={car.id} car={car} />
-            ))}
+            {loading ? (
+              // Loading skeleton
+              Array.from({ length: 6 }).map((_, index) => (
+                <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse">
+                  <div className="h-48 bg-gray-300"></div>
+                  <div className="p-6">
+                    <div className="h-4 bg-gray-300 rounded mb-2"></div>
+                    <div className="h-4 bg-gray-300 rounded w-2/3 mb-4"></div>
+                    <div className="h-6 bg-gray-300 rounded w-1/3"></div>
+                  </div>
+                </div>
+              ))
+            ) : error ? (
+              <div className="col-span-full text-center py-12">
+                <p className="text-red-600 mb-4">Không thể tải sản phẩm: {error}</p>
+                <button
+                  onClick={() => window.location.reload()}
+                  className="bg-blue-900 text-white px-6 py-2 rounded-lg hover:bg-blue-800"
+                >
+                  Thử lại
+                </button>
+              </div>
+            ) : featuredCars && featuredCars.length > 0 ? (
+              featuredCars.map((car) => (
+                <ProductCard key={car._id} car={car} />
+              ))
+            ) : (
+              <div className="col-span-full text-center py-12">
+                <p className="text-gray-600">Chưa có sản phẩm nào</p>
+              </div>
+            )}
           </div>
 
           <div className="text-center mt-12">

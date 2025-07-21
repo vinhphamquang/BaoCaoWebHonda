@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 
 // Generic API hook state
 export interface ApiState<T> {
@@ -25,6 +25,10 @@ export function useApi<T>(
     error: null,
   });
 
+  // Memoize dependencies để tránh infinite re-render
+  const depsString = JSON.stringify(dependencies);
+  const memoizedDeps = useMemo(() => dependencies, [depsString]);
+
   const execute = useCallback(async () => {
     setState(prev => ({ ...prev, loading: true, error: null }));
 
@@ -42,8 +46,7 @@ export function useApi<T>(
         error: error instanceof Error ? error.message : 'Có lỗi xảy ra',
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apiFunction, ...dependencies]);
+  }, [apiFunction, memoizedDeps]);
 
   const reset = useCallback(() => {
     setState({
@@ -161,11 +164,14 @@ export function usePaginatedApi<T>(
   const [currentPage, setCurrentPage] = useState(1);
   const limit = params.limit || 10;
 
+  // Memoize params để tránh infinite re-render
+  const memoizedParams = useMemo(() => params, [JSON.stringify(params)]);
+
   const execute = useCallback(async (page: number = 1, append: boolean = false) => {
     setState(prev => ({ ...prev, loading: true, error: null }));
-    
+
     try {
-      const result = await apiFunction({ ...params, page, limit });
+      const result = await apiFunction({ ...memoizedParams, page, limit });
       setState(prev => ({
         data: append ? [...prev.data, ...result.data] : result.data,
         loading: false,
@@ -180,7 +186,7 @@ export function usePaginatedApi<T>(
         error: error instanceof Error ? error.message : 'Có lỗi xảy ra',
       }));
     }
-  }, [apiFunction, params, limit]);
+  }, [apiFunction, memoizedParams, limit]);
 
   const refetch = useCallback(() => execute(currentPage), [execute, currentPage]);
   

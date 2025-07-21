@@ -26,10 +26,10 @@ const app = express();
 // Security middleware
 app.use(helmet());
 
-// Rate limiting
+// Rate limiting - More lenient for development
 const limiter = rateLimit({
   windowMs: (process.env.RATE_LIMIT_WINDOW || 15) * 60 * 1000, // 15 minutes
-  max: process.env.RATE_LIMIT_MAX_REQUESTS || 100, // limit each IP to 100 requests per windowMs
+  max: process.env.RATE_LIMIT_MAX_REQUESTS || 1000, // Increased to 1000 requests per windowMs
   message: {
     error: 'Quá nhiều yêu cầu từ IP này, vui lòng thử lại sau.'
   }
@@ -109,7 +109,7 @@ app.use('*', (req, res) => {
 // Error handling middleware
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, () => {
   console.log(`🚀 Server đang chạy trên port ${PORT}`);

@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { cars, getCarsByType } from '@/data/cars';
 import ProductCard from '@/components/ProductCard';
 import { Filter, Search, SlidersHorizontal } from 'lucide-react';
+import { useCars, useCarFilters } from '@/hooks/useCars';
 
 export default function ProductsPage() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -12,43 +12,32 @@ export default function ProductsPage() {
   const [sortBy, setSortBy] = useState('name');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
+  // Memoize params để tránh infinite re-render
+  const carsParams = useMemo(() => ({
+    page: 1,
+    limit: 50, // Get more cars for filtering
+  }), []);
+
+  // Fetch cars from API
+  const { data: carsData, loading, error } = useCars(carsParams);
+
+  const { applyFilters } = useCarFilters();
+
   const filteredCars = useMemo(() => {
-    let filtered = cars;
+    if (!carsData) return [];
 
-    // Filter by search term
-    if (searchTerm) {
-      filtered = filtered.filter(car =>
-        car.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        car.description.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
-    // Filter by type
-    if (selectedType !== 'all') {
-      filtered = getCarsByType(selectedType);
-    }
-
-    // Filter by price range
-    filtered = filtered.filter(car => 
-      car.price >= priceRange.min && car.price <= priceRange.max
-    );
-
-    // Sort
-    filtered.sort((a, b) => {
-      switch (sortBy) {
-        case 'price-low':
-          return a.price - b.price;
-        case 'price-high':
-          return b.price - a.price;
-        case 'year':
-          return b.year - a.year;
-        default:
-          return a.name.localeCompare(b.name);
-      }
+    return applyFilters(carsData, {
+      search: searchTerm,
+      type: selectedType !== 'all' ? selectedType : undefined,
+      minPrice: priceRange.min,
+      maxPrice: priceRange.max,
+      sortBy: sortBy === 'name' ? 'name' :
+             sortBy === 'price-low' ? 'price' :
+             sortBy === 'price-high' ? 'price' :
+             sortBy === 'year' ? 'year' : 'name',
+      sortOrder: sortBy === 'price-high' ? 'desc' : 'asc',
     });
-
-    return filtered;
-  }, [searchTerm, selectedType, priceRange, sortBy]);
+  }, [carsData, searchTerm, selectedType, priceRange, sortBy, applyFilters]);
 
   const resetFilters = () => {
     setSearchTerm('');
@@ -119,8 +108,8 @@ export default function ProductsPage() {
                   >
                     <option value="all">Tất cả</option>
                     <option value="electric">Xe điện</option>
-                    <option value="suv">SUV</option>
-                    <option value="sedan">Sedan</option>
+                    <option value="hybrid">Xe hybrid</option>
+                    <option value="gasoline">Xe xăng</option>
                   </select>
                 </div>
 
@@ -178,11 +167,42 @@ export default function ProductsPage() {
           <div className="lg:w-3/4">
             <div className="mb-6 flex justify-between items-center">
               <p className="text-gray-600">
-                Hiển thị {filteredCars.length} sản phẩm
+                {loading ? 'Đang tải...' : `Hiển thị ${filteredCars.length} sản phẩm`}
               </p>
             </div>
 
-            {filteredCars.length === 0 ? (
+            {loading ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                {Array.from({ length: 6 }).map((_, index) => (
+                  <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse">
+                    <div className="h-48 bg-gray-300"></div>
+                    <div className="p-6">
+                      <div className="h-4 bg-gray-300 rounded mb-2"></div>
+                      <div className="h-4 bg-gray-300 rounded w-2/3 mb-4"></div>
+                      <div className="h-6 bg-gray-300 rounded w-1/3"></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : error ? (
+              <div className="text-center py-12">
+                <div className="text-red-400 mb-4">
+                  <Search className="h-16 w-16 mx-auto" />
+                </div>
+                <h3 className="text-lg font-medium text-gray-900 mb-2">
+                  Lỗi tải dữ liệu
+                </h3>
+                <p className="text-gray-600 mb-4">
+                  {error}
+                </p>
+                <button
+                  onClick={() => window.location.reload()}
+                  className="bg-blue-900 text-white px-6 py-2 rounded-lg hover:bg-blue-800"
+                >
+                  Thử lại
+                </button>
+              </div>
+            ) : filteredCars.length === 0 ? (
               <div className="text-center py-12">
                 <div className="text-gray-400 mb-4">
                   <Search className="h-16 w-16 mx-auto" />
@@ -197,7 +217,7 @@ export default function ProductsPage() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {filteredCars.map((car) => (
-                  <ProductCard key={car.id} car={car} />
+                  <ProductCard key={car._id} car={car} />
                 ))}
               </div>
             )}
