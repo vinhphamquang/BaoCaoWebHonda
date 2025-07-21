@@ -1,0 +1,702 @@
+{
+  "info": {
+    "_postman_id": "vinfast-api-auto-generated",
+    "name": "VinFast API (Auto-generated)",
+    "description": "Auto-generated Postman collection from Swagger specification\n\nGenerated on: 2025-06-11T09:09:55.022Z",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Đăng ký tài khoản mới",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            },
+            "description": "Đăng ký tài khoản mới",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Nguyễn Văn A\",\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\",\n  \"phone\": \"0123456789\",\n  \"address\": \"Hà Nội\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Đăng nhập",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            },
+            "description": "Đăng nhập",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@vinfast.com\",\n  \"password\": \"admin123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Lấy thông tin người dùng hiện tại",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "me"
+              ]
+            },
+            "description": "Lấy thông tin người dùng hiện tại",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Đăng xuất",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/logout",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "logout"
+              ]
+            },
+            "description": "Đăng xuất"
+          }
+        }
+      ],
+      "description": "API endpoints for Authentication"
+    },
+    {
+      "name": "Cars",
+      "item": [
+        {
+          "name": "Lấy danh sách xe",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/cars",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cars"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "",
+                  "description": "Số trang",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "",
+                  "description": "Số lượng xe mỗi trang",
+                  "disabled": true
+                },
+                {
+                  "key": "type",
+                  "value": "",
+                  "description": "Loại xe",
+                  "disabled": true
+                },
+                {
+                  "key": "minPrice",
+                  "value": "",
+                  "description": "Giá tối thiểu",
+                  "disabled": true
+                },
+                {
+                  "key": "maxPrice",
+                  "value": "",
+                  "description": "Giá tối đa",
+                  "disabled": true
+                },
+                {
+                  "key": "year",
+                  "value": "",
+                  "description": "Năm sản xuất",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Lấy danh sách xe"
+          }
+        },
+        {
+          "name": "Tạo xe mới (Admin only)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/cars",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cars"
+              ]
+            },
+            "description": "Tạo xe mới (Admin only)",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"VinFast VF 9\",\n  \"type\": \"electric\",\n  \"price\": 1500000000,\n  \"year\": 2024,\n  \"description\": \"VinFast VF 9 là mẫu SUV điện cao cấp...\",\n  \"specifications\": {\n    \"engine\": \"Động cơ điện\",\n    \"power\": \"408 HP\",\n    \"seating\": 7\n  },\n  \"images\": [\n    {\n      \"url\": \"string\",\n      \"alt\": \"string\",\n      \"isPrimary\": true\n    }\n  ],\n  \"isFeatured\": true,\n  \"stock\": 10\n}"
+            }
+          }
+        },
+        {
+          "name": "Lấy danh sách xe nổi bật",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/cars/featured",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cars",
+                "featured"
+              ]
+            },
+            "description": "Lấy danh sách xe nổi bật"
+          }
+        },
+        {
+          "name": "Lấy chi tiết xe",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/cars/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cars",
+                "{id}"
+              ]
+            },
+            "description": "Lấy chi tiết xe"
+          }
+        },
+        {
+          "name": "Cập nhật xe (Admin only)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/cars/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cars",
+                "{id}"
+              ]
+            },
+            "description": "Cập nhật xe (Admin only)",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"string\",\n  \"type\": \"sedan\",\n  \"price\": 0,\n  \"year\": 2020,\n  \"description\": \"string\",\n  \"isFeatured\": true,\n  \"isActive\": true,\n  \"stock\": 0\n}"
+            }
+          }
+        },
+        {
+          "name": "Xóa xe (Admin only)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/cars/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cars",
+                "{id}"
+              ]
+            },
+            "description": "Xóa xe (Admin only)",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "description": "API endpoints for Cars"
+    },
+    {
+      "name": "Contact",
+      "item": [
+        {
+          "name": "Gửi liên hệ tư vấn",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/contact",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "contact"
+              ]
+            },
+            "description": "Gửi liên hệ tư vấn",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Nguyễn Văn A\",\n  \"email\": \"customer@example.com\",\n  \"phone\": \"0123456789\",\n  \"subject\": \"product-inquiry\",\n  \"message\": \"Tôi muốn tư vấn về xe VinFast VF 8\"\n}"
+            }
+          }
+        }
+      ],
+      "description": "API endpoints for Contact"
+    },
+    {
+      "name": "News",
+      "item": [
+        {
+          "name": "Lấy danh sách tin tức",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/news",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "news"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "",
+                  "description": "Số trang",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "",
+                  "description": "Số lượng tin tức mỗi trang",
+                  "disabled": true
+                },
+                {
+                  "key": "category",
+                  "value": "",
+                  "description": "Lọc theo danh mục",
+                  "disabled": true
+                },
+                {
+                  "key": "featured",
+                  "value": "",
+                  "description": "Lọc tin tức nổi bật",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Lấy danh sách tin tức"
+          }
+        },
+        {
+          "name": "Lấy danh sách tin tức nổi bật",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/news/featured",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "news",
+                "featured"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "",
+                  "description": "Số lượng tin tức",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Lấy danh sách tin tức nổi bật"
+          }
+        },
+        {
+          "name": "Tìm kiếm tin tức",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/news/search",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "news",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "VinFast",
+                  "description": "Từ khóa tìm kiếm",
+                  "disabled": false
+                },
+                {
+                  "key": "category",
+                  "value": "",
+                  "description": "Lọc theo danh mục",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "",
+                  "description": "Số trang",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "",
+                  "description": "Số lượng tin tức mỗi trang",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Tìm kiếm tin tức"
+          }
+        },
+        {
+          "name": "Lấy chi tiết tin tức",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/news/{slug}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "news",
+                "{slug}"
+              ]
+            },
+            "description": "Lấy chi tiết tin tức"
+          }
+        }
+      ],
+      "description": "API endpoints for News"
+    },
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "Lấy danh sách đơn hàng của user hiện tại",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/my-orders",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "my-orders"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "",
+                  "description": "Số trang",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "",
+                  "description": "Số lượng đơn hàng mỗi trang",
+                  "disabled": true
+                },
+                {
+                  "key": "status",
+                  "value": "",
+                  "description": "Lọc theo trạng thái",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Lấy danh sách đơn hàng của user hiện tại",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Tạo đơn hàng mới",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders"
+              ]
+            },
+            "description": "Tạo đơn hàng mới",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    {\n      \"car\": \"60d5ecb74b24a1234567890a\",\n      \"quantity\": 1,\n      \"selectedColor\": \"Trắng\",\n      \"depositAmount\": 50000000\n    }\n  ],\n  \"customerInfo\": {\n    \"fullName\": \"Nguyễn Văn A\",\n    \"email\": \"customer@example.com\",\n    \"phone\": \"0123456789\",\n    \"address\": \"123 ABC Street\",\n    \"city\": \"Hà Nội\"\n  },\n  \"payment\": {\n    \"method\": \"bank_transfer\"\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Lấy chi tiết đơn hàng",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/{id}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "{id}"
+              ]
+            },
+            "description": "Lấy chi tiết đơn hàng",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "description": "API endpoints for Orders"
+    },
+    {
+      "name": "Test Drive",
+      "item": [
+        {
+          "name": "Đăng ký lái thử xe",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/test-drive",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "test-drive"
+              ]
+            },
+            "description": "Đăng ký lái thử xe",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"car\": \"60d5ecb74b24a1234567890a\",\n  \"customerInfo\": {\n    \"fullName\": \"Nguyễn Văn A\",\n    \"email\": \"customer@example.com\",\n    \"phone\": \"0123456789\"\n  },\n  \"schedule\": {\n    \"preferredDate\": \"2024-12-15\",\n    \"preferredTime\": \"10:00\"\n  },\n  \"location\": \"hanoi\",\n  \"message\": \"Tôi muốn lái thử vào buổi sáng\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Lấy danh sách slot thời gian trống",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/test-drive/available-slots",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "test-drive",
+                "available-slots"
+              ],
+              "query": [
+                {
+                  "key": "date",
+                  "value": "2024-12-15",
+                  "description": "Ngày cần kiểm tra (phải là ngày trong tương lai)",
+                  "disabled": false
+                },
+                {
+                  "key": "location",
+                  "value": "hanoi",
+                  "description": "Địa điểm lái thử",
+                  "disabled": false
+                }
+              ]
+            },
+            "description": "Lấy danh sách slot thời gian trống"
+          }
+        }
+      ],
+      "description": "API endpoints for Test Drive"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8000/api",
+      "type": "string"
+    }
+  ]
+}

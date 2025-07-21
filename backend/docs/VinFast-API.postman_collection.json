@@ -1,0 +1,1168 @@
+{
+	"info": {
+		"_postman_id": "vinfast-api-collection",
+		"name": "VinFast API Collection",
+		"description": "Complete API collection for VinFast car dealership website\n\n## 🚗 VinFast API Documentation\n\nAPI cho website cửa hàng ô tô VinFast - Hệ thống quản lý bán hàng và dịch vụ ô tô điện.\n\n### 🔐 Authentication\n1. Đăng nhập qua `/api/auth/login` để lấy token\n2. Copy token từ response\n3. Paste vào Authorization tab của các request cần authentication\n\n### 📱 Test Accounts\n- **Admin**: admin@vinfast.com / admin123\n- **User**: user@example.com / user123\n\n### 🌐 Base URL\n- Development: `http://localhost:8000/api`\n- Production: `https://api.vinfast.com/api`",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "🔐 Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Nguyễn Văn Test\",\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\",\n  \"phone\": \"0987654321\",\n  \"address\": \"Hà Nội\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/register",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "register"]
+						},
+						"description": "Đăng ký tài khoản mới"
+					}
+				},
+				{
+					"name": "Login Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    pm.environment.set('authToken', response.token);",
+									"    pm.environment.set('userId', response.data.user.id);",
+									"    console.log('Admin token saved:', response.token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@vinfast.com\",\n  \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "login"]
+						},
+						"description": "Đăng nhập với tài khoản admin"
+					}
+				},
+				{
+					"name": "Login User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    pm.environment.set('userToken', response.token);",
+									"    console.log('User token saved:', response.token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"user123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "login"]
+						},
+						"description": "Đăng nhập với tài khoản user thường"
+					}
+				},
+				{
+					"name": "Get My Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/auth/me",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "me"]
+						},
+						"description": "Lấy thông tin profile của user hiện tại"
+					}
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Nguyễn Văn Updated\",\n  \"phone\": \"0123456789\",\n  \"address\": \"TP. Hồ Chí Minh\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/profile",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "profile"]
+						},
+						"description": "Cập nhật thông tin profile"
+					}
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/auth/logout",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "logout"]
+						},
+						"description": "Đăng xuất"
+					}
+				}
+			],
+			"description": "API xác thực và quản lý phiên đăng nhập"
+		},
+		{
+			"name": "🚗 Cars",
+			"item": [
+				{
+					"name": "Get All Cars",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cars?page=1&limit=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["cars"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "type",
+									"value": "electric",
+									"disabled": true
+								},
+								{
+									"key": "minPrice",
+									"value": "200000000",
+									"disabled": true
+								},
+								{
+									"key": "maxPrice",
+									"value": "2000000000",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Lấy danh sách tất cả xe với phân trang và filter"
+					}
+				},
+				{
+					"name": "Get Featured Cars",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cars/featured",
+							"host": ["{{baseUrl}}"],
+							"path": ["cars", "featured"]
+						},
+						"description": "Lấy danh sách xe nổi bật"
+					}
+				},
+				{
+					"name": "Search Cars",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cars/search?q=VinFast&type=electric",
+							"host": ["{{baseUrl}}"],
+							"path": ["cars", "search"],
+							"query": [
+								{
+									"key": "q",
+									"value": "VinFast"
+								},
+								{
+									"key": "type",
+									"value": "electric"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Tìm kiếm xe theo từ khóa"
+					}
+				},
+				{
+					"name": "Get Car by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    if (response.data && response.data._id) {",
+									"        pm.environment.set('carId', response.data._id);",
+									"        console.log('Car ID saved:', response.data._id);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cars/{{carId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["cars", "{{carId}}"]
+						},
+						"description": "Lấy chi tiết xe theo ID"
+					}
+				},
+				{
+					"name": "Create Car (Admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    if (response.data && response.data._id) {",
+									"        pm.environment.set('newCarId', response.data._id);",
+									"        console.log('New car ID saved:', response.data._id);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"VinFast VF 9 Test\",\n  \"type\": \"electric\",\n  \"price\": 1800000000,\n  \"year\": 2024,\n  \"description\": \"VinFast VF 9 là mẫu SUV điện cao cấp với thiết kế sang trọng và công nghệ tiên tiến.\",\n  \"specifications\": {\n    \"engine\": \"Động cơ điện\",\n    \"power\": \"408 HP\",\n    \"transmission\": \"Hộp số tự động\",\n    \"fuelType\": \"Điện\",\n    \"seating\": 7\n  },\n  \"images\": [\n    {\n      \"url\": \"/images/vf9-test.jpg\",\n      \"alt\": \"VinFast VF 9 Test\",\n      \"isPrimary\": true\n    }\n  ],\n  \"colors\": [\n    {\n      \"name\": \"Trắng\",\n      \"code\": \"#FFFFFF\"\n    },\n    {\n      \"name\": \"Đen\",\n      \"code\": \"#000000\"\n    }\n  ],\n  \"isElectric\": true,\n  \"isFeatured\": true,\n  \"stock\": 5\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/cars",
+							"host": ["{{baseUrl}}"],
+							"path": ["cars"]
+						},
+						"description": "Tạo xe mới (chỉ Admin)"
+					}
+				},
+				{
+					"name": "Update Car (Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"VinFast VF 9 Updated\",\n  \"price\": 1900000000,\n  \"isFeatured\": false,\n  \"stock\": 8\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/cars/{{newCarId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["cars", "{{newCarId}}"]
+						},
+						"description": "Cập nhật thông tin xe (chỉ Admin)"
+					}
+				},
+				{
+					"name": "Delete Car (Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cars/{{newCarId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["cars", "{{newCarId}}"]
+						},
+						"description": "Xóa xe (chỉ Admin) - Soft delete"
+					}
+				}
+			],
+			"description": "API quản lý xe - xem, tìm kiếm, quản lý (Admin)"
+		},
+		{
+			"name": "📦 Orders",
+			"item": [
+				{
+					"name": "Get My Orders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/orders/my-orders?page=1&limit=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["orders", "my-orders"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "status",
+									"value": "pending",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Lấy danh sách đơn hàng của user hiện tại"
+					}
+				},
+				{
+					"name": "Create Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    if (response.data && response.data._id) {",
+									"        pm.environment.set('orderId', response.data._id);",
+									"        console.log('Order ID saved:', response.data._id);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"items\": [\n    {\n      \"car\": \"{{carId}}\",\n      \"quantity\": 1,\n      \"selectedColor\": \"Trắng\",\n      \"depositAmount\": 50000000\n    }\n  ],\n  \"customerInfo\": {\n    \"fullName\": \"Nguyễn Văn Test\",\n    \"email\": \"customer@example.com\",\n    \"phone\": \"0123456789\",\n    \"address\": \"123 ABC Street\",\n    \"city\": \"Hà Nội\"\n  },\n  \"payment\": {\n    \"method\": \"bank_transfer\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders",
+							"host": ["{{baseUrl}}"],
+							"path": ["orders"]
+						},
+						"description": "Tạo đơn hàng mới"
+					}
+				},
+				{
+					"name": "Get Order by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/orders/{{orderId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["orders", "{{orderId}}"]
+						},
+						"description": "Lấy chi tiết đơn hàng"
+					}
+				},
+				{
+					"name": "Get All Orders (Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/orders?page=1&limit=20",
+							"host": ["{{baseUrl}}"],
+							"path": ["orders"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								},
+								{
+									"key": "status",
+									"value": "pending",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Lấy tất cả đơn hàng (Admin only)"
+					}
+				},
+				{
+					"name": "Update Order Status (Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"confirmed\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders/{{orderId}}/status",
+							"host": ["{{baseUrl}}"],
+							"path": ["orders", "{{orderId}}", "status"]
+						},
+						"description": "Cập nhật trạng thái đơn hàng (Admin only)"
+					}
+				}
+			],
+			"description": "API quản lý đơn hàng - đặt cọc, theo dõi trạng thái"
+		},
+		{
+			"name": "🚙 Test Drive",
+			"item": [
+				{
+					"name": "Get Available Slots",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/test-drive/available-slots?date=2024-12-15&location=hanoi",
+							"host": ["{{baseUrl}}"],
+							"path": ["test-drive", "available-slots"],
+							"query": [
+								{
+									"key": "date",
+									"value": "2024-12-15"
+								},
+								{
+									"key": "location",
+									"value": "hanoi"
+								}
+							]
+						},
+						"description": "Lấy danh sách slot thời gian trống cho lái thử"
+					}
+				},
+				{
+					"name": "Register Test Drive",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    if (response.data && response.data._id) {",
+									"        pm.environment.set('testDriveId', response.data._id);",
+									"        console.log('Test Drive ID saved:', response.data._id);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"car\": \"{{carId}}\",\n  \"customerInfo\": {\n    \"fullName\": \"Nguyễn Văn Test\",\n    \"email\": \"testdrive@example.com\",\n    \"phone\": \"0987654321\"\n  },\n  \"schedule\": {\n    \"preferredDate\": \"2024-12-15\",\n    \"preferredTime\": \"10:00\"\n  },\n  \"location\": \"hanoi\",\n  \"message\": \"Tôi muốn lái thử xe VinFast vào buổi sáng\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/test-drive",
+							"host": ["{{baseUrl}}"],
+							"path": ["test-drive"]
+						},
+						"description": "Đăng ký lái thử xe"
+					}
+				},
+				{
+					"name": "Get My Test Drives",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/test-drive/my-test-drives?page=1&limit=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["test-drive", "my-test-drives"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Lấy danh sách lái thử của user hiện tại"
+					}
+				},
+				{
+					"name": "Get Test Drive by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/test-drive/{{testDriveId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["test-drive", "{{testDriveId}}"]
+						},
+						"description": "Lấy chi tiết lịch lái thử"
+					}
+				},
+				{
+					"name": "Update Test Drive Status (Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"confirmed\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/test-drive/{{testDriveId}}/status",
+							"host": ["{{baseUrl}}"],
+							"path": ["test-drive", "{{testDriveId}}", "status"]
+						},
+						"description": "Cập nhật trạng thái lái thử (Admin only)"
+					}
+				},
+				{
+					"name": "Add Feedback",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"feedback\": {\n    \"rating\": 5,\n    \"comment\": \"Xe rất tuyệt vời, trải nghiệm lái thử rất tốt!\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/test-drive/{{testDriveId}}/feedback",
+							"host": ["{{baseUrl}}"],
+							"path": ["test-drive", "{{testDriveId}}", "feedback"]
+						},
+						"description": "Thêm feedback sau khi lái thử"
+					}
+				}
+			],
+			"description": "API đăng ký và quản lý lịch lái thử xe"
+		},
+		{
+			"name": "📞 Contact",
+			"item": [
+				{
+					"name": "Send Contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    if (response.data && response.data._id) {",
+									"        pm.environment.set('contactId', response.data._id);",
+									"        console.log('Contact ID saved:', response.data._id);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Nguyễn Văn Contact\",\n  \"email\": \"contact@example.com\",\n  \"phone\": \"0123456789\",\n  \"subject\": \"product-inquiry\",\n  \"message\": \"Tôi muốn tư vấn về xe VinFast VF 8. Xin cho biết thông tin chi tiết về giá cả và chính sách bảo hành.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact",
+							"host": ["{{baseUrl}}"],
+							"path": ["contact"]
+						},
+						"description": "Gửi liên hệ tư vấn"
+					}
+				},
+				{
+					"name": "Get All Contacts (Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/contact?page=1&limit=20&status=new",
+							"host": ["{{baseUrl}}"],
+							"path": ["contact"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								},
+								{
+									"key": "status",
+									"value": "new"
+								},
+								{
+									"key": "subject",
+									"value": "product-inquiry",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Lấy danh sách liên hệ (Admin only)"
+					}
+				},
+				{
+					"name": "Get Contact by ID (Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/contact/{{contactId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["contact", "{{contactId}}"]
+						},
+						"description": "Lấy chi tiết liên hệ (Admin only)"
+					}
+				},
+				{
+					"name": "Respond to Contact (Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"message\": \"Cảm ơn bạn đã quan tâm đến VinFast VF 8. Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất để tư vấn chi tiết.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact/{{contactId}}/respond",
+							"host": ["{{baseUrl}}"],
+							"path": ["contact", "{{contactId}}", "respond"]
+						},
+						"description": "Phản hồi liên hệ (Admin only)"
+					}
+				}
+			],
+			"description": "API liên hệ tư vấn và hỗ trợ khách hàng"
+		},
+		{
+			"name": "📰 News",
+			"item": [
+				{
+					"name": "Get All News",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/news?page=1&limit=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["news"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "category",
+									"value": "product",
+									"disabled": true
+								},
+								{
+									"key": "featured",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Lấy danh sách tin tức"
+					}
+				},
+				{
+					"name": "Get Featured News",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/news/featured?limit=5",
+							"host": ["{{baseUrl}}"],
+							"path": ["news", "featured"],
+							"query": [
+								{
+									"key": "limit",
+									"value": "5"
+								}
+							]
+						},
+						"description": "Lấy danh sách tin tức nổi bật"
+					}
+				},
+				{
+					"name": "Search News",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/news/search?q=VinFast&category=product",
+							"host": ["{{baseUrl}}"],
+							"path": ["news", "search"],
+							"query": [
+								{
+									"key": "q",
+									"value": "VinFast"
+								},
+								{
+									"key": "category",
+									"value": "product"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Tìm kiếm tin tức"
+					}
+				},
+				{
+					"name": "Get News by Slug",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    if (response.data && response.data._id) {",
+									"        pm.environment.set('newsId', response.data._id);",
+									"        console.log('News ID saved:', response.data._id);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/news/vinfast-vf-3-chinh-thuc-ra-mat-voi-gia-240-trieu-dong",
+							"host": ["{{baseUrl}}"],
+							"path": ["news", "vinfast-vf-3-chinh-thuc-ra-mat-voi-gia-240-trieu-dong"]
+						},
+						"description": "Lấy chi tiết tin tức theo slug"
+					}
+				},
+				{
+					"name": "Create News (Admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    if (response.data && response.data._id) {",
+									"        pm.environment.set('newNewsId', response.data._id);",
+									"        console.log('New News ID saved:', response.data._id);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"VinFast mở rộng thị trường quốc tế\",\n  \"excerpt\": \"VinFast tiếp tục mở rộng hoạt động kinh doanh ra thị trường quốc tế với nhiều kế hoạch đầy tham vọng.\",\n  \"content\": \"<p>VinFast đang có những bước tiến mạnh mẽ trong việc mở rộng thị trường quốc tế...</p>\",\n  \"category\": \"business\",\n  \"featuredImage\": {\n    \"url\": \"/images/news/vinfast-international.jpg\",\n    \"alt\": \"VinFast mở rộng quốc tế\"\n  },\n  \"tags\": [\"vinfast\", \"quốc tế\", \"mở rộng\"],\n  \"status\": \"published\",\n  \"featured\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/news",
+							"host": ["{{baseUrl}}"],
+							"path": ["news"]
+						},
+						"description": "Tạo tin tức mới (Admin only)"
+					}
+				},
+				{
+					"name": "Add Comment to News",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"content\": \"Tin tức rất hay và bổ ích. Cảm ơn VinFast đã chia sẻ!\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/news/{{newsId}}/comments",
+							"host": ["{{baseUrl}}"],
+							"path": ["news", "{{newsId}}", "comments"]
+						},
+						"description": "Thêm bình luận vào tin tức"
+					}
+				}
+			],
+			"description": "API quản lý tin tức và bài viết"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Set base URL if not exists",
+					"if (!pm.environment.get('baseUrl')) {",
+					"    pm.environment.set('baseUrl', 'http://localhost:8000/api');",
+					"}",
+					"",
+					"// Log request info",
+					"console.log('🚀 Request:', pm.request.method, pm.request.url.toString());"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Log response info",
+					"console.log('📥 Response:', pm.response.code, pm.response.status);",
+					"",
+					"// Check for common errors",
+					"if (pm.response.code === 401) {",
+					"    console.log('❌ Authentication required or token expired');",
+					"} else if (pm.response.code === 403) {",
+					"    console.log('❌ Insufficient permissions');",
+					"} else if (pm.response.code >= 400) {",
+					"    console.log('❌ Error response:', pm.response.text());",
+					"} else if (pm.response.code >= 200 && pm.response.code < 300) {",
+					"    console.log('✅ Success');",
+					"}"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8000/api",
+			"type": "string"
+		}
+	]
+}

@@ -8,7 +8,9 @@
     "dev": "nodemon server.js",
     "seed": "node scripts/seedData.js",
     "export-swagger": "node scripts/exportSwagger.js",
-    "docs": "npm run export-swagger && echo 'Swagger docs exported! Visit http://localhost:8000/api-docs'"
+    "generate-postman": "node scripts/generatePostman.js",
+    "docs": "npm run export-swagger && npm run generate-postman && echo 'Documentation exported! Swagger: http://localhost:8000/api-docs'",
+    "test-api": "echo 'Use Postman collection in docs/ folder to test API endpoints'"
   },
   "keywords": [
     "vinfast",
