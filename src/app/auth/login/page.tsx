@@ -30,15 +30,10 @@ export default function LoginPage() {
     setLoginError('');
 
     try {
-      const success = await login(data.email, data.password);
-      
-      if (success) {
-        router.push('/');
-      } else {
-        setLoginError('Email hoặc mật khẩu không chính xác');
-      }
-    } catch {
-      setLoginError('Có lỗi xảy ra, vui lòng thử lại');
+      await login(data);
+      router.push('/');
+    } catch (error) {
+      setLoginError(error instanceof Error ? error.message : 'Có lỗi xảy ra, vui lòng thử lại');
     } finally {
       setIsLoading(false);
     }

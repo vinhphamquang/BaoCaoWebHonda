@@ -54,7 +54,7 @@ export default function Cart() {
             ) : (
               <div className="space-y-4">
                 {items.map((item) => (
-                  <div key={item.car.id} className="border rounded-lg p-4">
+                  <div key={item.car._id} className="border rounded-lg p-4">
                     <div className="flex items-start space-x-3">
                       {/* Car image */}
                       <div className="relative w-16 h-12 bg-gray-200 rounded">
@@ -84,7 +84,7 @@ export default function Cart() {
 
                       {/* Remove button */}
                       <button
-                        onClick={() => removeItem(item.car.id)}
+                        onClick={() => removeItem(item.car._id)}
                         className="p-1 hover:bg-gray-100 rounded"
                       >
                         <X className="h-4 w-4 text-gray-400" />
@@ -95,7 +95,7 @@ export default function Cart() {
                     <div className="flex items-center justify-between mt-3">
                       <div className="flex items-center space-x-2">
                         <button
-                          onClick={() => updateQuantity(item.car.id, item.quantity - 1)}
+                          onClick={() => updateQuantity(item.car._id, item.quantity - 1)}
                           className="p-1 hover:bg-gray-100 rounded"
                           disabled={item.quantity <= 1}
                         >
@@ -103,7 +103,7 @@ export default function Cart() {
                         </button>
                         <span className="w-8 text-center">{item.quantity}</span>
                         <button
-                          onClick={() => updateQuantity(item.car.id, item.quantity + 1)}
+                          onClick={() => updateQuantity(item.car._id, item.quantity + 1)}
                           className="p-1 hover:bg-gray-100 rounded"
                         >
                           <Plus className="h-4 w-4" />

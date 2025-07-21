@@ -39,19 +39,13 @@ export default function RegisterPage() {
     setRegisterError('');
 
     try {
-      const { confirmPassword, agreeTerms, ...userData } = data;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const _unused = { confirmPassword, agreeTerms };
-      
-      const success = await registerUser(userData);
-      
-      if (success) {
-        router.push('/');
-      } else {
-        setRegisterError('Email đã được sử dụng');
-      }
-    } catch {
-      setRegisterError('Có lỗi xảy ra, vui lòng thử lại');
+      const { confirmPassword, agreeTerms, ...userData } = data;
+
+      await registerUser(userData);
+      router.push('/');
+    } catch (error) {
+      setRegisterError(error instanceof Error ? error.message : 'Có lỗi xảy ra, vui lòng thử lại');
     } finally {
       setIsLoading(false);
     }

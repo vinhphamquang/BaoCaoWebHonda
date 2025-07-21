@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getCarById } from '@/data/cars';
 import { formatPrice } from '@/lib/utils';
 import { useCartStore } from '@/stores/useCartStore';
+import { useCar } from '@/hooks/useCars';
 import {
   ArrowLeft,
   Heart,
@@ -21,14 +21,25 @@ import {
 
 export default function ProductDetailPage() {
   const params = useParams();
-  const car = getCarById(params.id as string);
+  const { data: car, loading, error } = useCar(params.id as string);
   const { addItem } = useCartStore();
-  
+
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedColor, setSelectedColor] = useState('');
   const [depositAmount, setDepositAmount] = useState(50000000); // 50M VNĐ mặc định
 
-  if (!car) {
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-900 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Đang tải thông tin sản phẩm...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !car) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
@@ -104,7 +115,7 @@ export default function ProductDetailPage() {
             
             {/* Thumbnail images */}
             <div className="grid grid-cols-3 gap-2">
-              {car.images.map((image, index) => (
+              {car.images.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setSelectedImage(index)}
@@ -135,7 +146,7 @@ export default function ProductDetailPage() {
                   </h1>
                   <div className="flex items-center space-x-4">
                     <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
-                      {car.isElectric ? 'Xe điện' : 'Xe xăng'}
+                      {car.type === 'electric' ? 'Xe điện' : car.type === 'hybrid' ? 'Xe hybrid' : 'Xe xăng'}
                     </span>
                     <span className="text-gray-500">Năm {car.year}</span>
                   </div>
@@ -180,7 +191,7 @@ export default function ProductDetailPage() {
                   <Car className="h-5 w-5 text-blue-500" />
                   <div>
                     <p className="text-sm text-gray-500">Số chỗ ngồi</p>
-                    <p className="font-medium">{car.specifications.seating} chỗ</p>
+                    <p className="font-medium">{car.specifications.seatingCapacity || 5} chỗ</p>
                   </div>
                 </div>
               </div>
@@ -191,15 +202,15 @@ export default function ProductDetailPage() {
                 <div className="grid grid-cols-2 gap-2">
                   {car.colors.map((color) => (
                     <button
-                      key={color}
-                      onClick={() => setSelectedColor(color)}
+                      key={color.name}
+                      onClick={() => setSelectedColor(color.name)}
                       className={`p-3 border rounded-lg text-left transition-colors ${
-                        selectedColor === color
+                        selectedColor === color.name
                           ? 'border-blue-500 bg-blue-50 text-blue-900'
                           : 'border-gray-300 hover:border-gray-400'
                       }`}
                     >
-                      {color}
+                      {color.name}
                     </button>
                   ))}
                 </div>
@@ -241,7 +252,7 @@ export default function ProductDetailPage() {
                 </button>
 
                 <Link
-                  href={`/test-drive?car=${car.id}`}
+                  href={`/test-drive?car=${car._id}`}
                   className="w-full border border-blue-900 text-blue-900 py-3 px-6 rounded-lg hover:bg-blue-50 transition-colors font-semibold text-center block"
                 >
                   Đăng ký lái thử
@@ -304,27 +315,27 @@ export default function ProductDetailPage() {
               <div className="space-y-3">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Chiều dài:</span>
-                  <span className="font-medium">{car.specifications.length}</span>
+                  <span className="font-medium">{car.specifications.dimensions?.length || 'N/A'} mm</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Chiều rộng:</span>
-                  <span className="font-medium">{car.specifications.width}</span>
+                  <span className="font-medium">{car.specifications.dimensions?.width || 'N/A'} mm</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Chiều cao:</span>
-                  <span className="font-medium">{car.specifications.height}</span>
+                  <span className="font-medium">{car.specifications.dimensions?.height || 'N/A'} mm</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Chiều dài cơ sở:</span>
-                  <span className="font-medium">{car.specifications.wheelbase}</span>
+                  <span className="font-medium">{car.specifications.dimensions?.wheelbase || 'N/A'} mm</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Khoảng sáng gầm:</span>
-                  <span className="font-medium">{car.specifications.groundClearance}</span>
+                  <span className="text-gray-600">Trọng lượng:</span>
+                  <span className="font-medium">{car.specifications.weight || 'N/A'} kg</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Dung tích cốp:</span>
-                  <span className="font-medium">{car.specifications.trunkCapacity}</span>
+                  <span className="font-medium">{car.specifications.trunkCapacity || 'N/A'} lít</span>
                 </div>
               </div>
             </div>

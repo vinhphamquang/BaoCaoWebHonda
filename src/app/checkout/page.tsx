@@ -132,7 +132,7 @@ export default function CheckoutPage() {
             
             <div className="space-y-4 mb-6">
               {items.map((item) => (
-                <div key={item.car.id} className="flex items-center space-x-4 p-4 border rounded-lg">
+                <div key={item.car._id} className="flex items-center space-x-4 p-4 border rounded-lg">
                   <div className="relative w-16 h-12 bg-gray-200 rounded">
                     <Image
                       src="/images/placeholder-car.jpg"

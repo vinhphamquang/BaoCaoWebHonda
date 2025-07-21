@@ -1,111 +1,219 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import authService, { LoginRequest, RegisterRequest, UpdateProfileRequest } from '@/services/auth';
 
 export interface User {
-  id: string;
+  _id: string;
   email: string;
   name: string;
   phone?: string;
   address?: string;
+  city?: string;
+  role: 'user' | 'admin';
+  avatar?: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface AuthStore {
   user: User | null;
   isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<boolean>;
-  register: (userData: Omit<User, 'id'> & { password: string }) => Promise<boolean>;
-  logout: () => void;
-  updateProfile: (userData: Partial<User>) => void;
+  loading: boolean;
+  error: string | null;
+  login: (data: LoginRequest) => Promise<void>;
+  register: (data: RegisterRequest) => Promise<void>;
+  logout: () => Promise<void>;
+  updateProfile: (data: UpdateProfileRequest) => Promise<void>;
+  refreshUser: () => Promise<void>;
+  clearError: () => void;
+  initializeAuth: () => Promise<void>;
 }
-
-// Mock users data - trong thực tế sẽ kết nối với database
-const mockUsers: (User & { password: string })[] = [
-  {
-    id: '1',
-    email: 'admin@vinfast.com',
-    name: 'Admin VinFast',
-    phone: '0123456789',
-    address: 'Hà Nội',
-    password: 'admin123'
-  }
-];
 
 export const useAuthStore = create<AuthStore>()(
   persist(
     (set, get) => ({
       user: null,
       isAuthenticated: false,
-      
-      login: async (email: string, password: string) => {
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        const user = mockUsers.find(u => u.email === email && u.password === password);
-        
-        if (user) {
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const { password, ...userWithoutPassword } = user;
-          set({
-            user: userWithoutPassword,
-            isAuthenticated: true
-          });
-          return true;
-        }
-        
-        return false;
-      },
-      
-      register: async (userData) => {
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // Check if user already exists
-        const existingUser = mockUsers.find(u => u.email === userData.email);
-        if (existingUser) {
-          return false;
-        }
-        
-        // Create new user
-        const newUser = {
-          id: Date.now().toString(),
-          ...userData
-        };
-        
-        mockUsers.push(newUser);
-        
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { password, ...userWithoutPassword } = newUser;
-        set({
-          user: userWithoutPassword,
-          isAuthenticated: true
-        });
-        
-        return true;
-      },
-      
-      logout: () => {
-        set({
-          user: null,
-          isAuthenticated: false
-        });
-      },
-      
-      updateProfile: (userData) => {
-        const currentUser = get().user;
-        if (currentUser) {
-          const updatedUser = { ...currentUser, ...userData };
-          set({ user: updatedUser });
-          
-          // Update in mock data
-          const userIndex = mockUsers.findIndex(u => u.id === currentUser.id);
-          if (userIndex !== -1) {
-            mockUsers[userIndex] = { ...mockUsers[userIndex], ...userData };
+      loading: false,
+      error: null,
+
+      initializeAuth: async () => {
+        try {
+          set({ loading: true, error: null });
+
+          const token = authService.getToken();
+          const user = authService.getUser();
+
+          if (token && user) {
+            // Verify token by fetching current user
+            try {
+              const currentUser = await authService.getMe();
+              set({
+                user: currentUser as User,
+                isAuthenticated: true,
+                loading: false,
+                error: null,
+              });
+            } catch {
+              // Token invalid, clear auth
+              authService.clearAuth();
+              set({
+                user: null,
+                isAuthenticated: false,
+                loading: false,
+                error: null,
+              });
+            }
+          } else {
+            set({
+              user: null,
+              isAuthenticated: false,
+              loading: false,
+              error: null,
+            });
           }
+        } catch (error) {
+          set({
+            user: null,
+            isAuthenticated: false,
+            loading: false,
+            error: error instanceof Error ? error.message : 'Có lỗi xảy ra',
+          });
         }
-      }
+      },
+
+      login: async (data: LoginRequest) => {
+        try {
+          set({ loading: true, error: null });
+
+          const result = await authService.login(data);
+
+          // Save auth data
+          authService.setAuth(result.token, result.user);
+
+          set({
+            user: result.user as User,
+            isAuthenticated: true,
+            loading: false,
+            error: null,
+          });
+        } catch (error) {
+          set({
+            loading: false,
+            error: error instanceof Error ? error.message : 'Đăng nhập thất bại',
+          });
+          throw error;
+        }
+      },
+
+      register: async (data: RegisterRequest) => {
+        try {
+          set({ loading: true, error: null });
+
+          const result = await authService.register(data);
+
+          // Save auth data
+          authService.setAuth(result.token, result.user);
+
+          set({
+            user: result.user as User,
+            isAuthenticated: true,
+            loading: false,
+            error: null,
+          });
+        } catch (error) {
+          set({
+            loading: false,
+            error: error instanceof Error ? error.message : 'Đăng ký thất bại',
+          });
+          throw error;
+        }
+      },
+
+      logout: async () => {
+        try {
+          set({ loading: true, error: null });
+
+          await authService.logout();
+
+          set({
+            user: null,
+            isAuthenticated: false,
+            loading: false,
+            error: null,
+          });
+        } catch {
+          // Still clear local auth even if API call fails
+          authService.clearAuth();
+          set({
+            user: null,
+            isAuthenticated: false,
+            loading: false,
+            error: null,
+          });
+        }
+      },
+
+      updateProfile: async (data: UpdateProfileRequest) => {
+        try {
+          set({ loading: true, error: null });
+
+          const updatedUser = await authService.updateProfile(data);
+
+          // Update local user data
+          authService.setAuth(authService.getToken()!, updatedUser);
+
+          set({
+            user: updatedUser as User,
+            loading: false,
+            error: null,
+          });
+        } catch (error) {
+          set({
+            loading: false,
+            error: error instanceof Error ? error.message : 'Cập nhật thông tin thất bại',
+          });
+          throw error;
+        }
+      },
+
+      refreshUser: async () => {
+        const { isAuthenticated } = get();
+        if (!isAuthenticated) return;
+
+        try {
+          set({ loading: true, error: null });
+
+          const user = await authService.getMe();
+
+          // Update local user data
+          authService.setAuth(authService.getToken()!, user);
+
+          set({
+            user: user as User,
+            loading: false,
+            error: null,
+          });
+        } catch (error) {
+          set({
+            loading: false,
+            error: error instanceof Error ? error.message : 'Lấy thông tin người dùng thất bại',
+          });
+        }
+      },
+
+      clearError: () => {
+        set({ error: null });
+      },
     }),
     {
       name: 'auth-storage',
+      partialize: (state) => ({
+        // Only persist user and isAuthenticated, not loading/error states
+        user: state.user,
+        isAuthenticated: state.isAuthenticated,
+      }),
     }
   )
 );
