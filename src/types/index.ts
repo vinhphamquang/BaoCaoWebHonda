@@ -34,7 +34,10 @@ export interface Customer {
     state: string;
     zipCode: string;
   };
+  favorites?: string[]; // Mảng các ID xe yêu thích
+  history?: string[]; // Mảng các ID xe đã xem
   createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface Order {

@@ -1,233 +1,225 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
-import { ArrowLeft, Search, Trash2, Clock } from 'lucide-react';
-import { useUserActivity } from '@/hooks/useUserActivity';
+import { User, Heart, Clock, Settings, LogOut, Car, History } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
-import { Card, CardContent } from '@/components/ui/Card';
-import Input from '@/components/ui/Input';
-import { formatPrice, getCarImageUrl } from '@/lib/utils';
-import { Car } from '@/types';
-
-interface CarDetail extends Car {
-  _id: string;
-  viewedAt?: number;
-}
+import Loading from '@/components/ui/Loading';
+import { Car as CarType } from '@/types';
+import { formatPrice } from '@/lib/utils';
+import Image from 'next/image';
 
 const HistoryPage: React.FC = () => {
-  const { viewedCars, clearViewedHistory } = useUserActivity();
-  const [searchTerm, setSearchTerm] = useState('');
-  const [viewedCarDetails, setViewedCarDetails] = useState<CarDetail[]>([]);
+  const router = useRouter();
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [user, setUser] = useState<any>(null);
+  const [history, setHistory] = useState<CarType[]>([]);
 
-  // Tải thông tin chi tiết của các xe đã xem
   useEffect(() => {
-    const fetchViewedCars = async () => {
-      if (viewedCars.length === 0) {
-        setViewedCarDetails([]);
-        setLoading(false);
+    const checkAuth = async () => {
+      // Kiểm tra token từ cookie
+      const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+      
+      if (!token) {
+        router.push('/login?callbackUrl=/profile/history');
         return;
       }
 
       try {
-        // Trong môi trường thực tế, bạn sẽ gọi API để lấy thông tin chi tiết của xe
-        // Ví dụ: const response = await fetch(`/api/cars?ids=${viewedCars.join(',')}`); 
-        // Nhưng ở đây chúng ta sẽ sử dụng dữ liệu giả lập
-        
-        // Giả lập dữ liệu xe
-        const mockCars: CarDetail[] = viewedCars.map((id, index) => ({
-          _id: id,
-          name: `Honda ${['Civic', 'CR-V', 'Accord', 'City', 'HR-V'][index % 5]} ${2020 + (index % 5)}`,
-          price: 800000000 + (index * 50000000),
-          category: ['sedan', 'suv', 'hatchback', 'coupe'][index % 4],
-          model: ['Civic', 'CR-V', 'Accord', 'City', 'HR-V'][index % 5],
-          year: 2020 + (index % 5),
-          color: ['Đỏ', 'Đen', 'Trắng', 'Xanh', 'Bạc'][index % 5],
-          images: [`cars/img/img/Honda-${['Civic', 'CR-V', 'Accord', 'City', 'HR-V'][index % 5]}.jpg`],
-          description: 'Xe Honda chính hãng với thiết kế hiện đại, tiết kiệm nhiên liệu và công nghệ an toàn tiên tiến.',
-          viewedAt: Date.now() - (index * 3600000), // Thời gian xem giảm dần (giờ)
-          specifications: {
-            engine: '1.5L VTEC TURBO',
-            transmission: 'CVT',
-            fuelType: 'Xăng',
-            mileage: '6.5L/100km',
-            seating: 5,
-            dimensions: { length: 4.6, width: 1.8, height: 1.4 },
-            safety: ['ABS', 'EBD', 'BA', 'VSA', 'HSA'],
-            features: ['Màn hình cảm ứng', 'Camera lùi', 'Cảm biến va chạm', 'Kết nối Bluetooth']
-          }
-        }));
+        // Lấy thông tin người dùng
+        const userResponse = await fetch('/api/auth/me');
+        const userData = await userResponse.json();
 
-        // Lọc xe theo từ khóa tìm kiếm nếu có
-        const filteredCars = searchTerm
-          ? mockCars.filter(car => 
-              car.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-              car.model.toLowerCase().includes(searchTerm.toLowerCase()) ||
-              car.category.toLowerCase().includes(searchTerm.toLowerCase())
-            )
-          : mockCars;
-
-        // Sắp xếp theo thời gian xem gần nhất
-        const sortedCars = filteredCars.sort((a, b) => 
-          (b.viewedAt || 0) - (a.viewedAt || 0)
-        );
-
-        setViewedCarDetails(sortedCars);
+        if (userData.success) {
+          setUser(userData.data);
+          // Lấy lịch sử xem xe
+          fetchHistory();
+        } else {
+          console.error('Error fetching user data:', userData.error);
+          setLoading(false);
+        }
       } catch (error) {
-        console.error('Lỗi khi tải thông tin xe đã xem:', error);
-        setError('Không thể tải thông tin xe đã xem. Vui lòng thử lại sau.');
-      } finally {
+        console.error('Error fetching user data:', error);
         setLoading(false);
       }
     };
 
-    fetchViewedCars();
-  }, [viewedCars, searchTerm]);
+    checkAuth();
+  }, [router]);
 
-  // Định dạng thời gian xem
-  const formatViewTime = (timestamp?: number): string => {
-    if (!timestamp) return 'Không xác định';
-    
-    const now = Date.now();
-    const diffMs = now - timestamp;
-    const diffMins = Math.floor(diffMs / 60000);
-    const diffHours = Math.floor(diffMs / 3600000);
-    const diffDays = Math.floor(diffMs / 86400000);
-    
-    if (diffMins < 60) return `${diffMins} phút trước`;
-    if (diffHours < 24) return `${diffHours} giờ trước`;
-    if (diffDays < 30) return `${diffDays} ngày trước`;
-    
-    const date = new Date(timestamp);
-    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+  const fetchHistory = async () => {
+    try {
+      const response = await fetch('/api/user/history');
+      const data = await response.json();
+
+      if (data.success) {
+        setHistory(data.data);
+      } else {
+        console.error('Error fetching history:', data.error);
+      }
+    } catch (error) {
+      console.error('Error fetching history:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <Loading size="lg" text="Đang tải lịch sử xem xe..." />
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            Không thể tải thông tin tài khoản
+          </h2>
+          <p className="text-gray-600 mb-6">
+            Vui lòng đăng nhập để xem thông tin tài khoản của bạn.
+          </p>
+          <Link href="/login?callbackUrl=/profile/history">
+            <Button size="lg">Đăng nhập</Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
-          <div>
-            <Link href="/profile" className="inline-flex items-center text-gray-600 hover:text-red-600 mb-4">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Quay lại
-            </Link>
-            <h1 className="text-3xl font-bold text-gray-900">Lịch sử xem</h1>
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* Sidebar */}
+          <div className="lg:col-span-1">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <User className="h-5 w-5 mr-2" />
+                  Tài khoản của tôi
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <nav className="space-y-2">
+                  <Link href="/profile" className="flex items-center p-2 text-gray-700 rounded-lg hover:bg-gray-100">
+                    <User className="h-5 w-5 mr-3" />
+                    Thông tin cá nhân
+                  </Link>
+                  <Link href="/profile/favorites" className="flex items-center p-2 text-gray-700 rounded-lg hover:bg-gray-100">
+                    <Heart className="h-5 w-5 mr-3" />
+                    Xe yêu thích
+                  </Link>
+                  <Link href="/profile/history" className="flex items-center p-2 text-gray-900 rounded-lg bg-gray-100">
+                    <Clock className="h-5 w-5 mr-3" />
+                    Lịch sử xem xe
+                  </Link>
+                  <Link href="/settings" className="flex items-center p-2 text-gray-700 rounded-lg hover:bg-gray-100">
+                    <Settings className="h-5 w-5 mr-3" />
+                    Cài đặt
+                  </Link>
+                  <button 
+                    onClick={() => {
+                      // Xử lý đăng xuất
+                      router.push('/api/auth/logout');
+                    }}
+                    className="flex items-center w-full p-2 text-left text-gray-700 rounded-lg hover:bg-gray-100"
+                  >
+                    <LogOut className="h-5 w-5 mr-3" />
+                    Đăng xuất
+                  </button>
+                </nav>
+              </CardContent>
+            </Card>
           </div>
 
-          {/* Search */}
-          <div className="w-full md:w-64 mt-4 md:mt-0">
-            <div className="relative">
-              <Input
-                type="text"
-                placeholder="Tìm kiếm xe..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-            </div>
+          {/* Main Content */}
+          <div className="lg:col-span-3">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Clock className="h-5 w-5 mr-2" />
+                  Lịch sử xem xe
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                {history.length === 0 ? (
+                  <div className="text-center py-12">
+                    <History className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+                    <h3 className="text-lg font-medium text-gray-900 mb-2">Chưa có lịch sử xem xe</h3>
+                    <p className="text-gray-600 mb-6">Bạn chưa xem chi tiết xe nào.</p>
+                    <Link href="/cars">
+                      <Button>
+                        <Car className="h-5 w-5 mr-2" />
+                        Khám phá các mẫu xe
+                      </Button>
+                    </Link>
+                  </div>
+                ) : (
+                  <div className="space-y-6">
+                    {history.map((car) => (
+                      <div key={car._id} className="border border-gray-200 rounded-lg overflow-hidden">
+                        <div className="flex flex-col md:flex-row">
+                          <div className="md:w-1/3 relative h-48">
+                            {car.images && car.images.length > 0 ? (
+                              <Image 
+                                src={`/${car.images[0]}`}
+                                alt={car.name}
+                                fill
+                                style={{ objectFit: 'cover' }}
+                              />
+                            ) : (
+                              <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                                <Car className="h-12 w-12 text-gray-400" />
+                              </div>
+                            )}
+                            <div className="absolute top-2 left-2 bg-red-600 text-white px-2 py-1 rounded-full text-xs font-medium">
+                              {car.category.toUpperCase()}
+                            </div>
+                          </div>
+                          <div className="md:w-2/3 p-4">
+                            <div className="flex justify-between items-start">
+                              <div>
+                                <h3 className="text-lg font-bold text-gray-900 mb-1">
+                                  <Link href={`/cars/${car._id}`} className="hover:text-red-600">
+                                    {car.name}
+                                  </Link>
+                                </h3>
+                                <div className="text-red-600 font-bold text-xl mb-2">
+                                  {formatPrice(car.price)}
+                                </div>
+                                <div className="text-sm text-gray-600 mb-4">
+                                  <span className="mr-3">{car.year}</span>
+                                  <span className="mr-3">{car.specifications.engine}</span>
+                                  <span>{car.specifications.transmission}</span>
+                                </div>
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                Đã xem: {new Date(car.updatedAt || '').toLocaleDateString('vi-VN')}
+                              </div>
+                            </div>
+                            <div className="flex space-x-3 mt-4">
+                              <Link href={`/cars/${car._id}`}>
+                                <Button variant="outline" size="sm">
+                                  Xem chi tiết
+                                </Button>
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
           </div>
         </div>
-
-        {/* Clear all button */}
-        {viewedCars.length > 0 && (
-          <div className="flex justify-end mb-4">
-            <Button
-              variant="outline"
-              className="text-red-600 border-red-600 hover:bg-red-50"
-              onClick={clearViewedHistory}
-            >
-              <Trash2 className="h-4 w-4 mr-2" />
-              Xóa lịch sử
-            </Button>
-          </div>
-        )}
-
-        {/* Content */}
-        {loading ? (
-          <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-600"></div>
-          </div>
-        ) : error ? (
-          <div className="text-center py-12">
-            <div className="text-red-600 mb-4">{error}</div>
-            <Button onClick={() => window.location.reload()}>Thử lại</Button>
-          </div>
-        ) : viewedCars.length === 0 ? (
-          <div className="text-center py-16 bg-gray-50 rounded-lg border border-gray-200">
-            <Clock className="h-16 w-16 mx-auto text-gray-300 mb-4" />
-            <h2 className="text-2xl font-bold text-gray-700 mb-2">Chưa có lịch sử xem</h2>
-            <p className="text-gray-500 mb-6">Bạn chưa xem chi tiết xe nào</p>
-            <Link href="/cars">
-              <Button>
-                Khám phá các mẫu xe Honda
-              </Button>
-            </Link>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {viewedCarDetails.map((car) => (
-              <Card key={car._id} className="group hover:shadow-lg transition-all duration-300">
-                <Link href={`/cars/${car._id}`}>
-                  <div className="relative h-48 overflow-hidden rounded-t-lg">
-                    {car.images && car.images.length > 0 ? (
-                      <Image
-                        src={getCarImageUrl(car.images[0])}
-                        alt={car.name}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                        <span className="text-gray-400">Không có hình ảnh</span>
-                      </div>
-                    )}
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
-                      <div className="flex items-center text-white text-xs">
-                        <Clock className="h-3 w-3 mr-1" />
-                        <span>{formatViewTime(car.viewedAt)}</span>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-
-                <CardContent className="p-4">
-                  <Link href={`/cars/${car._id}`}>
-                    <h3 className="text-lg font-bold text-gray-900 hover:text-red-600 transition-colors mb-2">
-                      {car.name}
-                    </h3>
-                  </Link>
-
-                  <div className="text-xl font-bold text-red-600 mb-2">
-                    {formatPrice(car.price)}
-                  </div>
-
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-md">
-                      {car.year}
-                    </span>
-                    <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-md">
-                      {car.model}
-                    </span>
-                    <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-md">
-                      {car.category}
-                    </span>
-                  </div>
-
-                  <Link href={`/cars/${car._id}`}>
-                    <Button className="w-full">
-                      Xem chi tiết
-                    </Button>
-                  </Link>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        )}
       </div>
     </div>
   );
