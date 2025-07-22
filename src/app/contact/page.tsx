@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { MapPin, Phone, Mail, Clock, Send, MessageCircle } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
 const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +15,18 @@ const ContactPage: React.FC = () => {
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Vị trí showroom Honda
+  const showroomLocation = {
+    lat: 10.7553411, // Tọa độ vĩ độ của Nguyễn Văn Linh, Q7
+    lng: 106.7021555 // Tọa độ kinh độ của Nguyễn Văn Linh, Q7
+  };
+  
+  const mapContainerStyle = {
+    width: '100%',
+    height: '400px',
+    borderRadius: '0.5rem'
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -265,18 +278,45 @@ const ContactPage: React.FC = () => {
               </CardContent>
             </Card>
 
-            {/* Map Placeholder */}
+            {/* Google Maps */}
             <Card>
               <CardHeader>
                 <CardTitle>Vị trí showroom</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="w-full h-64 bg-gray-300 rounded-lg flex items-center justify-center">
-                  <div className="text-center text-gray-600">
-                    <MapPin className="h-12 w-12 mx-auto mb-2" />
-                    <p>Bản đồ Google Maps</p>
-                    <p className="text-sm">123 Nguyễn Văn Linh, Q7, TP.HCM</p>
-                  </div>
+                {/* 
+                  Phương pháp 1: Sử dụng Google Maps API (yêu cầu API key)
+                  Để sử dụng, hãy bỏ comment phần code bên dưới và thêm API key của bạn
+                  Xem hướng dẫn tại: /docs/google-maps-api-guide.md
+                */}
+                {/* 
+                <LoadScript googleMapsApiKey="YOUR_API_KEY_HERE">
+                  <GoogleMap
+                    mapContainerStyle={mapContainerStyle}
+                    center={showroomLocation}
+                    zoom={15}
+                  >
+                    <Marker position={showroomLocation} />
+                  </GoogleMap>
+                </LoadScript>
+                */}
+                
+                {/* Phương pháp 2: Sử dụng iframe (không yêu cầu API key) */}
+                <div className="w-full h-96 rounded-lg overflow-hidden">
+                  <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3920.0381286049307!2d106.69996797586805!3d10.755341057826347!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f9023a3a85d%3A0xdee5c99a7b02feab!2zMTIzIMSQLiBOZ3V54buFbiBWxINuIExpbmgsIFTDom4gUGjDuiwgUXXhuq1uIDcsIFRow6BuaCBwaOG7kSBI4buTIENow60gTWluaCwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1700553329797!5m2!1svi!2s" 
+                    width="100%" 
+                    height="100%" 
+                    style={{ border: 0 }} 
+                    allowFullScreen={true} 
+                    loading="lazy" 
+                    referrerPolicy="no-referrer-when-downgrade"
+                  ></iframe>
+                </div>
+                
+                <div className="mt-4 text-center text-gray-600">
+                  <p className="font-medium">Honda Shop</p>
+                  <p className="text-sm">123 Nguyễn Văn Linh, Q7, TP.HCM</p>
                 </div>
               </CardContent>
             </Card>

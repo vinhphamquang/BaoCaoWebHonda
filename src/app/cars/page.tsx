@@ -26,7 +26,7 @@ const CarsPage: React.FC = () => {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   // Removed unused state variables
 
-  const models = ['Civic', 'Accord', 'CR-V', 'City', 'HR-V', 'Pilot'];
+  const models = ['Civic', 'Accord', 'CR-V', 'City', 'HR-V', 'Pilot', 'Jazz', 'Insight', 'BR-V'];
   // Removed unused constants
 
   const fetchCars = useCallback(async () => {

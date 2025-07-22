@@ -110,7 +110,18 @@ export async function GET(request: NextRequest) {
     }
 
     if (search) {
-      filter.$text = { $search: search };
+      // Cải thiện tìm kiếm để hoạt động chính xác hơn
+      const searchRegex = new RegExp(search, 'i');
+      filter.$or = [
+        { name: searchRegex },
+        { model: searchRegex },
+        { description: searchRegex },
+        { color: searchRegex },
+        { category: searchRegex },
+        { 'specifications.engine': searchRegex },
+        { 'specifications.transmission': searchRegex },
+        { 'specifications.fuelType': searchRegex },
+      ];
     }
 
     // Calculate skip value

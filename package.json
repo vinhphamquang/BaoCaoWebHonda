@@ -23,6 +23,7 @@
     "postman:test": "newman run postman/Honda-Plus-API.postman_collection.json -e postman/Honda-Plus-Environment.postman_environment.json"
   },
   "dependencies": {
+    "@react-google-maps/api": "^2.20.7",
     "clsx": "^2.1.1",
     "lucide-react": "^0.514.0",
     "mongodb": "^6.17.0",
