@@ -45,9 +45,12 @@
 ## 🛠️ Công nghệ sử dụng
 
 - **Frontend**: Next.js 15, TypeScript, Tailwind CSS
-- **Backend**: Next.js API Routes
+- **Backend**: Next.js API Routes với Swagger documentation
 - **Database**: MongoDB, Mongoose
 - **UI Components**: Custom components với Lucide React icons
+- **API Documentation**: Swagger/OpenAPI 3.0
+- **Testing**: Jest, Postman/Newman
+- **DevOps**: Docker, GitHub Actions CI/CD
 - **State Management**: React Context API
 - **Form Handling**: React Hook Form
 - **Notifications**: Custom Toast system
@@ -127,22 +130,40 @@ shopcar/
 └── package.json
 ```
 
+## 📖 API Documentation
+
+Honda Plus cung cấp API documentation hoàn chỉnh với Swagger/OpenAPI:
+
+- **📖 Interactive Docs**: http://localhost:3001/api/docs
+- **🔍 OpenAPI Spec**: http://localhost:3001/api/swagger
+- **📋 API Reference**: [API.md](./API.md)
+- **🧪 Postman Collection**: `postman/Honda-Plus-API.postman_collection.json`
+
 ## 🔌 API Endpoints
 
-### Cars API
-- `GET /api/cars` - Lấy danh sách xe (có pagination, filter, sort)
-- `GET /api/cars/[id]` - Lấy chi tiết xe
-- `POST /api/cars` - Tạo xe mới (admin)
-- `PUT /api/cars/[id]` - Cập nhật xe (admin)
-- `DELETE /api/cars/[id]` - Xóa xe (admin)
+### 🏥 Health Check
+- `GET /api/health` - API health check với system metrics
 
-### Orders API
-- `GET /api/orders` - Lấy danh sách đơn hàng (admin)
+### 🚗 Cars API
+- `GET /api/cars` - Lấy danh sách xe (có pagination, filter, sort)
+- `GET /api/cars/{id}` - Lấy chi tiết xe theo ID
+
+### 📋 Orders API
+- `GET /api/orders` - Lấy danh sách đơn hàng với filtering
 - `POST /api/orders` - Tạo đơn hàng mới
 
-### Utility API
-- `POST /api/seed` - Seed dữ liệu mẫu
-- `GET /api/seed` - Kiểm tra số lượng xe trong DB
+### 🗄️ Database API
+- `POST /api/seed` - Seed dữ liệu mẫu (development only)
+
+### 🧪 Testing API
+```bash
+# Test với curl
+curl http://localhost:3001/api/health
+curl "http://localhost:3001/api/cars?limit=5"
+
+# Test với Postman
+npm run postman:test
+```
 
 ## 🎨 Tính năng UI/UX
 

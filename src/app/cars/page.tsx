@@ -112,7 +112,7 @@ const CarsPage: React.FC = () => {
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="container-honda page-padding">
           <div className="text-center">
             <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
               Xe Honda Chính Hãng
@@ -124,7 +124,7 @@ const CarsPage: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="container-honda page-padding">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar Filters */}
           <div className="lg:w-1/4">

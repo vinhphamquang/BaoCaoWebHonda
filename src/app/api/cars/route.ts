@@ -1,3 +1,67 @@
+/**
+ * @swagger
+ * /api/cars:
+ *   get:
+ *     tags: [Cars]
+ *     summary: Get all Honda cars
+ *     description: Retrieve a list of Honda cars with optional filtering, sorting, and pagination
+ *     parameters:
+ *       - in: query
+ *         name: search
+ *         schema:
+ *           type: string
+ *         description: Search term for car name or model
+ *       - in: query
+ *         name: model
+ *         schema:
+ *           type: string
+ *         description: Filter by car model (Civic, Accord, CR-V, etc.)
+ *       - in: query
+ *         name: category
+ *         schema:
+ *           type: string
+ *           enum: [sedan, suv, hatchback, coupe]
+ *         description: Filter by car category
+ *       - in: query
+ *         name: sortBy
+ *         schema:
+ *           type: string
+ *           enum: [name, price, year, createdAt]
+ *           default: createdAt
+ *         description: Field to sort by
+ *       - in: query
+ *         name: sortOrder
+ *         schema:
+ *           type: string
+ *           enum: [asc, desc]
+ *           default: desc
+ *         description: Sort order
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: number
+ *           default: 10
+ *         description: Number of results to return
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved cars
+ *         content:
+ *           application/json:
+ *             schema:
+ *               allOf:
+ *                 - $ref: '#/components/schemas/ApiResponse'
+ *                 - type: object
+ *                   properties:
+ *                     data:
+ *                       type: array
+ *                       items:
+ *                         $ref: '#/components/schemas/Car'
+ *       400:
+ *         $ref: '#/components/responses/BadRequest'
+ *       500:
+ *         $ref: '#/components/responses/InternalServerError'
+ */
+
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import Car from '@/models/Car';

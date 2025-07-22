@@ -72,7 +72,7 @@ const PremiumPage: React.FC = () => {
       {/* Hero Section */}
       <section className="relative py-20 lg:py-32 bg-gradient-to-br from-gray-900 via-red-900 to-black text-white overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-red-600/20 to-blue-600/20"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative container-honda text-center">
           <div className="space-y-8">
             <div className="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm rounded-full border border-white/30">
               <Crown className="h-5 w-5 mr-2 text-yellow-400" />
@@ -105,8 +105,8 @@ const PremiumPage: React.FC = () => {
       </section>
 
       {/* Premium Features */}
-      <section className="py-20 lg:py-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="section-padding">
+        <div className="container-honda">
           <div className="text-center space-y-6 mb-16">
             <h2 className="text-4xl lg:text-5xl font-black text-gray-900">
               Đặc Quyền
@@ -136,8 +136,8 @@ const PremiumPage: React.FC = () => {
       </section>
 
       {/* Membership Tiers */}
-      <section className="py-20 lg:py-32 bg-gradient-to-br from-gray-100 to-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="section-padding bg-gradient-to-br from-gray-100 to-gray-50">
+        <div className="container-honda">
           <div className="text-center space-y-6 mb-16">
             <h2 className="text-4xl lg:text-5xl font-black text-gray-900">
               Gói Thành Viên
@@ -186,8 +186,8 @@ const PremiumPage: React.FC = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 lg:py-32 gradient-primary text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="section-padding gradient-primary text-white">
+        <div className="container-honda text-center">
           <div className="space-y-8">
             <h2 className="text-4xl lg:text-5xl font-black">
               Sẵn Sàng Trở Thành

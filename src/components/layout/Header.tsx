@@ -15,37 +15,12 @@ const Header: React.FC = () => {
   const { totalItems } = useCart();
 
   const navigation = [
-    {
-      name: 'Trang chủ',
-      href: '/',
-      icon: '🏠',
-      description: 'Khám phá Honda Plus'
-    },
-    {
-      name: 'Bộ sưu tập',
-      href: '/cars',
-      icon: '🚗',
-      description: 'Xe Honda cao cấp'
-    },
-    {
-      name: 'Honda Plus',
-      href: '/premium',
-      icon: '👑',
-      description: 'Dịch vụ VIP',
-      isSpecial: true
-    },
-    {
-      name: 'Về chúng tôi',
-      href: '/about',
-      icon: '🏢',
-      description: 'Câu chuyện thương hiệu'
-    },
-    {
-      name: 'Liên hệ',
-      href: '/contact',
-      icon: '📞',
-      description: 'Tư vấn 24/7'
-    },
+    { name: 'Trang chủ', href: '/' },
+    { name: 'Xe Honda', href: '/cars' },
+    { name: 'Honda Plus', href: '/premium', isSpecial: true },
+    { name: 'API Docs', href: '/api/docs' },
+    { name: 'Giới thiệu', href: '/about' },
+    { name: 'Liên hệ', href: '/contact' },
   ];
 
   const handleSearch = (e: React.FormEvent) => {
@@ -129,23 +104,21 @@ const Header: React.FC = () => {
           </div>
 
           {/* Navigation - Honda Plus Desktop */}
-          <nav className="hidden lg:flex space-x-2">
+          <nav className="hidden lg:flex items-center space-x-1">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  'px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-300 relative overflow-hidden group',
-                  pathname === item.href
-                    ? 'text-white bg-red-600 shadow-lg'
-                    : 'text-gray-700 hover:text-red-600 hover:bg-red-50'
+                  'px-3 py-2 text-xs font-medium rounded-md transition-colors duration-200',
+                  item.isSpecial
+                    ? 'bg-yellow-400 text-gray-900 hover:bg-yellow-500'
+                    : pathname === item.href
+                      ? 'text-white bg-red-600'
+                      : 'text-gray-600 hover:text-red-600 hover:bg-gray-100'
                 )}
               >
-                <span className="relative z-10">{item.name}</span>
-                {pathname === item.href && (
-                  <div className="absolute inset-0 gradient-primary"></div>
-                )}
-                <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                {item.name}
               </Link>
             ))}
           </nav>
@@ -204,30 +177,60 @@ const Header: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu - Honda Plus */}
       {isMenuOpen && (
-        <div className="md:hidden border-t border-gray-200 bg-white">
-          <div className="px-4 py-2 space-y-1">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={cn(
-                  'block px-3 py-2 text-base font-medium rounded-md transition-colors',
-                  pathname === item.href
-                    ? 'text-red-600 bg-red-50'
-                    : 'text-gray-700 hover:text-red-600 hover:bg-gray-50'
-                )}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {item.name}
-              </Link>
-            ))}
-            <div className="pt-2 border-t border-gray-200">
-              <Button className="w-full justify-center">
-                <Phone className="h-4 w-4 mr-2" />
-                Liên hệ ngay
-              </Button>
+        <div className="lg:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 shadow-2xl z-40">
+          <div className="max-w-7xl mx-auto px-4 py-6">
+            {/* Mobile Navigation Items */}
+            <div className="space-y-3 mb-6">
+              {navigation.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={cn(
+                    'flex items-center px-4 py-4 text-base font-semibold rounded-2xl transition-all duration-300 group',
+                    item.isSpecial
+                      ? 'bg-gradient-to-r from-yellow-400 to-amber-500 text-gray-900 shadow-lg'
+                      : pathname === item.href
+                        ? 'text-white bg-gradient-to-r from-red-600 to-red-700 shadow-lg'
+                        : 'text-gray-700 hover:text-red-600 hover:bg-gradient-to-r hover:from-red-50 hover:to-red-100'
+                  )}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <span className="font-semibold">{item.name}</span>
+                  <ArrowRight className="h-5 w-5 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 ml-auto" />
+                </Link>
+              ))}
+            </div>
+
+            {/* Mobile CTA Section */}
+            <div className="border-t border-gray-200 pt-6 space-y-4">
+              <div className="grid grid-cols-2 gap-3">
+                <Button className="gradient-primary font-semibold py-3 rounded-xl">
+                  <Phone className="h-4 w-4 mr-2" />
+                  Gọi ngay
+                </Button>
+                <Button variant="outline" className="border-2 border-red-200 hover:border-red-500 font-semibold py-3 rounded-xl">
+                  <Mail className="h-4 w-4 mr-2" />
+                  Email
+                </Button>
+              </div>
+
+              {/* Mobile Quick Stats */}
+              <div className="grid grid-cols-3 gap-4 pt-4">
+                <div className="text-center">
+                  <div className="text-lg font-bold text-red-600">15+</div>
+                  <div className="text-xs text-gray-600">Năm kinh nghiệm</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-lg font-bold text-red-600">10K+</div>
+                  <div className="text-xs text-gray-600">Khách hàng VIP</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-lg font-bold text-red-600">100%</div>
+                  <div className="text-xs text-gray-600">Chính hãng</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -70,13 +70,13 @@ const AboutPage: React.FC = () => {
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-red-600 to-red-700 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="container-honda section-padding">
           <div className="text-center">
             <h1 className="text-4xl lg:text-5xl font-bold mb-6">
               Về Honda Shop
             </h1>
             <p className="text-xl lg:text-2xl text-red-100 max-w-4xl mx-auto">
-              Hơn 10 năm đồng hành cùng khách hàng Việt Nam, Honda Shop tự hào là đại lý Honda uy tín 
+              Hơn 10 năm đồng hành cùng khách hàng Việt Nam, Honda Shop tự hào là đại lý Honda uy tín
               với cam kết mang đến những chiếc xe chất lượng và dịch vụ tốt nhất.
             </p>
           </div>
@@ -84,8 +84,8 @@ const AboutPage: React.FC = () => {
       </div>
 
       {/* Stats Section */}
-      <div className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="section-padding bg-white">
+        <div className="container-honda">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
@@ -105,8 +105,8 @@ const AboutPage: React.FC = () => {
       </div>
 
       {/* Mission & Vision */}
-      <div className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="section-padding bg-gray-50">
+        <div className="container-honda">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <Card>
               <CardContent className="p-8">
@@ -114,9 +114,9 @@ const AboutPage: React.FC = () => {
                   Sứ mệnh của chúng tôi
                 </h2>
                 <p className="text-gray-700 leading-relaxed">
-                  Honda Shop cam kết mang đến cho khách hàng Việt Nam những chiếc xe Honda chính hãng 
-                  với chất lượng tốt nhất, giá cả hợp lý và dịch vụ chăm sóc khách hàng tận tâm. 
-                  Chúng tôi không chỉ bán xe mà còn đồng hành cùng khách hàng trong suốt quá trình 
+                  Honda Shop cam kết mang đến cho khách hàng Việt Nam những chiếc xe Honda chính hãng
+                  với chất lượng tốt nhất, giá cả hợp lý và dịch vụ chăm sóc khách hàng tận tâm.
+                  Chúng tôi không chỉ bán xe mà còn đồng hành cùng khách hàng trong suốt quá trình
                   sử dụng xe.
                 </p>
               </CardContent>
@@ -128,8 +128,8 @@ const AboutPage: React.FC = () => {
                   Tầm nhìn của chúng tôi
                 </h2>
                 <p className="text-gray-700 leading-relaxed">
-                  Trở thành đại lý Honda hàng đầu Việt Nam, được khách hàng tin tưởng và lựa chọn 
-                  bởi sự uy tín, chất lượng dịch vụ và cam kết phục vụ. Chúng tôi hướng tới việc 
+                  Trở thành đại lý Honda hàng đầu Việt Nam, được khách hàng tin tưởng và lựa chọn
+                  bởi sự uy tín, chất lượng dịch vụ và cam kết phục vụ. Chúng tôi hướng tới việc
                   mở rộng mạng lưới showroom trên toàn quốc để phục vụ khách hàng tốt hơn.
                 </p>
               </CardContent>
@@ -139,8 +139,8 @@ const AboutPage: React.FC = () => {
       </div>
 
       {/* Core Values */}
-      <div className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="section-padding bg-white">
+        <div className="container-honda">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
               Giá trị cốt lõi
@@ -171,8 +171,8 @@ const AboutPage: React.FC = () => {
       </div>
 
       {/* Timeline */}
-      <div className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="section-padding bg-gray-50">
+        <div className="container-honda">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
               Hành trình phát triển
@@ -204,10 +204,10 @@ const AboutPage: React.FC = () => {
                       </CardContent>
                     </Card>
                   </div>
-                  
+
                   {/* Timeline dot */}
                   <div className="relative z-10 w-4 h-4 bg-red-600 rounded-full border-4 border-white shadow-lg"></div>
-                  
+
                   <div className="w-1/2"></div>
                 </div>
               ))}
@@ -217,8 +217,8 @@ const AboutPage: React.FC = () => {
       </div>
 
       {/* Team Section */}
-      <div className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="section-padding bg-white">
+        <div className="container-honda">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
               Đội ngũ chuyên nghiệp
