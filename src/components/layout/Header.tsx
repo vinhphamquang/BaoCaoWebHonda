@@ -22,8 +22,8 @@ const Header: React.FC = () => {
   return (
     <header className="bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100 sticky top-0 z-50">
       {/* Top bar - Honda Plus Style */}
-      <div className="gradient-primary text-white py-3 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer"></div>
+      <div className="gradient-yellow-black text-black py-3 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="flex justify-between items-center text-sm font-medium">
             <div className="flex items-center space-x-6">
@@ -51,18 +51,18 @@ const Header: React.FC = () => {
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center space-x-3 group">
               <div className="relative">
-                <div className="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110">
-                  <span className="text-white font-black text-2xl">H</span>
+                <div className="w-12 h-12 gradient-yellow-black rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110">
+                  <span className="text-black font-black text-2xl">H</span>
                   <div className="absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full flex items-center justify-center">
                     <Sparkles className="h-2 w-2 text-yellow-800" />
                   </div>
                 </div>
               </div>
               <div className="hidden sm:block">
-                <h1 className="text-2xl font-black text-gray-900 group-hover:text-red-600 transition-colors">
+                <h1 className="text-2xl font-black text-gray-900 group-hover:text-amber-600 transition-colors">
                   Honda <span className="text-gradient">Plus</span>
                 </h1>
-                <p className="text-xs text-gray-600 font-medium tracking-wide">
+                <p className="text-xs text-gray-700 font-medium tracking-wide">
                   PREMIUM • AUTHENTIC • EXCELLENCE
                 </p>
               </div>
@@ -115,7 +115,7 @@ const Header: React.FC = () => {
 
       {/* Mobile menu - Honda Plus */}
       {isMenuOpen && (
-        <div className="lg:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 shadow-2xl z-40">
+        <div className="lg:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-100 shadow-2xl z-40">
           <div className="max-w-7xl mx-auto px-4 py-6">
             {/* Mobile Navigation Items */}
             <div className="space-y-3 mb-6">

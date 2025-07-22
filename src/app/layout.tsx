@@ -39,7 +39,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi" className="scroll-smooth">
-      <body className={`${inter.variable} font-sans antialiased bg-gray-50`}>
+      <body className={`${inter.variable} font-sans antialiased bg-gray-100`}>
         <ToastProvider>
           <div className="min-h-screen flex flex-col">
             <Header />

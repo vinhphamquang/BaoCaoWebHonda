@@ -18,16 +18,16 @@ const Footer: React.FC = () => {
           <div className="space-y-6">
             <div className="flex items-center space-x-3">
               <div className="relative">
-                <div className="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center shadow-2xl">
-                  <span className="text-white font-black text-2xl">H</span>
+                <div className="w-12 h-12 gradient-yellow-black rounded-xl flex items-center justify-center shadow-2xl">
+                  <span className="text-black font-black text-2xl">H</span>
                 </div>
                 <div className="absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full flex items-center justify-center">
                   <span className="text-xs">+</span>
                 </div>
               </div>
               <div>
-                <h3 className="text-2xl font-black">Honda <span className="text-gradient bg-gradient-to-r from-yellow-400 to-red-400 bg-clip-text text-transparent">Plus</span></h3>
-                <p className="text-sm text-gray-400 font-medium tracking-wide">PREMIUM • AUTHENTIC • EXCELLENCE</p>
+                <h3 className="text-2xl font-black">Honda <span className="text-gradient">Plus</span></h3>
+                <p className="text-sm text-gray-300 font-medium tracking-wide">PREMIUM • AUTHENTIC • EXCELLENCE</p>
               </div>
             </div>
             <p className="text-gray-300 leading-relaxed">
@@ -36,13 +36,13 @@ const Footer: React.FC = () => {
               dịch vụ chăm sóc khách hàng 5 sao.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="group p-3 bg-white/10 rounded-xl hover:bg-red-600 transition-all duration-300 hover:scale-110">
+              <a href="#" className="group p-3 bg-white/10 rounded-xl hover:bg-amber-600 transition-all duration-300 hover:scale-110">
                 <Facebook className="h-5 w-5 text-gray-400 group-hover:text-white transition-colors" />
               </a>
-              <a href="#" className="group p-3 bg-white/10 rounded-xl hover:bg-red-600 transition-all duration-300 hover:scale-110">
+              <a href="#" className="group p-3 bg-white/10 rounded-xl hover:bg-amber-600 transition-all duration-300 hover:scale-110">
                 <Youtube className="h-5 w-5 text-gray-400 group-hover:text-white transition-colors" />
               </a>
-              <a href="#" className="group p-3 bg-white/10 rounded-xl hover:bg-red-600 transition-all duration-300 hover:scale-110">
+              <a href="#" className="group p-3 bg-white/10 rounded-xl hover:bg-amber-600 transition-all duration-300 hover:scale-110">
                 <Instagram className="h-5 w-5 text-gray-400 group-hover:text-white transition-colors" />
               </a>
             </div>
