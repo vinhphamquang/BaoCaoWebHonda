@@ -59,7 +59,9 @@
 
 import { NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
-import { version } from '../../../../package.json';
+// Import version from package.json
+const packageJson = require('../../../../package.json');
+const version = packageJson.version;
 
 export async function GET() {
   try {
@@ -105,10 +107,10 @@ export async function GET() {
     if (dbStatus === 'error') {
       return NextResponse.json(
         {
+          ...healthData,
           success: false,
           message: 'Honda Plus API is unhealthy',
-          error: 'Database connection failed',
-          ...healthData
+          error: 'Database connection failed'
         },
         { status: 503 }
       );

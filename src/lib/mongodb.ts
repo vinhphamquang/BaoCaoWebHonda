@@ -11,6 +11,14 @@ if (!MONGODB_URI) {
  * in development. This prevents connections growing exponentially
  * during API Route usage.
  */
+// Extend global type for mongoose caching
+declare global {
+  var mongoose: {
+    conn: typeof mongoose | null;
+    promise: Promise<typeof mongoose> | null;
+  };
+}
+
 let cached = global.mongoose;
 
 if (!cached) {

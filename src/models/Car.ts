@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import { Car } from '@/types';
 
-export interface CarDocument extends Car, Document {}
+export interface CarDocument extends Omit<Car, '_id'>, Document {}
 
 const CarSchema = new Schema<CarDocument>({
   name: {

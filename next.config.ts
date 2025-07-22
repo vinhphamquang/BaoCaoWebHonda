@@ -13,11 +13,6 @@ const nextConfig: NextConfig = {
   // External packages for server components
   serverExternalPackages: ['mongoose'],
 
-  // Environment variables
-  env: {
-    CUSTOM_KEY: process.env.CUSTOM_KEY,
-  },
-
   // Headers for security
   async headers() {
     return [
@@ -46,16 +41,6 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
     ];
-  },
-
-  // Turbopack configuration (for development)
-  turbo: {
-    rules: {
-      '*.svg': {
-        loaders: ['@svgr/webpack'],
-        as: '*.js',
-      },
-    },
   },
 };
 
