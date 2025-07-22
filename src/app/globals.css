@@ -84,8 +84,8 @@ body {
 
 /* Selection styles */
 ::selection {
-  background: #f59e0b;
-  color: #000000;
+  background: #dc2626;
+  color: #ffffff;
 }
 
 /* Animations */

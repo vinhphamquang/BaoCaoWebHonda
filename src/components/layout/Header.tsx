@@ -2,14 +2,18 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Menu, X, Phone, Mail, Sparkles, ArrowRight } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
+import { Menu, X, Phone, Mail, Sparkles, ArrowRight, User, LogOut } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 import Button from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+  const { user, logout } = useAuth();
 
   const navigation = [
     { name: 'Trang chủ', href: '/' },
@@ -100,6 +104,59 @@ const Header: React.FC = () => {
               Liên hệ ngay
             </Button>
 
+            {/* Auth buttons or User menu */}
+            {user ? (
+              <div className="relative">
+                <button
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                  className="flex items-center space-x-2 p-2 rounded-xl hover:bg-gray-100 transition-colors"
+                >
+                  <div className="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-white">
+                    <span className="text-sm font-bold">{user.name.charAt(0)}</span>
+                  </div>
+                  <span className="hidden md:block text-sm font-medium">{user.name.split(' ')[0]}</span>
+                </button>
+
+                {/* User dropdown menu */}
+                {isUserMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 z-50 border border-gray-200">
+                    <Link
+                      href="/profile"
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      onClick={() => setIsUserMenuOpen(false)}
+                    >
+                      <User className="h-4 w-4 mr-2" />
+                      Tài khoản của tôi
+                    </Link>
+                    <button
+                      onClick={() => {
+                        logout();
+                        setIsUserMenuOpen(false);
+                        router.push('/');
+                      }}
+                      className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Đăng xuất
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="hidden md:flex items-center space-x-2">
+                <Link href="/login">
+                  <Button variant="outline" size="sm" className="border-red-200 hover:border-red-500 font-medium">
+                    Đăng nhập
+                  </Button>
+                </Link>
+                <Link href="/register">
+                  <Button size="sm" className="gradient-primary font-medium">
+                    Đăng ký
+                  </Button>
+                </Link>
+              </div>
+            )}
+
             {/* Mobile menu button - Honda Plus */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -141,16 +198,51 @@ const Header: React.FC = () => {
 
             {/* Mobile CTA Section */}
             <div className="border-t border-gray-200 pt-6 space-y-4">
-              <div className="grid grid-cols-2 gap-3">
-                <Button className="gradient-primary font-semibold py-3 rounded-xl">
-                  <Phone className="h-4 w-4 mr-2" />
-                  Gọi ngay
-                </Button>
-                <Button variant="outline" className="border-2 border-red-200 hover:border-red-500 font-semibold py-3 rounded-xl">
-                  <Mail className="h-4 w-4 mr-2" />
-                  Email
-                </Button>
-              </div>
+              {user ? (
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-xl">
+                    <div className="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center text-white">
+                      <span className="text-sm font-bold">{user.name.charAt(0)}</span>
+                    </div>
+                    <div>
+                      <div className="font-medium">{user.name}</div>
+                      <div className="text-xs text-gray-500">{user.email}</div>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <Link href="/profile">
+                      <Button variant="outline" className="w-full border-2 border-red-200 hover:border-red-500 font-semibold py-3 rounded-xl">
+                        <User className="h-4 w-4 mr-2" />
+                        Tài khoản
+                      </Button>
+                    </Link>
+                    <Button 
+                      className="w-full gradient-primary font-semibold py-3 rounded-xl"
+                      onClick={() => {
+                        logout();
+                        setIsMenuOpen(false);
+                        router.push('/');
+                      }}
+                    >
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Đăng xuất
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-3">
+                  <Link href="/login" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="outline" className="w-full border-2 border-red-200 hover:border-red-500 font-semibold py-3 rounded-xl">
+                      Đăng nhập
+                    </Button>
+                  </Link>
+                  <Link href="/register" onClick={() => setIsMenuOpen(false)}>
+                    <Button className="w-full gradient-primary font-semibold py-3 rounded-xl">
+                      Đăng ký
+                    </Button>
+                  </Link>
+                </div>
+              )}
 
               {/* Mobile Quick Stats */}
               <div className="grid grid-cols-3 gap-4 pt-4">

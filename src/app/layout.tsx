@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { ToastProvider } from "@/components/ui/Toast";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -39,15 +40,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi" className="scroll-smooth">
-      <body className={`${inter.variable} font-sans antialiased bg-gray-100`}>
+      <body className={`${inter.variable} font-sans antialiased bg-gray-50`}>
         <ToastProvider>
-          <div className="min-h-screen flex flex-col">
-            <Header />
-            <main className="flex-1">
-              {children}
-            </main>
-            <Footer />
-          </div>
+          <AuthProvider>
+            <div className="min-h-screen flex flex-col">
+              <Header />
+              <main className="flex-1">
+                {children}
+              </main>
+              <Footer />
+            </div>
+          </AuthProvider>
         </ToastProvider>
       </body>
     </html>

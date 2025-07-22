@@ -1,7 +1,10 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import { Customer } from '@/types';
+import bcrypt from 'bcryptjs';
 
-export interface CustomerDocument extends Omit<Customer, '_id'>, Document {}
+export interface CustomerDocument extends Omit<Customer, '_id'>, Document {
+  comparePassword(candidatePassword: string): Promise<boolean>;
+}
 
 const CustomerSchema = new Schema<CustomerDocument>({
   name: {
@@ -18,6 +21,12 @@ const CustomerSchema = new Schema<CustomerDocument>({
     trim: true,
     lowercase: true,
     match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Email không hợp lệ'],
+  },
+  password: {
+    type: String,
+    required: [true, 'Mật khẩu là bắt buộc'],
+    minlength: [6, 'Mật khẩu phải có ít nhất 6 ký tự'],
+    select: false, // Không trả về password khi query
   },
   phone: {
     type: String,
@@ -54,5 +63,30 @@ const CustomerSchema = new Schema<CustomerDocument>({
 
 // Tạo index cho email để tìm kiếm nhanh
 CustomerSchema.index({ email: 1 });
+
+// Middleware để hash password trước khi lưu
+CustomerSchema.pre('save', async function(next) {
+  // Chỉ hash password nếu nó được sửa đổi hoặc là mới
+  if (!this.isModified('password')) return next();
+  
+  try {
+    // Tạo salt và hash password
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password as string, salt);
+    next();
+  } catch (error: any) {
+    next(error);
+  }
+});
+
+// Phương thức so sánh password
+CustomerSchema.methods.comparePassword = async function(candidatePassword: string): Promise<boolean> {
+  try {
+    // Sử dụng bcrypt để so sánh password
+    return await bcrypt.compare(candidatePassword, this.password);
+  } catch (error) {
+    throw error;
+  }
+};
 
 export default mongoose.models.Customer || mongoose.model<CustomerDocument>('Customer', CustomerSchema);
