@@ -60,7 +60,7 @@
 import { NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 // Import version from package.json
-const packageJson = require('../../../../package.json');
+import packageJson from '../../../../package.json';
 const version = packageJson.version;
 
 export async function GET() {

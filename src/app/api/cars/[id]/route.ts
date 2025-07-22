@@ -6,8 +6,9 @@ import mongoose from 'mongoose';
 // GET /api/cars/[id] - Lấy chi tiết xe theo ID
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
+  const { params } = context;
   try {
     await connectDB();
 
@@ -54,8 +55,9 @@ export async function GET(
 // PUT /api/cars/[id] - Cập nhật thông tin xe (admin only)
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
+  const { params } = context;
   try {
     await connectDB();
 
@@ -89,7 +91,7 @@ export async function PUT(
       message: 'Xe đã được cập nhật thành công',
     });
 
-  } catch (error: any) {
+  } catch (error: Error | unknown) {
     console.error('Error updating car:', error);
     
     if (error.name === 'ValidationError') {
@@ -113,8 +115,9 @@ export async function PUT(
 // DELETE /api/cars/[id] - Xóa xe (admin only)
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
+  const { params } = context;
   try {
     await connectDB();
 

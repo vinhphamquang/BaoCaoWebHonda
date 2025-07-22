@@ -118,8 +118,7 @@ temp/
 *.sw?
 
 # Docker
-Dockerfile*
-docker-compose*
+# Keeping Dockerfile and docker-compose for reference
 .dockerignore
 
 # Git
@@ -150,5 +149,6 @@ postman/
 # Development tools
 .eslintrc*
 .prettierrc*
-tsconfig.json
-tailwind.config.js
+# Keep configuration files needed for build
+# tsconfig.json
+# tailwind.config.js

@@ -1,14 +1,11 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { Search, Filter, Grid, List, ChevronDown } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Search, Grid, List } from 'lucide-react';
 import Button from '@/components/ui/Button';
-import { Card, CardContent } from '@/components/ui/Card';
-import Loading, { CardSkeleton } from '@/components/ui/Loading';
+import { CardSkeleton } from '@/components/ui/Loading';
 import CarCard from '@/components/cars/CarCard';
 import { Car } from '@/types';
-import { formatPrice } from '@/lib/utils';
 
 const CarsPage: React.FC = () => {
   const [cars, setCars] = useState<Car[]>([]);
@@ -27,17 +24,12 @@ const CarsPage: React.FC = () => {
   const [sortBy, setSortBy] = useState('createdAt');
   const [sortOrder, setSortOrder] = useState('desc');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [showFilters, setShowFilters] = useState(false);
+  // Removed unused state variables
 
   const models = ['Civic', 'Accord', 'CR-V', 'City', 'HR-V', 'Pilot'];
-  const categories = ['sedan', 'suv', 'hatchback', 'coupe'];
-  const colors = ['Trắng Ngọc Trai', 'Đen Ánh Kim', 'Bạc Ánh Kim', 'Đỏ Ánh Kim', 'Xanh Dương Ánh Kim'];
+  // Removed unused constants
 
-  useEffect(() => {
-    fetchCars();
-  }, [searchQuery, filters, sortBy, sortOrder]);
-
-  const fetchCars = async () => {
+  const fetchCars = useCallback(async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams();
@@ -70,7 +62,11 @@ const CarsPage: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [searchQuery, filters, sortBy, sortOrder]);
+
+  useEffect(() => {
+    fetchCars();
+  }, [fetchCars]);
 
   const handleFilterChange = (key: string, value: string) => {
     setFilters(prev => ({ ...prev, [key]: value }));

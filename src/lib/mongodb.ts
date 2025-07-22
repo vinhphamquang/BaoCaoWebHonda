@@ -13,7 +13,7 @@ if (!MONGODB_URI) {
  */
 // Extend global type for mongoose caching
 declare global {
-  var mongoose: {
+  let mongoose: {
     conn: typeof mongoose | null;
     promise: Promise<typeof mongoose> | null;
   };

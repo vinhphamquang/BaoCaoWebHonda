@@ -18,6 +18,8 @@
     "docker:compose": "docker-compose up -d",
     "docker:compose:dev": "docker-compose --profile development up -d",
     "docker:down": "docker-compose down",
+    "docker:frontend": "docker-compose -f docker-compose.frontend.yml up -d",
+    "docker:frontend:down": "docker-compose -f docker-compose.frontend.yml down",
     "postman:test": "newman run postman/Honda-Plus-API.postman_collection.json -e postman/Honda-Plus-Environment.postman_environment.json"
   },
   "dependencies": {

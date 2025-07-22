@@ -1,5 +1,5 @@
 import React from 'react';
-import { Crown, Star, Shield, Zap, Heart, Award, Users, Sparkles } from 'lucide-react';
+import { Crown, Star, Shield, Zap, Heart, Award } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import { Card, CardContent } from '@/components/ui/Card';
 
@@ -167,7 +167,7 @@ const PremiumPage: React.FC = () => {
                   <ul className="space-y-3 mb-8">
                     {tier.features.map((feature, idx) => (
                       <li key={idx} className="flex items-center text-gray-600">
-                        <Sparkles className="h-4 w-4 text-green-500 mr-3 flex-shrink-0" />
+                        <Star className="h-4 w-4 text-green-500 mr-3 flex-shrink-0" />
                         {feature}
                       </li>
                     ))}

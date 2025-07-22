@@ -1,11 +1,10 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { Trash2, Plus, Minus, ShoppingCart, ArrowLeft } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
-import { CartItem } from '@/types';
 import { formatPrice } from '@/lib/utils';
 import { useCart } from '@/contexts/CartContext';
 

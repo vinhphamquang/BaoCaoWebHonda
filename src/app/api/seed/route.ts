@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import Car from '@/models/Car';
 import { sampleCars } from '@/lib/seedData';
 
 // POST /api/seed - Seed database với dữ liệu mẫu
-export async function POST(request: NextRequest) {
+export async function POST() {
   try {
     await connectDB();
 

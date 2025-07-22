@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
       message: 'Đơn hàng đã được tạo thành công',
     }, { status: 201 });
 
-  } catch (error: any) {
+  } catch (error: Error | unknown) {
     console.error('Error creating order:', error);
     
     if (error.name === 'ValidationError') {
@@ -103,7 +103,7 @@ export async function GET(request: NextRequest) {
     const email = searchParams.get('email');
 
     // Build filter query
-    const filter: any = {};
+    const filter: Record<string, unknown> = {};
     if (status) filter.status = status;
     if (email) filter['customerInfo.email'] = { $regex: email, $options: 'i' };
 

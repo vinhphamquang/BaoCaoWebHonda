@@ -3,7 +3,6 @@
  */
 
 import { GET } from '@/app/api/health/route'
-import { NextRequest } from 'next/server'
 
 // Mock MongoDB connection
 jest.mock('@/lib/mongodb', () => ({
@@ -17,7 +16,6 @@ describe('/api/health', () => {
   })
 
   it('should return healthy status when database is connected', async () => {
-    const request = new NextRequest('http://localhost:3000/api/health')
     const response = await GET()
     const data = await response.json()
 
@@ -34,10 +32,9 @@ describe('/api/health', () => {
 
   it('should return unhealthy status when database connection fails', async () => {
     // Mock database connection failure
-    const mockConnectDB = require('@/lib/mongodb').default
+    const mockConnectDB = jest.requireMock('@/lib/mongodb').default
     mockConnectDB.mockRejectedValueOnce(new Error('Database connection failed'))
 
-    const request = new NextRequest('http://localhost:3000/api/health')
     const response = await GET()
     const data = await response.json()
 
@@ -48,7 +45,6 @@ describe('/api/health', () => {
   })
 
   it('should include system information in response', async () => {
-    const request = new NextRequest('http://localhost:3000/api/health')
     const response = await GET()
     const data = await response.json()
 
@@ -64,7 +60,6 @@ describe('/api/health', () => {
   })
 
   it('should have correct cache headers', async () => {
-    const request = new NextRequest('http://localhost:3000/api/health')
     const response = await GET()
 
     expect(response.headers.get('Cache-Control')).toBe('no-cache, no-store, must-revalidate')

@@ -65,7 +65,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import Car from '@/models/Car';
-import { FilterOptions, PaginationOptions } from '@/types';
+// Removed unused import
 
 // GET /api/cars - Lấy danh sách xe với pagination và sorting
 export async function GET(request: NextRequest) {
@@ -91,7 +91,7 @@ export async function GET(request: NextRequest) {
     const search = searchParams.get('search');
 
     // Build filter query
-    const filter: any = { isAvailable: true };
+    const filter: Record<string, unknown> = { isAvailable: true };
 
     if (model) filter.model = { $regex: model, $options: 'i' };
     if (category) filter.category = category;
@@ -117,8 +117,8 @@ export async function GET(request: NextRequest) {
     const skip = (page - 1) * limit;
 
     // Build sort object
-    const sort: any = {};
-    sort[sortBy] = sortOrder === 'asc' ? 1 : -1;
+    const sort: Record<string, number> = {};
+    sort[sortBy as string] = sortOrder === 'asc' ? 1 : -1;
 
     // Execute query
     const [cars, total] = await Promise.all([
@@ -170,7 +170,7 @@ export async function POST(request: NextRequest) {
       message: 'Xe đã được tạo thành công',
     }, { status: 201 });
 
-  } catch (error: any) {
+  } catch (error: Error | unknown) {
     console.error('Error creating car:', error);
     
     if (error.name === 'ValidationError') {

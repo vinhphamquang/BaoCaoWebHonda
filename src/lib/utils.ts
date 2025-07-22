@@ -32,7 +32,7 @@ export function truncateText(text: string, maxLength: number): string {
   return text.slice(0, maxLength) + '...';
 }
 
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {
@@ -71,7 +71,7 @@ export const storage = {
       return null;
     }
   },
-  set: (key: string, value: any) => {
+  set: (key: string, value: unknown) => {
     if (typeof window === 'undefined') return;
     try {
       localStorage.setItem(key, JSON.stringify(value));

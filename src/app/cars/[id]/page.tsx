@@ -20,7 +20,7 @@ const CarDetailPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [showContactForm, setShowContactForm] = useState(false);
-  const { addItem, getItemQuantity } = useCart();
+  const { addItem } = useCart();
   const { success } = useToast();
 
   useEffect(() => {
