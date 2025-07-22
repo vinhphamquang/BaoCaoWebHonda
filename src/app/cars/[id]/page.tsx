@@ -217,16 +217,7 @@ const CarDetailPage: React.FC = () => {
                 </Button>
               </div>
               
-              <div className="flex space-x-4">
-                <Button variant="ghost" size="lg" className="flex-1">
-                  <Heart className="h-5 w-5 mr-2" />
-                  Yêu thích
-                </Button>
-                <Button variant="ghost" size="lg" className="flex-1">
-                  <Share2 className="h-5 w-5 mr-2" />
-                  Chia sẻ
-                </Button>
-              </div>
+
             </div>
 
             {/* Contact Info */}
@@ -237,10 +228,6 @@ const CarDetailPage: React.FC = () => {
                     <h4 className="font-semibold text-gray-900">Liên hệ tư vấn</h4>
                     <p className="text-sm text-gray-600">Hotline: 1900-1234</p>
                   </div>
-                  <Button size="sm">
-                    <MessageCircle className="h-4 w-4 mr-2" />
-                    Chat ngay
-                  </Button>
                 </div>
               </CardContent>
             </Card>

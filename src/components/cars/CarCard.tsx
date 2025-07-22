@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Heart, Eye, Phone } from 'lucide-react';
+import { Phone } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import { Card, CardContent } from '@/components/ui/Card';
 import { Car } from '@/types';
@@ -18,17 +18,7 @@ interface CarCardProps {
 const CarCard: React.FC<CarCardProps> = ({ car, viewMode = 'grid', className }) => {
   const { success } = useToast();
 
-  const handleQuickView = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    // Implement quick view modal
-  };
-
-  const handleToggleFavorite = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    // Implement favorite functionality
-  };
+  // Không còn sử dụng các hàm xử lý sự kiện cho nút yêu thích và xem nhanh
 
   if (viewMode === 'list') {
     return (
@@ -70,28 +60,6 @@ const CarCard: React.FC<CarCardProps> = ({ car, viewMode = 'grid', className }) 
                   {formatPrice(car.price)}
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleToggleFavorite}
-                    className="text-gray-500 hover:text-red-500"
-                  >
-                    <Heart className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleQuickView}
-                    className="text-gray-500 hover:text-blue-500"
-                  >
-                    <Eye className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                  >
-                    Liên hệ ngay
-                  </Button>
                   <Button size="sm">
                     Xem chi tiết
                   </Button>
@@ -114,34 +82,7 @@ const CarCard: React.FC<CarCardProps> = ({ car, viewMode = 'grid', className }) 
               <span className="text-gray-700 font-semibold">{car.name}</span>
             </div>
 
-            {/* Premium Overlay with quick actions */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end justify-center pb-4">
-              <div className="flex space-x-3">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleToggleFavorite}
-                  className="text-white hover:text-red-400 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-xl border border-white/30"
-                >
-                  <Heart className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleQuickView}
-                  className="text-white hover:text-blue-400 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-xl border border-white/30"
-                >
-                  <Eye className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-white hover:text-green-400 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-xl border border-white/30"
-                >
-                  <Phone className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
+            {/* Đã xóa overlay với các nút thao tác nhanh */}
           </div>
 
           <div className="absolute top-4 left-4 gradient-primary text-white px-4 py-2 rounded-2xl text-sm font-bold shadow-lg">
@@ -183,16 +124,9 @@ const CarCard: React.FC<CarCardProps> = ({ car, viewMode = 'grid', className }) 
               {formatPrice(car.price)}
             </div>
 
-            <div className="flex space-x-3">
+            <div className="flex">
               <Button className="flex-1 gradient-primary hover:shadow-lg btn-hover-lift font-semibold py-3 rounded-xl" size="sm">
                 Xem chi tiết
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="px-4 py-3 rounded-xl border-2 border-red-200 hover:border-red-500 hover:bg-red-50 transition-all duration-300"
-              >
-                Liên hệ
               </Button>
             </div>
           </div>

@@ -267,10 +267,7 @@ const ContactPage: React.FC = () => {
                   <Phone className="h-5 w-5 mr-3" />
                   Gọi ngay: 1900-1234
                 </Button>
-                <Button variant="outline" className="w-full justify-start" size="lg">
-                  <MessageCircle className="h-5 w-5 mr-3" />
-                  Chat Zalo: 0901-234-567
-                </Button>
+
                 <Button variant="outline" className="w-full justify-start" size="lg">
                   <Mail className="h-5 w-5 mr-3" />
                   Email: info@hondashop.vn
