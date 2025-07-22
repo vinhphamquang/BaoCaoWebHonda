@@ -50,6 +50,50 @@ export function getCarImageUrl(imagePath: string): string {
   return `/images/${imagePath}`;
 }
 
+// Danh sách các đường dẫn ảnh xe có sẵn
+const carImagePaths = [
+  'cars/img/img/Civic-Type-R-lead.avif',
+  'cars/img/img/HONDA-BRV-G.webp',
+  'cars/img/img/Honda civic-RS.jpg',
+  'cars/img/img/Honda-CR-V-Hybrid.avif',
+  'cars/img/img/Honda-Odyssey.png',
+  'cars/img/img/Honda-ZR-V.jpg',
+  'cars/img/img/Honda_BR-V.jpg',
+  'cars/img/img/Honda_CR-v7cho.jpg',
+  'cars/img/img/civic-honda.webp',
+  'cars/img/img/honda-accord.jpg',
+  'cars/img/img/honda-city-G.webp',
+  'cars/img/img/honda-city.webp',
+  'cars/img/img/honda-civic-G.jpg',
+  'cars/img/img/honda-civic.webp',
+  'cars/img/img/honda-crv.jpg',
+  'cars/img/img/honda-hrv.avif',
+  'cars/img/img/honda_city_hatchback.jpg',
+  'cars/img/img/honda_type-s.jpg',
+  'cars/img/img/hondacity-hatchback.jpg'
+];
+
+/**
+ * Gán ngẫu nhiên các ảnh xe cho một mẫu xe
+ * @param count Số lượng ảnh cần gán (mặc định là 3)
+ * @returns Mảng các đường dẫn ảnh ngẫu nhiên
+ */
+export function getRandomCarImages(count: number = 3): string[] {
+  // Tạo bản sao của mảng ảnh để không ảnh hưởng đến mảng gốc
+  const availableImages = [...carImagePaths];
+  const result: string[] = [];
+  
+  // Lấy ngẫu nhiên các ảnh từ mảng có sẵn
+  for (let i = 0; i < count && availableImages.length > 0; i++) {
+    const randomIndex = Math.floor(Math.random() * availableImages.length);
+    result.push(availableImages[randomIndex]);
+    // Xóa ảnh đã chọn để tránh trùng lặp
+    availableImages.splice(randomIndex, 1);
+  }
+  
+  return result;
+}
+
 export function validateEmail(email: string): boolean {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);

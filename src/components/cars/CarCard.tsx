@@ -2,11 +2,12 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Phone } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import { Card, CardContent } from '@/components/ui/Card';
 import { Car } from '@/types';
-import { formatPrice } from '@/lib/utils';
+import { formatPrice, getCarImageUrl } from '@/lib/utils';
 import { useToast } from '@/components/ui/Toast';
 
 interface CarCardProps {
@@ -26,8 +27,19 @@ const CarCard: React.FC<CarCardProps> = ({ car, viewMode = 'grid', className }) 
         <Link href={`/cars/${car._id}`}>
           <div className="flex gap-6 p-6">
             {/* Car Image */}
-            <div className="w-48 h-32 bg-gray-300 rounded-lg flex items-center justify-center flex-shrink-0 relative overflow-hidden">
-              <span className="text-gray-600 text-sm">{car.name}</span>
+            <div className="w-48 h-32 rounded-lg flex-shrink-0 relative overflow-hidden">
+              {car.images && car.images.length > 0 ? (
+                <Image 
+                  src={getCarImageUrl(car.images[0])}
+                  alt={car.name}
+                  fill
+                  className="object-cover rounded-lg"
+                />
+              ) : (
+                <div className="w-full h-full bg-gray-300 flex items-center justify-center">
+                  <span className="text-gray-600 text-sm">{car.name}</span>
+                </div>
+              )}
               <div className="absolute top-2 left-2 bg-red-600 text-white px-2 py-1 rounded text-xs font-medium">
                 {car.category.toUpperCase()}
               </div>
@@ -76,13 +88,22 @@ const CarCard: React.FC<CarCardProps> = ({ car, viewMode = 'grid', className }) 
     <Card className={`group hover:shadow-2xl transition-all duration-500 card-hover bg-white/80 backdrop-blur-sm border-0 shadow-lg ${className}`}>
       <Link href={`/cars/${car._id}`}>
         <div className="relative overflow-hidden rounded-t-2xl">
-          <div className="w-full h-56 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center relative">
-            <div className="text-center">
-              <div className="text-4xl mb-2">🚗</div>
-              <span className="text-gray-700 font-semibold">{car.name}</span>
-            </div>
-
-            {/* Đã xóa overlay với các nút thao tác nhanh */}
+          <div className="w-full h-56 relative overflow-hidden">
+            {car.images && car.images.length > 0 ? (
+              <Image 
+                src={getCarImageUrl(car.images[0])}
+                alt={car.name}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+                <div className="text-center">
+                  <div className="text-4xl mb-2">🚗</div>
+                  <span className="text-gray-700 font-semibold">{car.name}</span>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="absolute top-4 left-4 gradient-primary text-white px-4 py-2 rounded-2xl text-sm font-bold shadow-lg">

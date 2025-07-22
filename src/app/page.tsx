@@ -3,42 +3,10 @@
 import React from 'react';
 import Link from 'next/link';
 
-import { ArrowRight, Star, Shield, Award, Users, Sparkles } from 'lucide-react';
+import { ArrowRight, Shield, Award, Users, Sparkles, Star } from 'lucide-react';
 import Button from '@/components/ui/Button';
 
-import CarCard from '@/components/cars/CarCard';
-
 export default function Home() {
-  const featuredCars = [
-    {
-      id: '1',
-      name: 'Honda Civic 2024',
-      model: 'Civic',
-      price: 730000000,
-      image: '/images/honda-civic-2024.jpg',
-      category: 'sedan' as const,
-      year: 2024,
-    },
-    {
-      id: '2',
-      name: 'Honda CR-V 2024',
-      model: 'CR-V',
-      price: 1050000000,
-      image: '/images/honda-crv-2024.jpg',
-      category: 'suv' as const,
-      year: 2024,
-    },
-    {
-      id: '3',
-      name: 'Honda Accord 2024',
-      model: 'Accord',
-      price: 1319000000,
-      image: '/images/honda-accord-2024.jpg',
-      category: 'sedan' as const,
-      year: 2024,
-    },
-  ];
-
   const features = [
     {
       icon: Shield,
@@ -79,22 +47,22 @@ export default function Home() {
             <div className="space-y-10 animate-slide-up">
               <div className="space-y-6">
                 <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
-                  <Sparkles className="h-4 w-4 mr-2 text-yellow-400" />
+                  <Sparkles className="h-4 w-4 mr-2 text-red-600" />
                   <span className="text-sm font-semibold">Honda Plus Premium Experience</span>
                 </div>
 
                 <h1 className="text-5xl lg:text-7xl font-black leading-tight">
                   <span className="block">Honda</span>
-                  <span className="block text-gradient bg-gradient-to-r from-yellow-400 to-red-400 bg-clip-text text-transparent">
-                    Plus
-                  </span>
+                  <span className="block text-gradient bg-gradient-to-r from-red-600 to-black bg-clip-text text-transparent">
+                  Plus
+                </span>
                   <span className="block text-3xl lg:text-4xl font-light text-gray-300">
                     Chính Hãng
                   </span>
                 </h1>
 
                 <p className="text-xl lg:text-2xl text-gray-200 font-light leading-relaxed">
-                  Trải nghiệm <span className="font-bold text-yellow-400">Premium</span> •
+                  Trải nghiệm <span className="font-bold text-red-600">Premium</span> •
                   Chất lượng <span className="font-bold text-red-400">Vượt trội</span> •
                   Dịch vụ <span className="font-bold text-blue-400">Đẳng cấp</span>
                 </p>
@@ -107,7 +75,7 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row gap-6">
                 <Link href="/cars">
                   <Button size="lg" className="gradient-primary hover:shadow-2xl btn-hover-lift font-bold px-8 py-4 rounded-2xl text-lg">
-                    Khám phá bộ sưu tập
+                    Xem các mẫu xe
                     <ArrowRight className="ml-3 h-6 w-6" />
                   </Button>
                 </Link>
@@ -120,7 +88,7 @@ export default function Home() {
 
               <div className="grid grid-cols-3 gap-8 pt-8">
                 <div className="text-center group">
-                  <div className="text-4xl font-black text-yellow-400 group-hover:scale-110 transition-transform">15+</div>
+                  <div className="text-4xl font-black text-red-600 group-hover:scale-110 transition-transform">15+</div>
                   <div className="text-gray-300 font-medium">Năm kinh nghiệm</div>
                 </div>
                 <div className="text-center group">
@@ -140,74 +108,19 @@ export default function Home() {
                   <div className="absolute inset-0 bg-gradient-to-br from-red-600/20 to-blue-600/20 group-hover:from-red-600/30 group-hover:to-blue-600/30 transition-all duration-500"></div>
                   <div className="relative text-center">
                     <div className="text-6xl mb-4">🚗</div>
-                    <span className="text-white text-xl font-bold">Honda Plus Collection</span>
+                    <span className="text-white text-xl font-bold">Honda Plus</span>
                     <p className="text-gray-300 mt-2">Premium Experience Awaits</p>
                   </div>
                 </div>
               </div>
-              <div className="absolute -bottom-6 -right-6 w-full h-full bg-gradient-to-br from-yellow-400 to-red-500 rounded-3xl -z-10 opacity-50"></div>
+              <div className="absolute -bottom-6 -right-6 w-full h-full bg-gradient-to-br from-red-600 to-black rounded-3xl -z-10 opacity-50"></div>
               <div className="absolute -top-6 -left-6 w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 rounded-3xl -z-20 opacity-30"></div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Featured Cars - Honda Plus */}
-      <section className="py-20 lg:py-32 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-red-50/50 to-blue-50/50"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center space-y-6 mb-16">
-            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-100 to-blue-100 rounded-full">
-              <Star className="h-5 w-5 mr-2 text-red-600" />
-              <span className="text-sm font-bold text-gray-800 tracking-wide">HONDA PLUS COLLECTION</span>
-            </div>
 
-            <h2 className="text-4xl lg:text-6xl font-black text-gray-900">
-              Bộ Sưu Tập
-              <span className="block text-gradient bg-gradient-to-r from-red-600 to-blue-600 bg-clip-text text-transparent">
-                Đẳng Cấp
-              </span>
-            </h2>
-
-            <p className="text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto font-light leading-relaxed">
-              Trải nghiệm những mẫu xe Honda cao cấp nhất với công nghệ tiên tiến,
-              thiết kế sang trọng và hiệu suất vượt trội
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredCars.map((car) => (
-              <CarCard
-                key={car.id}
-                car={{
-                  ...car,
-                  _id: car.id,
-                  color: 'Đa dạng màu sắc',
-                  images: [car.image],
-                  specifications: {
-                    engine: '1.5L VTEC Turbo',
-                    transmission: 'CVT',
-                    fuelType: 'Xăng',
-                    seating: 5,
-                    mileage: '6.5L/100km',
-                    safety: ['Honda SENSING', '6 túi khí'],
-                    features: ['Màn hình cảm ứng', 'Apple CarPlay'],
-                  },
-                  description: `${car.name} - Xe Honda chính hãng với thiết kế hiện đại và công nghệ tiên tiến.`,
-                  isAvailable: true,
-                }}
-              />
-            ))}
-          </div>
-          <div className="text-center mt-12">
-            <Link href="/cars">
-              <Button size="lg" variant="outline">
-                Xem tất cả xe Honda
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
 
       {/* Features - Honda Plus */}
       <section className="py-20 lg:py-32 bg-gradient-to-br from-gray-900 to-black text-white relative overflow-hidden">
@@ -216,7 +129,7 @@ export default function Home() {
           <div className="text-center space-y-6 mb-16">
             <h2 className="text-4xl lg:text-6xl font-black">
               Tại Sao Chọn
-              <span className="block text-gradient bg-gradient-to-r from-yellow-400 to-red-400 bg-clip-text text-transparent">
+              <span className="block text-gradient bg-gradient-to-r from-red-600 to-black bg-clip-text text-transparent">
                 Honda Plus?
               </span>
             </h2>
@@ -231,7 +144,7 @@ export default function Home() {
                 <div className="mx-auto w-20 h-20 gradient-primary rounded-2xl flex items-center justify-center shadow-2xl group-hover:shadow-red-500/25 transition-all duration-500 group-hover:scale-110">
                   <feature.icon className="h-10 w-10 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-white group-hover:text-yellow-400 transition-colors">{feature.title}</h3>
+                <h3 className="text-2xl font-bold text-white group-hover:text-red-600 transition-colors">{feature.title}</h3>
                 <p className="text-gray-300 leading-relaxed">{feature.description}</p>
               </div>
             ))}

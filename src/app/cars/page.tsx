@@ -96,9 +96,11 @@ const CarsPage: React.FC = () => {
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Có lỗi xảy ra</h2>
           <p className="text-gray-600 mb-4">{error}</p>
-          <Button onClick={() => window.location.reload()}>
-            Thử lại
-          </Button>
+          <div className="flex gap-4 justify-center">
+            <Button onClick={() => window.location.reload()}>
+              Thử lại
+            </Button>
+          </div>
         </div>
       </div>
     );
