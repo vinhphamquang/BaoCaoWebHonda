@@ -1,36 +1,217 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚗 Honda Plus - Ứng dụng bán xe Honda cao cấp
 
-## Getting Started
+Ứng dụng web bán xe Honda Plus với thiết kế đẳng cấp thế giới, được xây dựng với Next.js 15, TypeScript, MongoDB và Tailwind CSS. Trải nghiệm mua xe Honda premium với giao diện hiện đại và dịch vụ 5 sao.
 
-First, run the development server:
+## ✨ Tính năng Honda Plus
 
+### 🏆 **Honda Plus Premium Experience**
+- **Giao diện đẳng cấp**: Thiết kế sang trọng với gradient effects và animations cao cấp
+- **Honda Plus Membership**: Hệ thống thành viên VIP với các đặc quyền độc quyền
+- **Premium Showroom**: Trải nghiệm mua xe online như showroom thực tế
+- **Concierge Service**: Dịch vụ tư vấn cá nhân hóa 1-1
+
+### 🚗 **Showroom Honda Plus**
+- Hiển thị bộ sưu tập xe Honda cao cấp với hình ảnh HD
+- Tìm kiếm thông minh với AI-powered recommendations
+- Xem chi tiết 360° với thông số kỹ thuật đầy đủ
+- Virtual test drive và AR visualization
+- Chế độ xem grid/list với hover effects cao cấp
+
+### 🛒 **Smart Cart & Checkout**
+- Giỏ hàng thông minh với real-time pricing
+- Multiple payment options (trả góp 0%, leasing)
+- Express checkout cho Honda Plus members
+- Delivery tracking và white-glove service
+
+### 📱 **Premium Mobile Experience**
+- Responsive design với mobile-first approach
+- Touch-optimized interactions
+- Progressive Web App (PWA) capabilities
+- Offline browsing cho catalog
+
+### 🎨 **Honda Plus Design System**
+- **Color Palette**: Honda Red, Premium Gold, Platinum Silver
+- **Typography**: Inter font với custom weights
+- **Animations**: Smooth transitions và micro-interactions
+- **Components**: Reusable UI components với Honda Plus branding
+
+### 🔧 **Enterprise-Grade Architecture**
+- Next.js 15 với App Router và Server Components
+- TypeScript cho type safety
+- MongoDB với advanced indexing
+- Redis caching cho performance
+- Error tracking và monitoring
+
+## 🛠️ Công nghệ sử dụng
+
+- **Frontend**: Next.js 15, TypeScript, Tailwind CSS
+- **Backend**: Next.js API Routes
+- **Database**: MongoDB, Mongoose
+- **UI Components**: Custom components với Lucide React icons
+- **State Management**: React Context API
+- **Form Handling**: React Hook Form
+- **Notifications**: Custom Toast system
+
+## 📦 Cài đặt và chạy dự án
+
+### Yêu cầu hệ thống
+- Node.js 18+
+- MongoDB (local hoặc MongoDB Atlas)
+- npm hoặc yarn
+
+### 1. Clone repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd shopcar
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Cài đặt dependencies
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Cấu hình môi trường
+Tạo file `.env.local` trong thư mục gốc:
+```env
+# MongoDB Connection
+MONGODB_URI=mongodb://localhost:27017/honda-car-shop
+# Hoặc sử dụng MongoDB Atlas:
+# MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/honda-car-shop
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Next.js
+NEXTAUTH_SECRET=your-secret-key-here
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
 
-## Learn More
+### 4. Khởi động MongoDB
+Đảm bảo MongoDB đang chạy trên máy local hoặc có kết nối Atlas.
 
-To learn more about Next.js, take a look at the following resources:
+### 5. Seed dữ liệu mẫu
+```bash
+# Truy cập URL sau để tạo dữ liệu mẫu:
+curl -X POST http://localhost:3000/api/seed
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 6. Chạy ứng dụng
+```bash
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Mở [http://localhost:3000](http://localhost:3000) để xem ứng dụng.
 
-## Deploy on Vercel
+## 📁 Cấu trúc dự án
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+shopcar/
+├── src/
+│   ├── app/                    # Next.js App Router
+│   │   ├── api/               # API routes
+│   │   │   ├── cars/         # CRUD xe Honda
+│   │   │   ├── orders/       # Quản lý đơn hàng
+│   │   │   └── seed/         # Seed dữ liệu
+│   │   ├── cars/             # Trang danh sách xe
+│   │   ├── cart/             # Trang giỏ hàng
+│   │   ├── contact/          # Trang liên hệ
+│   │   ├── about/            # Trang giới thiệu
+│   │   ├── layout.tsx        # Layout chính
+│   │   └── page.tsx          # Trang chủ
+│   ├── components/            # React components
+│   │   ├── ui/               # UI components cơ bản
+│   │   ├── cars/             # Components liên quan xe
+│   │   └── layout/           # Header, Footer
+│   ├── contexts/             # React Context
+│   ├── lib/                  # Utilities, database
+│   ├── models/               # MongoDB schemas
+│   └── types/                # TypeScript interfaces
+├── public/                   # Static files
+└── package.json
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🔌 API Endpoints
+
+### Cars API
+- `GET /api/cars` - Lấy danh sách xe (có pagination, filter, sort)
+- `GET /api/cars/[id]` - Lấy chi tiết xe
+- `POST /api/cars` - Tạo xe mới (admin)
+- `PUT /api/cars/[id]` - Cập nhật xe (admin)
+- `DELETE /api/cars/[id]` - Xóa xe (admin)
+
+### Orders API
+- `GET /api/orders` - Lấy danh sách đơn hàng (admin)
+- `POST /api/orders` - Tạo đơn hàng mới
+
+### Utility API
+- `POST /api/seed` - Seed dữ liệu mẫu
+- `GET /api/seed` - Kiểm tra số lượng xe trong DB
+
+## 🎨 Tính năng UI/UX
+
+### Components chính
+- **CarCard**: Hiển thị thông tin xe với hover effects
+- **Header**: Navigation với search và cart counter
+- **Footer**: Thông tin liên hệ và links
+- **Toast**: Thông báo real-time
+- **Loading**: Skeleton loading states
+
+### Responsive Design
+- Mobile: < 768px
+- Tablet: 768px - 1024px
+- Desktop: > 1024px
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+1. Push code lên GitHub
+2. Import project vào Vercel
+3. Cấu hình environment variables
+4. Deploy
+
+### Manual Deployment
+```bash
+npm run build
+npm start
+```
+
+## 🧪 Testing
+
+```bash
+# Chạy linter
+npm run lint
+
+# Build production
+npm run build
+```
+
+## 📝 Dữ liệu mẫu
+
+Ứng dụng bao gồm dữ liệu mẫu cho 6 dòng xe Honda:
+- Honda Civic 2024
+- Honda CR-V 2024
+- Honda Accord 2024
+- Honda City 2024
+- Honda HR-V 2024
+- Honda Pilot 2024
+
+Mỗi xe có đầy đủ thông tin: giá, màu sắc, thông số kỹ thuật, tính năng an toàn.
+
+## 🤝 Đóng góp
+
+1. Fork repository
+2. Tạo feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to branch (`git push origin feature/AmazingFeature`)
+5. Mở Pull Request
+
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+## 📞 Liên hệ
+
+- **Email**: info@hondashop.vn
+- **Phone**: 1900-1234
+- **Website**: [Honda Shop](http://localhost:3000)
+
+---
+
+**Honda Shop** - *Uy tín - Chất lượng - Giá tốt nhất thị trường* 🚗✨
