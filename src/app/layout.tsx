@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { CartProvider } from "@/contexts/CartContext";
 import { ToastProvider } from "@/components/ui/Toast";
 
 const inter = Inter({
@@ -42,15 +41,13 @@ export default function RootLayout({
     <html lang="vi" className="scroll-smooth">
       <body className={`${inter.variable} font-sans antialiased bg-gray-50`}>
         <ToastProvider>
-          <CartProvider>
-            <div className="min-h-screen flex flex-col">
-              <Header />
-              <main className="flex-1">
-                {children}
-              </main>
-              <Footer />
-            </div>
-          </CartProvider>
+          <div className="min-h-screen flex flex-col">
+            <Header />
+            <main className="flex-1">
+              {children}
+            </main>
+            <Footer />
+          </div>
         </ToastProvider>
       </body>
     </html>

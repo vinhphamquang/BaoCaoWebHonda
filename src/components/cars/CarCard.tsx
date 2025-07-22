@@ -2,12 +2,11 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Heart, Eye, ShoppingCart } from 'lucide-react';
+import { Heart, Eye, Phone } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import { Card, CardContent } from '@/components/ui/Card';
 import { Car } from '@/types';
 import { formatPrice } from '@/lib/utils';
-import { useCart } from '@/contexts/CartContext';
 import { useToast } from '@/components/ui/Toast';
 
 interface CarCardProps {
@@ -17,16 +16,7 @@ interface CarCardProps {
 }
 
 const CarCard: React.FC<CarCardProps> = ({ car, viewMode = 'grid', className }) => {
-  const { addItem } = useCart();
   const { success } = useToast();
-
-  const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    addItem(car);
-    success('Đã thêm vào giỏ hàng!', `${car.name} đã được thêm vào giỏ hàng.`);
-  };
 
   const handleQuickView = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -99,10 +89,8 @@ const CarCard: React.FC<CarCardProps> = ({ car, viewMode = 'grid', className }) 
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={handleAddToCart}
                   >
-                    <ShoppingCart className="h-4 w-4 mr-2" />
-                    Thêm vào giỏ
+                    Liên hệ ngay
                   </Button>
                   <Button size="sm">
                     Xem chi tiết
@@ -148,10 +136,9 @@ const CarCard: React.FC<CarCardProps> = ({ car, viewMode = 'grid', className }) 
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={handleAddToCart}
                   className="text-white hover:text-green-400 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-xl border border-white/30"
                 >
-                  <ShoppingCart className="h-4 w-4" />
+                  <Phone className="h-4 w-4" />
                 </Button>
               </div>
             </div>
@@ -203,10 +190,9 @@ const CarCard: React.FC<CarCardProps> = ({ car, viewMode = 'grid', className }) 
               <Button
                 variant="outline"
                 size="sm"
-                onClick={handleAddToCart}
                 className="px-4 py-3 rounded-xl border-2 border-red-200 hover:border-red-500 hover:bg-red-50 transition-all duration-300"
               >
-                <ShoppingCart className="h-5 w-5" />
+                Liên hệ
               </Button>
             </div>
           </div>

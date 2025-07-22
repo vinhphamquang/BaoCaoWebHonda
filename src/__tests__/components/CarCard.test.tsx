@@ -2,7 +2,6 @@ import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import CarCard from '@/components/cars/CarCard'
-import { CartProvider } from '@/contexts/CartContext'
 
 // Mock car data
 const mockCar = {
@@ -29,9 +28,9 @@ const mockCar = {
   updatedAt: new Date('2024-01-01'),
 }
 
-// Wrapper component with CartProvider
+// Simple wrapper component for tests
 const CarCardWrapper = ({ children }: { children: React.ReactNode }) => (
-  <CartProvider>{children}</CartProvider>
+  <>{children}</>
 )
 
 describe('CarCard Component', () => {
@@ -105,29 +104,15 @@ describe('CarCard Component', () => {
     expect(screen.getByText('Xem chi tiết')).toBeInTheDocument()
   })
 
-  it('has add to cart button', () => {
+  it('has contact button', () => {
     render(
       <CarCardWrapper>
         <CarCard car={mockCar} />
       </CarCardWrapper>
     )
 
-    const addToCartButton = screen.getByRole('button', { name: /add to cart/i })
-    expect(addToCartButton).toBeInTheDocument()
-  })
-
-  it('adds car to cart when add to cart button is clicked', () => {
-    render(
-      <CarCardWrapper>
-        <CarCard car={mockCar} />
-      </CarCardWrapper>
-    )
-
-    const addToCartButton = screen.getByRole('button', { name: /add to cart/i })
-    fireEvent.click(addToCartButton)
-
-    // Note: In a real test, you would check if the car was added to cart
-    // This would require mocking the cart context or checking cart state
+    const contactButton = screen.getByRole('button', { name: /liên hệ/i })
+    expect(contactButton).toBeInTheDocument()
   })
 
   it('applies hover effects on card', () => {

@@ -3,15 +3,13 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ShoppingCart, Phone, Mail, Sparkles, ArrowRight } from 'lucide-react';
+import { Menu, X, Phone, Mail, Sparkles, ArrowRight } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
-import { useCart } from '@/contexts/CartContext';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
-  const { totalItems } = useCart();
 
   const navigation = [
     { name: 'Trang chủ', href: '/' },
@@ -96,18 +94,6 @@ const Header: React.FC = () => {
 
           {/* Right side buttons - Honda Plus */}
           <div className="flex items-center space-x-3">
-            {/* Cart - Honda Plus */}
-            <Link href="/cart" className="relative group">
-              <div className="p-3 rounded-xl bg-gray-100 group-hover:bg-red-50 transition-all duration-300 group-hover:scale-110">
-                <ShoppingCart className="h-6 w-6 text-gray-700 group-hover:text-red-600 transition-colors" />
-                {totalItems > 0 && (
-                  <span className="absolute -top-2 -right-2 gradient-primary text-white text-xs font-bold rounded-full h-6 w-6 flex items-center justify-center shadow-lg animate-pulse">
-                    {totalItems > 99 ? '99+' : totalItems}
-                  </span>
-                )}
-              </div>
-            </Link>
-
             {/* Contact button - Honda Plus */}
             <Button size="sm" className="hidden lg:flex gradient-primary hover:shadow-lg btn-hover-lift font-semibold px-6 py-3 rounded-xl">
               <Phone className="h-4 w-4 mr-2" />

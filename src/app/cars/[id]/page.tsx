@@ -9,7 +9,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import Loading from '@/components/ui/Loading';
 import { Car as CarType } from '@/types';
 import { formatPrice } from '@/lib/utils';
-import { useCart } from '@/contexts/CartContext';
 import { useToast } from '@/components/ui/Toast';
 
 const CarDetailPage: React.FC = () => {
@@ -20,7 +19,6 @@ const CarDetailPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [showContactForm, setShowContactForm] = useState(false);
-  const { addItem } = useCart();
   const { success } = useToast();
 
   useEffect(() => {
@@ -49,11 +47,11 @@ const CarDetailPage: React.FC = () => {
     }
   };
 
-  const handleAddToCart = () => {
+  const handleContactRequest = () => {
     if (!car) return;
-
-    addItem(car);
-    success('Đã thêm vào giỏ hàng!', `${car.name} đã được thêm vào giỏ hàng của bạn.`);
+    
+    setShowContactForm(true);
+    success('Yêu cầu tư vấn!', `Yêu cầu tư vấn về ${car.name} đã được gửi.`);
   };
 
   if (loading) {
@@ -205,9 +203,9 @@ const CarDetailPage: React.FC = () => {
                 <Button 
                   size="lg" 
                   className="flex-1"
-                  onClick={handleAddToCart}
+                  onClick={handleContactRequest}
                 >
-                  Thêm vào giỏ hàng
+                  Đặt lịch lái thử
                 </Button>
                 <Button 
                   size="lg" 
