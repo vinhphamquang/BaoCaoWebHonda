@@ -48,17 +48,14 @@ const nextConfig: NextConfig = {
     ];
   },
 
-  // Webpack configuration
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-        net: false,
-        tls: false,
-      };
-    }
-    return config;
+  // Turbopack configuration (for development)
+  turbo: {
+    rules: {
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
+      },
+    },
   },
 };
 
