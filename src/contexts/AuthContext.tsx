@@ -53,7 +53,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   useEffect(() => {
     const checkUserLoggedIn = async () => {
       try {
-        const res = await fetch('/api/auth/me');
+        const res = await fetch('/api/auth/me', {
+          credentials: 'include', // Đảm bảo cookies được gửi kèm
+        });
         const data = await res.json();
 
         if (data.success) {
@@ -81,6 +83,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, password }),
+        credentials: 'include', // Đảm bảo cookies được gửi kèm
       });
 
       const data = await res.json();

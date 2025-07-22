@@ -5,25 +5,23 @@ export async function POST() {
     // Tạo response
     const response = NextResponse.json({
       success: true,
-      message: 'Đăng xuất thành công',
+      message: 'Đăng xuất thành công'
     });
 
     // Xóa cookie token
-    response.cookies.set({
-      name: 'token',
-      value: '',
+    response.cookies.set('token', '', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 0, // Hết hạn ngay lập tức
-      path: '/',
+      sameSite: 'lax',
+      maxAge: 0 // Expire immediately
     });
 
     return response;
+
   } catch (error: any) {
-    console.error('Lỗi đăng xuất:', error.message);
+    console.error('Logout error:', error);
     return NextResponse.json(
-      { success: false, message: 'Đã xảy ra lỗi khi đăng xuất' },
+      { success: false, message: 'Có lỗi xảy ra khi đăng xuất' },
       { status: 500 }
     );
   }

@@ -58,7 +58,7 @@
  */
 
 import { NextResponse } from 'next/server';
-import connectDB from '@/lib/mongodb';
+import { checkDBHealth } from '@/lib/mongodb';
 // Import version from package.json
 import packageJson from '../../../../package.json';
 const version = packageJson.version;
@@ -67,18 +67,8 @@ export async function GET() {
   try {
     const startTime = Date.now();
     
-    // Check database connection
-    let dbStatus = 'disconnected';
-    let dbResponseTime = 0;
-    
-    try {
-      await connectDB();
-      dbResponseTime = Date.now() - startTime;
-      dbStatus = 'connected';
-    } catch (dbError) {
-      console.error('Database health check failed:', dbError);
-      dbStatus = 'error';
-    }
+    // Check MongoDB Atlas connection
+    const dbHealth = await checkDBHealth();
 
     const healthData = {
       success: true,
@@ -87,10 +77,7 @@ export async function GET() {
       version: version || '1.0.0',
       uptime: process.uptime(),
       environment: process.env.NODE_ENV || 'development',
-      database: {
-        status: dbStatus,
-        responseTime: dbResponseTime
-      },
+      database: dbHealth,
       memory: {
         used: Math.round(process.memoryUsage().heapUsed / 1024 / 1024),
         total: Math.round(process.memoryUsage().heapTotal / 1024 / 1024),
@@ -104,13 +91,13 @@ export async function GET() {
     };
 
     // Return 503 if database is not connected
-    if (dbStatus === 'error') {
+    if (dbHealth.status !== 'connected') {
       return NextResponse.json(
         {
           ...healthData,
           success: false,
           message: 'Honda Plus API is unhealthy',
-          error: 'Database connection failed'
+          error: 'MongoDB Atlas connection failed'
         },
         { status: 503 }
       );

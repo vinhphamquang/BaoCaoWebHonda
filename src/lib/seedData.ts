@@ -9,9 +9,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 730000000,
     color: 'Trắng Ngọc Trai',
     images: [
-      '/images/cars/civic-2024-white-1.jpg',
-      '/images/cars/civic-2024-white-2.jpg',
-      '/images/cars/civic-2024-white-3.jpg',
+      '/images/cars/city-lx-2024-silver/city-lx-2024-silver-2.jpg',
+      '/images/cars/crv-lx-2024-silver/crv-lx-2024-silver-2.jpg',
+      '/images/cars/accord-hybrid-2024-green/accord-hybrid-2024-green-1.jpg',
     ],
     specifications: {
       engine: '1.5L VTEC Turbo',
@@ -46,9 +46,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 1050000000,
     color: 'Đen Ánh Kim',
     images: [
-      '/images/cars/crv-2024-black-1.jpg',
-      '/images/cars/crv-2024-black-2.jpg',
-      '/images/cars/crv-2024-black-3.jpg',
+      '/images/cars/pilot-exl-2024-white/pilot-exl-2024-white-2.jpg',
+      '/images/cars/crv-lx-2024-silver/crv-lx-2024-silver-1.jpg',
+      '/images/cars/pilot-touring-2024-silver/pilot-touring-2024-silver-2.jpg',
     ],
     specifications: {
       engine: '1.5L VTEC Turbo',
@@ -85,9 +85,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 1319000000,
     color: 'Bạc Ánh Kim',
     images: [
-      '/images/cars/accord-2024-silver-1.jpg',
-      '/images/cars/accord-2024-silver-2.jpg',
-      '/images/cars/accord-2024-silver-3.jpg',
+      '/images/cars/civic-coupe-si-2024-red/civic-coupe-si-2024-red-1.jpg',
+      '/images/cars/city-rs-2024-red/city-rs-2024-red-1.jpg',
+      '/images/cars/civic-coupe-lx-2024-silver/civic-coupe-lx-2024-silver-2.jpg',
     ],
     specifications: {
       engine: '1.5L VTEC Turbo',
@@ -124,9 +124,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 559000000,
     color: 'Đỏ Ánh Kim',
     images: [
-      '/images/cars/city-2024-red-1.jpg',
-      '/images/cars/city-2024-red-2.jpg',
-      '/images/cars/city-2024-red-3.jpg',
+      '/images/cars/civic-hatchback-type-r-2024-white/civic-hatchback-type-r-2024-white-2.jpg',
+      '/images/cars/accord-hybrid-2024-green/accord-hybrid-2024-green-1.jpg',
+      '/images/cars/pilot-elite-2024-black/pilot-elite-2024-black-1.jpg',
     ],
     specifications: {
       engine: '1.5L i-VTEC',
@@ -161,9 +161,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 786000000,
     color: 'Xanh Dương Ánh Kim',
     images: [
-      '/images/cars/hrv-2024-blue-1.jpg',
-      '/images/cars/hrv-2024-blue-2.jpg',
-      '/images/cars/hrv-2024-blue-3.jpg',
+      '/images/cars/city-rs-2024-red/city-rs-2024-red-1.jpg',
+      '/images/cars/civic-hatchback-sport-2024-gray/civic-hatchback-sport-2024-gray-3.jpg',
+      '/images/cars/civic-coupe-si-2024-red/civic-coupe-si-2024-red-2.jpg',
     ],
     specifications: {
       engine: '1.5L i-VTEC',
@@ -198,9 +198,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 2200000000,
     color: 'Trắng Ngọc Trai',
     images: [
-      '/images/cars/pilot-2024-white-1.jpg',
-      '/images/cars/pilot-2024-white-2.jpg',
-      '/images/cars/pilot-2024-white-3.jpg',
+      '/images/cars/civic-hatchback-lx-2024-blue/civic-hatchback-lx-2024-blue-1.jpg',
+      '/images/cars/civic-sport-2024-gray/civic-sport-2024-gray-2.jpg',
+      '/images/cars/civic-coupe-sport-2024-black/civic-coupe-sport-2024-black-2.jpg',
     ],
     specifications: {
       engine: '3.5L V6 i-VTEC',
@@ -242,9 +242,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 480000000,
     color: 'Vàng Chanh',
     images: [
-      '/images/cars/jazz-2024-yellow-1.jpg',
-      '/images/cars/jazz-2024-yellow-2.jpg',
-      '/images/cars/jazz-2024-yellow-3.jpg',
+      '/images/cars/civic-coupe-lx-2024-silver/civic-coupe-lx-2024-silver-3.jpg',
+      '/images/cars/civic-hatchback-sport-touring-2024-red/civic-hatchback-sport-touring-2024-red-2.jpg',
+      '/images/cars/civic-coupe-si-2024-red/civic-coupe-si-2024-red-3.jpg',
     ],
     specifications: {
       engine: '1.5L i-VTEC',
@@ -279,9 +279,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 820000000,
     color: 'Xanh Lá Đậm',
     images: [
-      '/images/cars/civic-hatchback-2024-green-1.jpg',
-      '/images/cars/civic-hatchback-2024-green-2.jpg',
-      '/images/cars/civic-hatchback-2024-green-3.jpg',
+      '/images/cars/accord-hybrid-2024-green/accord-hybrid-2024-green-2.jpg',
+      '/images/cars/city-rs-2024-red/city-rs-2024-red-1.jpg',
+      '/images/cars/civic-sport-2024-gray/civic-sport-2024-gray-2.jpg',
     ],
     specifications: {
       engine: '1.5L VTEC Turbo',
@@ -319,9 +319,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 850000000,
     color: 'Đỏ Thể Thao',
     images: [
-      '/images/cars/civic-coupe-2024-red-1.jpg',
-      '/images/cars/civic-coupe-2024-red-2.jpg',
-      '/images/cars/civic-coupe-2024-red-3.jpg',
+      '/images/cars/civic-hatchback-sport-touring-2024-red/civic-hatchback-sport-touring-2024-red-3.jpg',
+      '/images/cars/crv-sport-2024-red/crv-sport-2024-red-3.jpg',
+      '/images/cars/accord-hybrid-2024-green/accord-hybrid-2024-green-3.jpg',
     ],
     specifications: {
       engine: '1.5L VTEC Turbo',
@@ -356,9 +356,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 1250000000,
     color: 'Đen Bóng',
     images: [
-      '/images/cars/accord-coupe-2024-black-1.jpg',
-      '/images/cars/accord-coupe-2024-black-2.jpg',
-      '/images/cars/accord-coupe-2024-black-3.jpg',
+      '/images/cars/accord-lx-2024-gray/accord-lx-2024-gray-2.jpg',
+      '/images/cars/civic-hatchback-type-r-2024-white/civic-hatchback-type-r-2024-white-1.jpg',
+      '/images/cars/pilot-elite-2024-black/pilot-elite-2024-black-2.jpg',
     ],
     specifications: {
       engine: '2.0L VTEC Turbo',
@@ -397,9 +397,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 950000000,
     color: 'Xanh Dương Ánh Kim',
     images: [
-      '/images/cars/insight-2024-blue-1.jpg',
-      '/images/cars/insight-2024-blue-2.jpg',
-      '/images/cars/insight-2024-blue-3.jpg',
+      '/images/cars/accord-hybrid-2024-green/accord-hybrid-2024-green-2.jpg',
+      '/images/cars/pilot-exl-2024-white/pilot-exl-2024-white-3.jpg',
+      '/images/cars/accord-lx-2024-gray/accord-lx-2024-gray-1.jpg',
     ],
     specifications: {
       engine: '1.5L i-VTEC + Electric Motor',
@@ -437,9 +437,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 650000000,
     color: 'Bạc Ánh Kim',
     images: [
-      '/images/cars/brv-2024-silver-1.jpg',
-      '/images/cars/brv-2024-silver-2.jpg',
-      '/images/cars/brv-2024-silver-3.jpg',
+      '/images/cars/crv-lx-2024-silver/crv-lx-2024-silver-1.jpg',
+      '/images/cars/accord-lx-2024-gray/accord-lx-2024-gray-3.jpg',
+      '/images/cars/civic-hatchback-type-r-2024-white/civic-hatchback-type-r-2024-white-3.jpg',
     ],
     specifications: {
       engine: '1.5L i-VTEC',
@@ -475,9 +475,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 1450000000,
     color: 'Trắng Ngọc Trai',
     images: [
-      '/images/cars/accord-touring-2024-white-1.jpg',
-      '/images/cars/accord-touring-2024-white-2.jpg',
-      '/images/cars/accord-touring-2024-white-3.jpg',
+      '/images/cars/crv-black-2024-black/crv-black-2024-black-3.jpg',
+      '/images/cars/pilot-elite-2024-black/pilot-elite-2024-black-1.jpg',
+      '/images/cars/civic-coupe-si-2024-red/civic-coupe-si-2024-red-2.jpg',
     ],
     specifications: {
       engine: '2.0L VTEC Turbo',
@@ -517,9 +517,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 1250000000,
     color: 'Đỏ San Hô',
     images: [
-      '/images/cars/accord-sport-2024-red-1.jpg',
-      '/images/cars/accord-sport-2024-red-2.jpg',
-      '/images/cars/accord-sport-2024-red-3.jpg',
+      '/images/cars/city-sport-2024-black/city-sport-2024-black-2.jpg',
+      '/images/cars/city-lx-2024-silver/city-lx-2024-silver-3.jpg',
+      '/images/cars/civic-coupe-touring-2024-blue/civic-coupe-touring-2024-blue-2.jpg',
     ],
     specifications: {
       engine: '1.5L VTEC Turbo',
@@ -557,9 +557,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 1380000000,
     color: 'Xanh Lá Ánh Kim',
     images: [
-      '/images/cars/accord-hybrid-2024-green-1.jpg',
-      '/images/cars/accord-hybrid-2024-green-2.jpg',
-      '/images/cars/accord-hybrid-2024-green-3.jpg',
+      '/images/cars/city-lx-2024-silver/city-lx-2024-silver-2.jpg',
+      '/images/cars/pilot-exl-2024-white/pilot-exl-2024-white-2.jpg',
+      '/images/cars/civic-coupe-si-2024-red/civic-coupe-si-2024-red-1.jpg',
     ],
     specifications: {
       engine: '2.0L i-MMD Hybrid',
@@ -598,9 +598,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 1150000000,
     color: 'Xám Ánh Kim',
     images: [
-      '/images/cars/accord-lx-2024-gray-1.jpg',
-      '/images/cars/accord-lx-2024-gray-2.jpg',
-      '/images/cars/accord-lx-2024-gray-3.jpg',
+      '/images/cars/civic-hatchback-type-r-2024-white/civic-hatchback-type-r-2024-white-1.jpg',
+      '/images/cars/accord-lx-2024-gray/accord-lx-2024-gray-3.jpg',
+      '/images/cars/pilot-elite-2024-black/pilot-elite-2024-black-3.jpg',
     ],
     specifications: {
       engine: '1.5L VTEC Turbo',
@@ -638,9 +638,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 870000000,
     color: 'Đỏ Thể Thao',
     images: [
-      '/images/cars/civic-rs-2024-red-1.jpg',
-      '/images/cars/civic-rs-2024-red-2.jpg',
-      '/images/cars/civic-rs-2024-red-3.jpg',
+      '/images/cars/civic-rs-2024-red/civic-rs-2024-red-1.jpg',
+      '/images/cars/civic-typer-2024-red/civic-typer-2024-red-2.jpg',
+      '/images/cars/crv-sport-2024-red/crv-sport-2024-red-2.jpg',
     ],
     specifications: {
       engine: '1.5L VTEC Turbo',
@@ -678,9 +678,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 950000000,
     color: 'Xanh Dương Ánh Kim',
     images: [
-      '/images/cars/civic-ehev-2024-blue-1.jpg',
-      '/images/cars/civic-ehev-2024-blue-2.jpg',
-      '/images/cars/civic-ehev-2024-blue-3.jpg',
+      '/images/cars/civic-coupe-sport-2024-black/civic-coupe-sport-2024-black-2.jpg',
+      '/images/cars/civic-hatchback-type-r-2024-white/civic-hatchback-type-r-2024-white-2.jpg',
+      '/images/cars/pilot-touring-2024-silver/pilot-touring-2024-silver-1.jpg',
     ],
     specifications: {
       engine: '2.0L i-MMD Hybrid',
@@ -719,9 +719,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 2200000000,
     color: 'Đỏ Rally',
     images: [
-      '/images/cars/civic-typer-2024-red-1.jpg',
-      '/images/cars/civic-typer-2024-red-2.jpg',
-      '/images/cars/civic-typer-2024-red-3.jpg',
+      '/images/cars/city-rs-2024-red/city-rs-2024-red-2.jpg',
+      '/images/cars/civic-rs-2024-red/civic-rs-2024-red-1.jpg',
+      '/images/cars/accord-lx-2024-gray/accord-lx-2024-gray-3.jpg',
     ],
     specifications: {
       engine: '2.0L VTEC Turbo',
@@ -759,9 +759,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 799000000,
     color: 'Xám Sonic',
     images: [
-      '/images/cars/civic-sport-2024-gray-1.jpg',
-      '/images/cars/civic-sport-2024-gray-2.jpg',
-      '/images/cars/civic-sport-2024-gray-3.jpg',
+      '/images/cars/crv-black-2024-black/crv-black-2024-black-1.jpg',
+      '/images/cars/crv-sport-2024-red/crv-sport-2024-red-2.jpg',
+      '/images/cars/pilot-exl-2024-white/pilot-exl-2024-white-3.jpg',
     ],
     specifications: {
       engine: '1.5L VTEC Turbo',
@@ -797,9 +797,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 1180000000,
     color: 'Đen Tuyền',
     images: [
-      '/images/cars/crv-black-2024-black-1.jpg',
-      '/images/cars/crv-black-2024-black-2.jpg',
-      '/images/cars/crv-black-2024-black-3.jpg',
+      '/images/cars/civic-coupe-lx-2024-silver/civic-coupe-lx-2024-silver-3.jpg',
+      '/images/cars/civic-rs-2024-red/civic-rs-2024-red-1.jpg',
+      '/images/cars/accord-hybrid-2024-green/accord-hybrid-2024-green-1.jpg',
     ],
     specifications: {
       engine: '1.5L VTEC Turbo',
@@ -839,9 +839,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 1250000000,
     color: 'Xanh Dương Ánh Kim',
     images: [
-      '/images/cars/crv-hybrid-2024-blue-1.jpg',
-      '/images/cars/crv-hybrid-2024-blue-2.jpg',
-      '/images/cars/crv-hybrid-2024-blue-3.jpg',
+      '/images/cars/accord-hybrid-2024-green/accord-hybrid-2024-green-2.jpg',
+      '/images/cars/pilot-touring-2024-silver/pilot-touring-2024-silver-3.jpg',
+      '/images/cars/crv-black-2024-black/crv-black-2024-black-3.jpg',
     ],
     specifications: {
       engine: '2.0L i-MMD Hybrid',
@@ -881,9 +881,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 1150000000,
     color: 'Đỏ Thể Thao',
     images: [
-      '/images/cars/crv-sport-2024-red-1.jpg',
-      '/images/cars/crv-sport-2024-red-2.jpg',
-      '/images/cars/crv-sport-2024-red-3.jpg',
+      '/images/cars/civic-hatchback-sport-2024-gray/civic-hatchback-sport-2024-gray-3.jpg',
+      '/images/cars/accord-lx-2024-gray/accord-lx-2024-gray-2.jpg',
+      '/images/cars/crv-lx-2024-silver/crv-lx-2024-silver-2.jpg',
     ],
     specifications: {
       engine: '1.5L VTEC Turbo',
@@ -922,9 +922,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 980000000,
     color: 'Bạc Ánh Kim',
     images: [
-      '/images/cars/crv-lx-2024-silver-1.jpg',
-      '/images/cars/crv-lx-2024-silver-2.jpg',
-      '/images/cars/crv-lx-2024-silver-3.jpg',
+      '/images/cars/city-sport-2024-black/city-sport-2024-black-2.jpg',
+      '/images/cars/civic-coupe-si-2024-red/civic-coupe-si-2024-red-3.jpg',
+      '/images/cars/civic-typer-2024-red/civic-typer-2024-red-3.jpg',
     ],
     specifications: {
       engine: '1.5L VTEC Turbo',
@@ -962,9 +962,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 609000000,
     color: 'Đỏ Thể Thao',
     images: [
-      '/images/cars/city-rs-2024-red-1.jpg',
-      '/images/cars/city-rs-2024-red-2.jpg',
-      '/images/cars/city-rs-2024-red-3.jpg',
+      '/images/cars/crv-sport-2024-red/crv-sport-2024-red-2.jpg',
+      '/images/cars/city-sport-2024-black/city-sport-2024-black-2.jpg',
+      '/images/cars/crv-hybrid-2024-blue/crv-hybrid-2024-blue-3.jpg',
     ],
     specifications: {
       engine: '1.5L VTEC Turbo',
@@ -1002,9 +1002,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 650000000,
     color: 'Xanh Dương Ánh Kim',
     images: [
-      '/images/cars/city-hybrid-2024-blue-1.jpg',
-      '/images/cars/city-hybrid-2024-blue-2.jpg',
-      '/images/cars/city-hybrid-2024-blue-3.jpg',
+      '/images/cars/civic-coupe-lx-2024-silver/civic-coupe-lx-2024-silver-1.jpg',
+      '/images/cars/crv-lx-2024-silver/crv-lx-2024-silver-3.jpg',
+      '/images/cars/civic-hatchback-lx-2024-blue/civic-hatchback-lx-2024-blue-2.jpg',
     ],
     specifications: {
       engine: '1.5L i-MMD Hybrid',
@@ -1041,9 +1041,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 589000000,
     color: 'Đen Ánh Kim',
     images: [
-      '/images/cars/city-sport-2024-black-1.jpg',
-      '/images/cars/city-sport-2024-black-2.jpg',
-      '/images/cars/city-sport-2024-black-3.jpg',
+      '/images/cars/civic-hatchback-type-r-2024-white/civic-hatchback-type-r-2024-white-1.jpg',
+      '/images/cars/crv-hybrid-2024-blue/crv-hybrid-2024-blue-3.jpg',
+      '/images/cars/city-rs-2024-red/city-rs-2024-red-3.jpg',
     ],
     specifications: {
       engine: '1.5L i-VTEC',
@@ -1079,9 +1079,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 529000000,
     color: 'Bạc Ánh Kim',
     images: [
-      '/images/cars/city-lx-2024-silver-1.jpg',
-      '/images/cars/city-lx-2024-silver-2.jpg',
-      '/images/cars/city-lx-2024-silver-3.jpg',
+      '/images/cars/pilot-elite-2024-black/pilot-elite-2024-black-3.jpg',
+      '/images/cars/city-hybrid-2024-blue/city-hybrid-2024-blue-3.jpg',
+      '/images/cars/civic-hatchback-type-r-2024-white/civic-hatchback-type-r-2024-white-3.jpg',
     ],
     specifications: {
       engine: '1.5L i-VTEC',
@@ -1119,9 +1119,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 1550000000,
     color: 'Đen Ánh Kim',
     images: [
-      '/images/cars/pilot-elite-2024-black-1.jpg',
-      '/images/cars/pilot-elite-2024-black-2.jpg',
-      '/images/cars/pilot-elite-2024-black-3.jpg',
+      '/images/cars/pilot-elite-2024-black/pilot-elite-2024-black-3.jpg',
+      '/images/cars/city-rs-2024-red/city-rs-2024-red-3.jpg',
+      '/images/cars/accord-hybrid-2024-green/accord-hybrid-2024-green-1.jpg',
     ],
     specifications: {
       engine: '3.5L V6 i-VTEC',
@@ -1164,9 +1164,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 850000000,
     color: 'Đỏ Thể Thao',
     images: [
-      '/images/cars/civic-hatchback-sport-touring-2024-red-1.jpg',
-      '/images/cars/civic-hatchback-sport-touring-2024-red-2.jpg',
-      '/images/cars/civic-hatchback-sport-touring-2024-red-3.jpg',
+      '/images/cars/civic-rs-2024-red/civic-rs-2024-red-1.jpg',
+      '/images/cars/civic-coupe-lx-2024-silver/civic-coupe-lx-2024-silver-2.jpg',
+      '/images/cars/city-sport-2024-black/city-sport-2024-black-2.jpg',
     ],
     specifications: {
       engine: '1.5L VTEC Turbo',
@@ -1206,9 +1206,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 1200000000,
     color: 'Trắng Ngọc Trai',
     images: [
-      '/images/cars/civic-hatchback-type-r-2024-white-1.jpg',
-      '/images/cars/civic-hatchback-type-r-2024-white-2.jpg',
-      '/images/cars/civic-hatchback-type-r-2024-white-3.jpg',
+      '/images/cars/accord-hybrid-2024-green/accord-hybrid-2024-green-2.jpg',
+      '/images/cars/civic-typer-2024-red/civic-typer-2024-red-1.jpg',
+      '/images/cars/civic-sport-2024-gray/civic-sport-2024-gray-3.jpg',
     ],
     specifications: {
       engine: '2.0L VTEC Turbo',
@@ -1248,9 +1248,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 750000000,
     color: 'Xám Ánh Kim',
     images: [
-      '/images/cars/civic-hatchback-sport-2024-gray-1.jpg',
-      '/images/cars/civic-hatchback-sport-2024-gray-2.jpg',
-      '/images/cars/civic-hatchback-sport-2024-gray-3.jpg',
+      '/images/cars/accord-hybrid-2024-green/accord-hybrid-2024-green-2.jpg',
+      '/images/cars/civic-hatchback-sport-2024-gray/civic-hatchback-sport-2024-gray-2.jpg',
+      '/images/cars/civic-coupe-lx-2024-silver/civic-coupe-lx-2024-silver-3.jpg',
     ],
     specifications: {
       engine: '1.5L VTEC Turbo',
@@ -1288,9 +1288,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 699000000,
     color: 'Xanh Dương Ánh Kim',
     images: [
-      '/images/cars/civic-hatchback-lx-2024-blue-1.jpg',
-      '/images/cars/civic-hatchback-lx-2024-blue-2.jpg',
-      '/images/cars/civic-hatchback-lx-2024-blue-3.jpg',
+      '/images/cars/city-sport-2024-black/city-sport-2024-black-1.jpg',
+      '/images/cars/accord-lx-2024-gray/accord-lx-2024-gray-3.jpg',
+      '/images/cars/civic-hatchback-type-r-2024-white/civic-hatchback-type-r-2024-white-1.jpg',
     ],
     specifications: {
       engine: '1.5L i-VTEC',
@@ -1326,9 +1326,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 1450000000,
     color: 'Xanh Rêu',
     images: [
-      '/images/cars/pilot-trailsport-2024-green-1.jpg',
-      '/images/cars/pilot-trailsport-2024-green-2.jpg',
-      '/images/cars/pilot-trailsport-2024-green-3.jpg',
+      '/images/cars/city-sport-2024-black/city-sport-2024-black-3.jpg',
+      '/images/cars/accord-hybrid-2024-green/accord-hybrid-2024-green-3.jpg',
+      '/images/cars/crv-hybrid-2024-blue/crv-hybrid-2024-blue-1.jpg',
     ],
     specifications: {
       engine: '3.5L V6 i-VTEC',
@@ -1368,9 +1368,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 1350000000,
     color: 'Bạc Ánh Kim',
     images: [
-      '/images/cars/pilot-touring-2024-silver-1.jpg',
-      '/images/cars/pilot-touring-2024-silver-2.jpg',
-      '/images/cars/pilot-touring-2024-silver-3.jpg',
+      '/images/cars/civic-hatchback-sport-touring-2024-red/civic-hatchback-sport-touring-2024-red-3.jpg',
+      '/images/cars/crv-sport-2024-red/crv-sport-2024-red-2.jpg',
+      '/images/cars/city-sport-2024-black/city-sport-2024-black-2.jpg',
     ],
     specifications: {
       engine: '3.5L V6 i-VTEC',
@@ -1408,9 +1408,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 1250000000,
     color: 'Trắng Ngọc Trai',
     images: [
-      '/images/cars/pilot-exl-2024-white-1.jpg',
-      '/images/cars/pilot-exl-2024-white-2.jpg',
-      '/images/cars/pilot-exl-2024-white-3.jpg',
+      '/images/cars/civic-coupe-touring-2024-blue/civic-coupe-touring-2024-blue-1.jpg',
+      '/images/cars/crv-lx-2024-silver/crv-lx-2024-silver-2.jpg',
+      '/images/cars/civic-hatchback-lx-2024-blue/civic-hatchback-lx-2024-blue-3.jpg',
     ],
     specifications: {
       engine: '3.5L V6 i-VTEC',
@@ -1448,9 +1448,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 899000000,
     color: 'Đỏ Thể Thao',
     images: [
-      '/images/cars/civic-coupe-si-2024-red-1.jpg',
-      '/images/cars/civic-coupe-si-2024-red-2.jpg',
-      '/images/cars/civic-coupe-si-2024-red-3.jpg',
+      '/images/cars/civic-hatchback-lx-2024-blue/civic-hatchback-lx-2024-blue-1.jpg',
+      '/images/cars/city-hybrid-2024-blue/city-hybrid-2024-blue-3.jpg',
+      '/images/cars/civic-coupe-sport-2024-black/civic-coupe-sport-2024-black-3.jpg',
     ],
     specifications: {
       engine: '1.5L VTEC Turbo',
@@ -1490,9 +1490,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 850000000,
     color: 'Xanh Dương Ánh Kim',
     images: [
-      '/images/cars/civic-coupe-touring-2024-blue-1.jpg',
-      '/images/cars/civic-coupe-touring-2024-blue-2.jpg',
-      '/images/cars/civic-coupe-touring-2024-blue-3.jpg',
+      '/images/cars/civic-coupe-lx-2024-silver/civic-coupe-lx-2024-silver-3.jpg',
+      '/images/cars/pilot-trailsport-2024-green/pilot-trailsport-2024-green-1.jpg',
+      '/images/cars/pilot-elite-2024-black/pilot-elite-2024-black-1.jpg',
     ],
     specifications: {
       engine: '1.5L VTEC Turbo',
@@ -1532,9 +1532,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 780000000,
     color: 'Đen Ánh Kim',
     images: [
-      '/images/cars/civic-coupe-sport-2024-black-1.jpg',
-      '/images/cars/civic-coupe-sport-2024-black-2.jpg',
-      '/images/cars/civic-coupe-sport-2024-black-3.jpg',
+      '/images/cars/city-lx-2024-silver/city-lx-2024-silver-3.jpg',
+      '/images/cars/accord-hybrid-2024-green/accord-hybrid-2024-green-1.jpg',
+      '/images/cars/pilot-elite-2024-black/pilot-elite-2024-black-2.jpg',
     ],
     specifications: {
       engine: '1.5L VTEC Turbo',
@@ -1572,9 +1572,9 @@ export const sampleCars: Omit<Car, '_id' | 'createdAt' | 'updatedAt'>[] = [
     price: 720000000,
     color: 'Bạc Ánh Kim',
     images: [
-      '/images/cars/civic-coupe-lx-2024-silver-1.jpg',
-      '/images/cars/civic-coupe-lx-2024-silver-2.jpg',
-      '/images/cars/civic-coupe-lx-2024-silver-3.jpg',
+      '/images/cars/city-sport-2024-black/city-sport-2024-black-3.jpg',
+      '/images/cars/city-lx-2024-silver/city-lx-2024-silver-1.jpg',
+      '/images/cars/city-hybrid-2024-blue/city-hybrid-2024-blue-1.jpg',
     ],
     specifications: {
       engine: '1.5L i-VTEC',

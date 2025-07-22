@@ -1,211 +1,203 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-
-import { ArrowRight, Shield, Award, Users, Sparkles, Star } from 'lucide-react';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { Car, ArrowRight, Phone, Shield, Award, Clock, ChevronRight } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
+import CarCard from '@/components/cars/CarCard';
+import { Car as CarType } from '@/types';
 
-export default function Home() {
+const HomePage: React.FC = () => {
+  const router = useRouter();
+  const [featuredCars, setFeaturedCars] = useState<CarType[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchFeaturedCars = async () => {
+      try {
+        const response = await fetch('/api/cars?limit=4&sortBy=price&sortOrder=desc');
+        const data = await response.json();
+        if (data.success) {
+          setFeaturedCars(data.data);
+        }
+      } catch (error) {
+        console.error('Error fetching featured cars:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFeaturedCars();
+  }, []);
+
   const features = [
     {
       icon: Shield,
       title: 'Bảo hành chính hãng',
-      description: 'Bảo hành toàn diện 3 năm hoặc 100.000km',
+      description: 'Xe Honda được bảo hành toàn diện 3 năm hoặc 100.000 km',
+      color: 'text-blue-600',
+      bgColor: 'bg-blue-50',
     },
     {
       icon: Award,
       title: 'Chất lượng đảm bảo',
-      description: 'Xe Honda chính hãng 100% nhập khẩu',
+      description: 'Tất cả xe đều được kiểm tra nghiêm ngặt trước khi giao',
+      color: 'text-green-600',
+      bgColor: 'bg-green-50',
     },
     {
-      icon: Users,
-      title: 'Dịch vụ tận tâm',
-      description: 'Đội ngũ tư vấn chuyên nghiệp 24/7',
+      icon: Clock,
+      title: 'Dịch vụ 24/7',
+      description: 'Hỗ trợ kỹ thuật và tư vấn mọi lúc mọi nơi',
+      color: 'text-purple-600',
+      bgColor: 'bg-purple-50',
     },
     {
-      icon: Star,
-      title: 'Uy tín hàng đầu',
-      description: 'Hơn 10 năm kinh nghiệm trong ngành',
+      icon: Car,
+      title: 'Lái thử miễn phí',
+      description: 'Đăng ký lái thử xe Honda yêu thích của bạn',
+      color: 'text-red-600',
+      bgColor: 'bg-red-50',
     },
   ];
 
-
-
   return (
-    <div className="bg-white">
-      {/* Hero Section - Honda Plus */}
-      <section className="relative min-h-screen bg-gradient-to-br from-gray-900 via-red-900 to-black text-white overflow-hidden">
-        {/* Animated Background */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-red-600/20 to-transparent animate-pulse"></div>
-          <div className="absolute top-0 left-0 w-full h-full opacity-30 animate-float"></div>
-        </div>
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 flex items-center min-h-screen">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full">
-            <div className="space-y-10 animate-slide-up">
-              <div className="space-y-6">
-                <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
-                  <Sparkles className="h-4 w-4 mr-2 text-red-600" />
-                  <span className="text-sm font-semibold">Honda Plus Premium Experience</span>
-                </div>
-
-                <h1 className="text-5xl lg:text-7xl font-black leading-tight">
-                  <span className="block">Honda</span>
-                  <span className="block text-gradient bg-gradient-to-r from-red-600 to-black bg-clip-text text-transparent">
-                  Plus
-                </span>
-                  <span className="block text-3xl lg:text-4xl font-light text-gray-300">
-                    Chính Hãng
-                  </span>
-                </h1>
-
-                <p className="text-xl lg:text-2xl text-gray-200 font-light leading-relaxed">
-                  Trải nghiệm <span className="font-bold text-red-600">Premium</span> •
-                  Chất lượng <span className="font-bold text-red-400">Vượt trội</span> •
-                  Dịch vụ <span className="font-bold text-blue-400">Đẳng cấp</span>
-                </p>
-
-                <p className="text-lg text-gray-300 max-w-2xl leading-relaxed">
-                  Showroom Honda Plus - Nơi hội tụ những mẫu xe Honda cao cấp nhất với công nghệ tiên tiến,
-                  thiết kế sang trọng và dịch vụ chăm sóc khách hàng 5 sao.
-                </p>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-6">
+    <div className="flex flex-col min-h-screen">
+      {/* Hero Section */}
+      <section className="relative bg-gradient-to-r from-gray-900 to-black py-20 overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/images/cars/img/img/honda-pattern.png')] opacity-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-red-600/20 to-transparent"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="text-center lg:text-left">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+                Khám phá dòng xe <span className="text-gradient bg-gradient-to-r from-yellow-400 to-red-500 bg-clip-text text-transparent">Honda</span> mới nhất
+              </h1>
+              <p className="text-lg text-gray-300 mb-8">
+                Trải nghiệm đẳng cấp với thiết kế hiện đại, công nghệ tiên tiến và hiệu suất vượt trội
+              </p>
+              <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
                 <Link href="/cars">
-                  <Button size="lg" className="gradient-primary hover:shadow-2xl btn-hover-lift font-bold px-8 py-4 rounded-2xl text-lg">
-                    Xem các mẫu xe
-                    <ArrowRight className="ml-3 h-6 w-6" />
+                  <Button size="lg" className="gradient-primary hover:shadow-lg btn-hover-lift font-semibold px-8 py-4 rounded-xl">
+                    Xem tất cả xe
+                    <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
                 <Link href="/test-drive">
-                  <Button size="lg" variant="outline" className="border-2 border-white/30 text-white hover:bg-white hover:text-gray-900 backdrop-blur-sm bg-white/10 font-semibold px-8 py-4 rounded-2xl text-lg">
-                    Đặt lịch lái thử
+                  <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white hover:text-red-600 backdrop-blur-sm bg-white/10 font-semibold px-8 py-4 rounded-xl">
+                    Đăng ký lái thử
                   </Button>
                 </Link>
               </div>
-
-              <div className="grid grid-cols-3 gap-8 pt-8">
-                <div className="text-center group">
-                  <div className="text-4xl font-black text-red-600 group-hover:scale-110 transition-transform">15+</div>
-                  <div className="text-gray-300 font-medium">Năm kinh nghiệm</div>
-                </div>
-                <div className="text-center group">
-                  <div className="text-4xl font-black text-blue-400 group-hover:scale-110 transition-transform">10K+</div>
-                  <div className="text-gray-300 font-medium">Khách hàng VIP</div>
-                </div>
-                <div className="text-center group">
-                  <div className="text-4xl font-black text-green-400 group-hover:scale-110 transition-transform">100%</div>
-                  <div className="text-gray-300 font-medium">Chính hãng</div>
-                </div>
-              </div>
             </div>
-
-            <div className="relative animate-slide-right">
-              <div className="relative z-10">
-                <div className="w-full h-96 lg:h-[500px] bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl flex items-center justify-center shadow-2xl overflow-hidden group">
-                  <div className="absolute inset-0 bg-gradient-to-br from-red-600/20 to-blue-600/20 group-hover:from-red-600/30 group-hover:to-blue-600/30 transition-all duration-500"></div>
-                  <div className="relative text-center">
-                    <div className="text-6xl mb-4">🚗</div>
-                    <span className="text-white text-xl font-bold">Honda Plus</span>
-                    <p className="text-gray-300 mt-2">Premium Experience Awaits</p>
-                  </div>
-                </div>
+            <div className="relative">
+              <div className="relative h-64 md:h-80 lg:h-96 w-full overflow-hidden rounded-2xl shadow-2xl">
+                <Image 
+                  src="/images/cars/img/img/honda-civic.webp" 
+                  alt="Honda Civic" 
+                  fill 
+                  className="object-cover" 
+                />
               </div>
-              <div className="absolute -bottom-6 -right-6 w-full h-full bg-gradient-to-br from-red-600 to-black rounded-3xl -z-10 opacity-50"></div>
-              <div className="absolute -top-6 -left-6 w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 rounded-3xl -z-20 opacity-30"></div>
+              <div className="absolute -bottom-6 -right-6 bg-red-600 text-white p-4 rounded-xl shadow-xl">
+                <div className="text-sm font-medium">Bắt đầu từ</div>
+                <div className="text-2xl font-bold">559.000.000 VNĐ</div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-
-
-      {/* Features - Honda Plus */}
-      <section className="py-20 lg:py-32 bg-gradient-to-br from-gray-900 to-black text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-red-900/20 to-blue-900/20"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center space-y-6 mb-16">
-            <h2 className="text-4xl lg:text-6xl font-black">
-              Tại Sao Chọn
-              <span className="block text-gradient bg-gradient-to-r from-red-600 to-black bg-clip-text text-transparent">
-                Honda Plus?
-              </span>
-            </h2>
-            <p className="text-xl lg:text-2xl text-gray-300 max-w-4xl mx-auto font-light">
-              Trải nghiệm dịch vụ đẳng cấp thế giới với cam kết chất lượng vượt trội
-            </p>
+      {/* Featured Cars Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Xe Honda nổi bật</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">Khám phá những mẫu xe Honda được yêu thích nhất với thiết kế hiện đại và công nghệ tiên tiến</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <div key={index} className="group text-center space-y-6 p-8 rounded-3xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-500 hover:scale-105">
-                <div className="mx-auto w-20 h-20 gradient-primary rounded-2xl flex items-center justify-center shadow-2xl group-hover:shadow-red-500/25 transition-all duration-500 group-hover:scale-110">
-                  <feature.icon className="h-10 w-10 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-white group-hover:text-red-600 transition-colors">{feature.title}</h3>
-                <p className="text-gray-300 leading-relaxed">{feature.description}</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {loading ? (
+              Array(4).fill(0).map((_, index) => (
+                <Card key={index} className="animate-pulse">
+                  <div className="h-48 bg-gray-200 rounded-t-lg"></div>
+                  <CardContent>
+                    <div className="h-6 bg-gray-200 rounded w-3/4 mb-2"></div>
+                    <div className="h-4 bg-gray-200 rounded w-1/2 mb-4"></div>
+                    <div className="h-8 bg-gray-200 rounded w-1/3"></div>
+                  </CardContent>
+                </Card>
+              ))
+            ) : featuredCars.length > 0 ? (
+              featuredCars.map((car) => (
+                <CarCard key={car._id} car={car} />
+              ))
+            ) : (
+              <div className="col-span-4 text-center py-12">
+                <p className="text-gray-500">Không tìm thấy xe nổi bật</p>
               </div>
+            )}
+          </div>
+
+          <div className="text-center mt-12">
+            <Link href="/cars">
+              <Button variant="outline" className="border-red-200 hover:border-red-500 font-medium">
+                Xem tất cả xe
+                <ChevronRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Tại sao chọn Honda Plus?</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">Chúng tôi cam kết mang đến trải nghiệm mua xe Honda đẳng cấp với dịch vụ chăm sóc khách hàng 5 sao</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {features.map((feature, index) => (
+              <Card key={index} className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-0 shadow">
+                <CardContent className="p-6">
+                  <div className="flex flex-col items-center text-center gap-4">
+                    <div className={`p-4 rounded-xl ${feature.bgColor}`}>
+                      <feature.icon className={`h-8 w-8 ${feature.color}`} />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">{feature.title}</h3>
+                      <p className="text-gray-600">{feature.description}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Xóa toàn bộ phần CTA Section này */}
-      {/* 
-      <section className="py-20 lg:py-32 gradient-primary text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent"></div>
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-yellow-400/10 to-transparent"></div>
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="space-y-10">
-            <div className="space-y-6">
-              <div className="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm rounded-full border border-white/30">
-                <Sparkles className="h-5 w-5 mr-2 text-yellow-400" />
-                <span className="text-sm font-bold tracking-wide">HONDA PLUS EXPERIENCE</span>
-              </div>
-
-              <h2 className="text-4xl lg:text-6xl font-black leading-tight">
-                Sẵn Sàng Trải Nghiệm
-                <span className="block text-yellow-400">Đẳng Cấp?</span>
-              </h2>
-
-              <p className="text-xl lg:text-2xl text-red-100 max-w-4xl mx-auto font-light leading-relaxed">
-                Đặt lịch hẹn ngay hôm nay để trải nghiệm dịch vụ Honda Plus đẳng cấp thế giới.
-                <span className="font-bold text-yellow-400">Tư vấn miễn phí</span> •
-                <span className="font-bold text-blue-300">Lái thử tận nơi</span> •
-                <span className="font-bold text-green-300">Hỗ trợ 24/7</span>
-              </p>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-              <Button size="lg" variant="secondary" className="bg-white text-gray-900 hover:bg-yellow-400 hover:text-gray-900 font-bold px-10 py-4 rounded-2xl text-lg shadow-2xl btn-hover-lift">
-                📞 Gọi ngay: 1900-1234
+      {/* CTA Section */}
+      <section className="py-16 bg-gradient-to-r from-red-600 to-red-800 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold mb-6">Sẵn sàng trải nghiệm xe Honda?</h2>
+          <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">Liên hệ với chúng tôi ngay hôm nay để được tư vấn và đặt lịch lái thử xe Honda yêu thích của bạn</p>
+          <div className="flex justify-center">
+            <Link href="/cars">
+              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white hover:text-red-600 backdrop-blur-sm bg-white/10 font-semibold px-8 py-4 rounded-xl">
+                Xem tất cả xe
               </Button>
-              <Button size="lg" variant="outline" className="border-2 border-white/50 text-white hover:bg-white hover:text-red-600 backdrop-blur-sm bg-white/10 font-bold px-10 py-4 rounded-2xl text-lg">
-                🚗 Đặt lịch lái thử VIP
-              </Button>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12">
-              <div className="text-center space-y-2">
-                <div className="text-3xl">⚡</div>
-                <div className="font-bold text-yellow-400">Phản hồi trong 5 phút</div>
-              </div>
-              <div className="text-center space-y-2">
-                <div className="text-3xl">🎯</div>
-                <div className="font-bold text-blue-300">Tư vấn 1-1 chuyên sâu</div>
-              </div>
-              <div className="text-center space-y-2">
-                <div className="text-3xl">🏆</div>
-                <div className="font-bold text-green-300">Cam kết giá tốt nhất</div>
-              </div>
-            </div>
+            </Link>
           </div>
         </div>
       </section>
-      */}
     </div>
   );
-}
+};
+
+export default HomePage;

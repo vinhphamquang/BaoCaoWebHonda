@@ -190,40 +190,21 @@ export default function ApiDocsPage() {
                   </div>
                 </div>
 
-                {/* Orders API */}
+                {/* Authentication API */}
                 <div className="border border-gray-200 rounded-lg p-6">
                   <div className="flex items-center mb-4">
-                    <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded mr-3">GET</span>
                     <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded mr-3">POST</span>
-                    <code className="text-lg font-mono">/api/orders</code>
+                    <code className="text-lg font-mono">/api/auth/login</code>
                   </div>
-                  <p className="text-gray-600 mb-4">Manage car orders - retrieve all orders or create new orders</p>
+                  <p className="text-gray-600 mb-4">Authenticate user and create session</p>
 
                   <div className="mb-4">
-                    <h4 className="font-medium mb-2">GET - Query Parameters:</h4>
-                    <div className="space-y-2 text-sm">
-                      <div><code className="bg-gray-100 px-2 py-1 rounded">status</code> - Filter by order status (pending, confirmed, processing, completed, cancelled)</div>
-                      <div><code className="bg-gray-100 px-2 py-1 rounded">customerEmail</code> - Filter by customer email</div>
-                      <div><code className="bg-gray-100 px-2 py-1 rounded">sortBy</code> - Sort field (createdAt, totalAmount, customerName)</div>
-                      <div><code className="bg-gray-100 px-2 py-1 rounded">sortOrder</code> - Sort order (asc, desc)</div>
-                      <div><code className="bg-gray-100 px-2 py-1 rounded">limit</code> - Number of results to return</div>
-                      <div><code className="bg-gray-100 px-2 py-1 rounded">page</code> - Page number for pagination</div>
-                    </div>
-                  </div>
-
-                  <div className="mb-4">
-                    <h4 className="font-medium mb-2">POST - Create Order Body:</h4>
+                    <h4 className="font-medium mb-2">Request Body:</h4>
                     <div className="bg-gray-50 p-4 rounded-lg">
                       <pre className="text-sm text-gray-700 overflow-x-auto">
 {`{
-  "customerName": "Nguyễn Văn A",
-  "customerEmail": "nguyenvana@email.com",
-  "customerPhone": "0901234567",
-  "customerAddress": "123 Đường ABC, Quận 1, TP.HCM",
-  "carId": "507f1f77bcf86cd799439011",
-  "quantity": 1,
-  "paymentMethod": "bank_transfer",
-  "notes": "Khách hàng muốn giao xe vào cuối tuần"
+  "email": "user@example.com",
+  "password": "password123"
 }`}
                       </pre>
                     </div>
@@ -231,11 +212,159 @@ export default function ApiDocsPage() {
 
                   <div className="mt-4 flex space-x-3">
                     <Link
-                      href="/api/orders"
+                      href="/login"
+                      className="inline-flex items-center px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-colors"
+                    >
+                      Login Page →
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Registration API */}
+                <div className="border border-gray-200 rounded-lg p-6">
+                  <div className="flex items-center mb-4">
+                    <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded mr-3">POST</span>
+                    <code className="text-lg font-mono">/api/auth/register</code>
+                  </div>
+                  <p className="text-gray-600 mb-4">Register new user account</p>
+
+                  <div className="mb-4">
+                    <h4 className="font-medium mb-2">Request Body:</h4>
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <pre className="text-sm text-gray-700 overflow-x-auto">
+{`{
+  "name": "Nguyễn Văn A",
+  "email": "user@example.com",
+  "password": "password123",
+  "phone": "0901234567",
+  "address": "123 Đường ABC, Quận 1, TP.HCM"
+}`}
+                      </pre>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 flex space-x-3">
+                    <Link
+                      href="/register"
+                      className="inline-flex items-center px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-colors"
+                    >
+                      Register Page →
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Test Drive API */}
+                <div className="border border-gray-200 rounded-lg p-6">
+                  <div className="flex items-center mb-4">
+                    <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded mr-3">GET</span>
+                    <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded mr-3">POST</span>
+                    <code className="text-lg font-mono">/api/test-drive</code>
+                  </div>
+                  <p className="text-gray-600 mb-4">Manage test drive bookings</p>
+
+                  <div className="mb-4">
+                    <h4 className="font-medium mb-2">POST - Book Test Drive:</h4>
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <pre className="text-sm text-gray-700 overflow-x-auto">
+{`{
+  "customerName": "Nguyễn Văn A",
+  "customerEmail": "user@example.com",
+  "customerPhone": "0901234567",
+  "carId": "507f1f77bcf86cd799439011",
+  "preferredDate": "2024-02-15",
+  "preferredTime": "14:00",
+  "showroom": "Honda Quận 1",
+  "experience": "experienced",
+  "message": "Tôi muốn lái thử xe Honda Civic"
+}`}
+                      </pre>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 flex space-x-3">
+                    <Link
+                      href="/test-drive"
+                      className="inline-flex items-center px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-colors"
+                    >
+                      Book Test Drive →
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Contact API */}
+                <div className="border border-gray-200 rounded-lg p-6">
+                  <div className="flex items-center mb-4">
+                    <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded mr-3">GET</span>
+                    <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded mr-3">POST</span>
+                    <code className="text-lg font-mono">/api/contact</code>
+                  </div>
+                  <p className="text-gray-600 mb-4">Handle customer contact inquiries</p>
+
+                  <div className="mb-4">
+                    <h4 className="font-medium mb-2">POST - Submit Contact Form:</h4>
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <pre className="text-sm text-gray-700 overflow-x-auto">
+{`{
+  "name": "Nguyễn Văn A",
+  "email": "user@example.com",
+  "phone": "0901234567",
+  "subject": "Tư vấn mua xe",
+  "message": "Tôi muốn tư vấn về xe Honda Civic 2024"
+}`}
+                      </pre>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 flex space-x-3">
+                    <Link
+                      href="/contact"
+                      className="inline-flex items-center px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-colors"
+                    >
+                      Contact Page →
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Car Statistics API */}
+                <div className="border border-gray-200 rounded-lg p-6">
+                  <div className="flex items-center mb-4">
+                    <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded mr-3">GET</span>
+                    <code className="text-lg font-mono">/api/cars/stats</code>
+                  </div>
+                  <p className="text-gray-600 mb-4">Get comprehensive statistics about Honda cars inventory</p>
+
+                  <div className="bg-gray-50 p-4 rounded-lg mb-4">
+                    <h4 className="font-medium mb-2">Example Response:</h4>
+                    <pre className="text-sm text-gray-700 overflow-x-auto">
+{`{
+  "success": true,
+  "data": {
+    "overview": {
+      "totalCars": 10,
+      "avgPrice": 1104900000,
+      "minPrice": 599000000,
+      "maxPrice": 2100000000
+    },
+    "categories": [
+      { "_id": "suv", "count": 4, "avgPrice": 950000000 },
+      { "_id": "sedan", "count": 3, "avgPrice": 883000000 }
+    ],
+    "models": [
+      { "_id": "Civic", "count": 2, "avgPrice": 1415000000 },
+      { "_id": "City", "count": 2, "avgPrice": 624500000 }
+    ]
+  }
+}`}
+                    </pre>
+                  </div>
+
+                  <div className="mt-4">
+                    <Link
+                      href="/api/cars/stats"
                       target="_blank"
                       className="inline-flex items-center px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-colors"
                     >
-                      View Orders →
+                      View Stats →
                     </Link>
                   </div>
                 </div>

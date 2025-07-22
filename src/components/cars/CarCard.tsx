@@ -3,12 +3,13 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Phone } from 'lucide-react';
+import { Phone, Heart } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import { Card, CardContent } from '@/components/ui/Card';
 import { Car } from '@/types';
 import { formatPrice, getCarImageUrl } from '@/lib/utils';
 import { useToast } from '@/components/ui/Toast';
+import { useFavorites } from '@/hooks/useFavorites';
 
 interface CarCardProps {
   car: Car;

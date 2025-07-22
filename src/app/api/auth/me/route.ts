@@ -1,46 +1,64 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
-import Customer from '@/models/Customer';
-import { authenticateRequest } from '@/lib/auth';
+import User from '@/models/User';
+import jwt from 'jsonwebtoken';
 
-export async function GET(req: NextRequest) {
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+
+export async function GET(request: NextRequest) {
   try {
-    // Xác thực request
-    const decoded = await authenticateRequest(req);
-    if (!decoded || !decoded.id) {
+    await connectDB();
+
+    // Lấy token từ cookie
+    const token = request.cookies.get('token')?.value;
+
+    if (!token) {
       return NextResponse.json(
-        { success: false, message: 'Không được phép truy cập' },
+        { success: false, message: 'Không tìm thấy token xác thực' },
         { status: 401 }
       );
     }
 
-    // Kết nối đến database
-    await connectDB();
-
-    // Tìm khách hàng theo id
-    const customer = await Customer.findById(decoded.id);
-    if (!customer) {
+    // Verify token
+    let decoded: any;
+    try {
+      decoded = jwt.verify(token, JWT_SECRET);
+    } catch (error) {
       return NextResponse.json(
-        { success: false, message: 'Không tìm thấy người dùng' },
-        { status: 404 }
+        { success: false, message: 'Token không hợp lệ' },
+        { status: 401 }
       );
     }
 
-    // Trả về thông tin khách hàng
+    // Tìm user theo ID từ token
+    const user = await User.findById(decoded.userId);
+
+    if (!user || !user.isActive) {
+      return NextResponse.json(
+        { success: false, message: 'Người dùng không tồn tại hoặc đã bị vô hiệu hóa' },
+        { status: 401 }
+      );
+    }
+
     return NextResponse.json({
       success: true,
       user: {
-        id: customer._id,
-        name: customer.name,
-        email: customer.email,
-        phone: customer.phone,
-        address: customer.address,
-      },
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        address: user.address,
+        role: user.role,
+        avatar: user.avatar,
+        emailVerified: user.emailVerified,
+        lastLogin: user.lastLogin
+      }
     });
+
   } catch (error: any) {
-    console.error('Lỗi lấy thông tin người dùng:', error.message);
+    console.error('Get user info error:', error);
     return NextResponse.json(
-      { success: false, message: 'Đã xảy ra lỗi khi lấy thông tin người dùng' },
+      { success: false, message: 'Lỗi lấy thông tin người dùng' },
       { status: 500 }
     );
   }

@@ -11,9 +11,15 @@ import { cn } from '@/lib/utils';
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  const { user, logout } = useAuth();
+  const { user, logout, loading } = useAuth();
+
+  // Prevent hydration mismatch
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const navigation = [
     { name: 'Trang chủ', href: '/' },
@@ -98,14 +104,19 @@ const Header: React.FC = () => {
 
           {/* Right side buttons - Honda Plus */}
           <div className="flex items-center space-x-3">
-            {/* Contact button - Honda Plus */}
-            <Button size="sm" className="hidden lg:flex gradient-primary hover:shadow-lg btn-hover-lift font-semibold px-6 py-3 rounded-xl">
-              <Phone className="h-4 w-4 mr-2" />
-              Liên hệ ngay
-            </Button>
+
 
             {/* Auth buttons or User menu */}
-            {user ? (
+            {!mounted || loading ? (
+              <div className="hidden md:flex items-center space-x-2">
+                <div className="border border-gray-200 bg-gray-100 px-4 py-2 text-sm font-medium rounded-md animate-pulse">
+                  <div className="w-16 h-4 bg-gray-200 rounded"></div>
+                </div>
+                <div className="bg-gray-200 px-4 py-2 text-sm font-medium rounded-md animate-pulse">
+                  <div className="w-12 h-4 bg-gray-300 rounded"></div>
+                </div>
+              </div>
+            ) : user ? (
               <div className="relative">
                 <button
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
@@ -144,15 +155,11 @@ const Header: React.FC = () => {
               </div>
             ) : (
               <div className="hidden md:flex items-center space-x-2">
-                <Link href="/login">
-                  <Button variant="outline" size="sm" className="border-red-200 hover:border-red-500 font-medium">
-                    Đăng nhập
-                  </Button>
+                <Link href="/login" className="border border-red-200 hover:border-red-500 bg-transparent text-gray-700 hover:bg-red-50 px-4 py-2 text-sm font-medium rounded-md transition-colors">
+                  Đăng nhập
                 </Link>
-                <Link href="/register">
-                  <Button size="sm" className="gradient-primary font-medium">
-                    Đăng ký
-                  </Button>
+                <Link href="/register" className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 text-sm font-medium rounded-md transition-colors">
+                  Đăng ký
                 </Link>
               </div>
             )}
@@ -211,13 +218,13 @@ const Header: React.FC = () => {
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <Link href="/profile">
-                      <Button variant="outline" className="w-full border-2 border-red-200 hover:border-red-500 font-semibold py-3 rounded-xl">
+                      <button className="w-full border-2 border-red-200 hover:border-red-500 bg-transparent text-gray-700 hover:bg-red-50 font-semibold py-3 rounded-xl transition-colors flex items-center justify-center">
                         <User className="h-4 w-4 mr-2" />
                         Tài khoản
-                      </Button>
+                      </button>
                     </Link>
-                    <Button 
-                      className="w-full gradient-primary font-semibold py-3 rounded-xl"
+                    <button 
+                      className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-xl transition-colors flex items-center justify-center"
                       onClick={() => {
                         logout();
                         setIsMenuOpen(false);
@@ -226,20 +233,20 @@ const Header: React.FC = () => {
                     >
                       <LogOut className="h-4 w-4 mr-2" />
                       Đăng xuất
-                    </Button>
+                    </button>
                   </div>
                 </div>
               ) : (
                 <div className="grid grid-cols-2 gap-3">
                   <Link href="/login" onClick={() => setIsMenuOpen(false)}>
-                    <Button variant="outline" className="w-full border-2 border-red-200 hover:border-red-500 font-semibold py-3 rounded-xl">
+                    <button className="w-full border-2 border-red-200 hover:border-red-500 bg-transparent text-gray-700 hover:bg-red-50 font-semibold py-3 rounded-xl transition-colors">
                       Đăng nhập
-                    </Button>
+                    </button>
                   </Link>
                   <Link href="/register" onClick={() => setIsMenuOpen(false)}>
-                    <Button className="w-full gradient-primary font-semibold py-3 rounded-xl">
+                    <button className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-xl transition-colors">
                       Đăng ký
-                    </Button>
+                    </button>
                   </Link>
                 </div>
               )}

@@ -57,16 +57,6 @@ const CustomerSchema = new Schema<CustomerDocument>({
       match: [/^[0-9]{5,6}$/, 'Mã bưu điện phải có 5-6 chữ số'],
     },
   },
-  favorites: {
-    type: [String],
-    default: [],
-    ref: 'Car' // Tham chiếu đến model Car
-  },
-  history: {
-    type: [String],
-    default: [],
-    ref: 'Car' // Tham chiếu đến model Car để lưu lịch sử xem xe
-  },
 }, {
   timestamps: true,
 });

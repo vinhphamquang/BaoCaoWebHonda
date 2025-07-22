@@ -44,10 +44,28 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
 }
 
 export function getCarImageUrl(imagePath: string): string {
+  if (!imagePath) return '/images/cars/img/img/honda-civic.webp';
+  
   if (imagePath.startsWith('http')) {
     return imagePath;
   }
-  return `/images/${imagePath}`;
+  
+  // Kiểm tra nếu đường dẫn đã có '/images/' thì không thêm vào nữa
+  if (imagePath.startsWith('/images/')) {
+    return imagePath;
+  }
+  
+  // Kiểm tra nếu đường dẫn đã có 'img/img' thì không thêm vào nữa
+  if (imagePath.includes('img/img')) {
+    return `/images/${imagePath}`;
+  }
+  
+  // Nếu đường dẫn chứa 'cars/' nhưng không có 'img/img', thêm 'img/img' vào
+  if (imagePath.startsWith('cars/') && !imagePath.includes('img/img')) {
+    return `/images/cars/img/img/${imagePath.replace('cars/', '')}`;
+  }
+  
+  return `/images/cars/img/img/${imagePath}`;
 }
 
 // Danh sách các đường dẫn ảnh xe có sẵn

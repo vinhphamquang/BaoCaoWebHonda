@@ -5,6 +5,8 @@ import { Search, Grid, List } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import { CardSkeleton } from '@/components/ui/Loading';
 import CarCard from '@/components/cars/CarCard';
+import SearchBar from '@/components/search/SearchBar';
+import AdvancedSearch, { SearchFilters } from '@/components/search/AdvancedSearch';
 import { Car } from '@/types';
 
 const CarsPage: React.FC = () => {
@@ -20,6 +22,9 @@ const CarsPage: React.FC = () => {
     maxPrice: '',
     minYear: '',
     maxYear: '',
+    seating: '',
+    fuelType: '',
+    transmission: '',
   });
   const [sortBy, setSortBy] = useState('createdAt');
   const [sortOrder, setSortOrder] = useState('desc');
@@ -42,6 +47,9 @@ const CarsPage: React.FC = () => {
       if (filters.maxPrice) params.append('maxPrice', filters.maxPrice);
       if (filters.minYear) params.append('minYear', filters.minYear);
       if (filters.maxYear) params.append('maxYear', filters.maxYear);
+      if (filters.seating) params.append('seating', filters.seating);
+      if (filters.fuelType) params.append('fuelType', filters.fuelType);
+      if (filters.transmission) params.append('transmission', filters.transmission);
       
       params.append('sortBy', sortBy);
       params.append('sortOrder', sortOrder);
@@ -81,6 +89,9 @@ const CarsPage: React.FC = () => {
       maxPrice: '',
       minYear: '',
       maxYear: '',
+      seating: '',
+      fuelType: '',
+      transmission: '',
     });
     setSearchQuery('');
   };
@@ -232,6 +243,61 @@ const CarsPage: React.FC = () => {
                     className="p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                   />
                 </div>
+              </div>
+              
+              {/* Seating Filter */}
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Số chỗ ngồi
+                </label>
+                <select
+                  value={filters.seating}
+                  onChange={(e) => handleFilterChange('seating', e.target.value)}
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                >
+                  <option value="">Tất cả số chỗ</option>
+                  <option value="2">2 chỗ</option>
+                  <option value="4">4 chỗ</option>
+                  <option value="5">5 chỗ</option>
+                  <option value="7">7 chỗ</option>
+                  <option value="8">8 chỗ</option>
+                </select>
+              </div>
+              
+              {/* Fuel Type Filter */}
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Loại nhiên liệu
+                </label>
+                <select
+                  value={filters.fuelType}
+                  onChange={(e) => handleFilterChange('fuelType', e.target.value)}
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                >
+                  <option value="">Tất cả loại nhiên liệu</option>
+                  <option value="Xăng">Xăng</option>
+                  <option value="Dầu">Dầu</option>
+                  <option value="Hybrid">Hybrid</option>
+                  <option value="Điện">Điện</option>
+                </select>
+              </div>
+              
+              {/* Transmission Filter */}
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Hộp số
+                </label>
+                <select
+                  value={filters.transmission}
+                  onChange={(e) => handleFilterChange('transmission', e.target.value)}
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                >
+                  <option value="">Tất cả loại hộp số</option>
+                  <option value="Số sàn">Số sàn</option>
+                  <option value="Số tự động">Số tự động</option>
+                  <option value="CVT">CVT</option>
+                  <option value="DCT">DCT</option>
+                </select>
               </div>
             </div>
           </div>

@@ -82,8 +82,37 @@ const CarSchema = new Schema<CarDocument>({
   timestamps: true,
 });
 
-// Tạo index cho tìm kiếm
-CarSchema.index({ name: 'text', model: 'text', description: 'text' });
-CarSchema.index({ model: 1, year: 1, price: 1 });
+// Tạo các index tối ưu cho MongoDB Atlas
+// Compound text index cho tìm kiếm toàn văn
+CarSchema.index({ 
+  name: 'text', 
+  model: 'text', 
+  description: 'text',
+  'specifications.engine': 'text',
+  'specifications.features': 'text'
+}, {
+  weights: {
+    name: 10,
+    model: 8,
+    description: 5,
+    'specifications.engine': 3,
+    'specifications.features': 1
+  },
+  name: 'car_text_search'
+});
+
+// Compound indexes cho các query phổ biến
+CarSchema.index({ isAvailable: 1, category: 1, price: 1 }, { name: 'available_category_price' });
+CarSchema.index({ isAvailable: 1, model: 1, year: -1 }, { name: 'available_model_year' });
+CarSchema.index({ isAvailable: 1, price: 1, year: -1 }, { name: 'available_price_year' });
+CarSchema.index({ isAvailable: 1, 'specifications.seating': 1 }, { name: 'available_seating' });
+
+// Single field indexes
+CarSchema.index({ createdAt: -1 }, { name: 'created_desc' });
+CarSchema.index({ updatedAt: -1 }, { name: 'updated_desc' });
+CarSchema.index({ category: 1 }, { name: 'category_asc' });
+
+// Sparse index cho các trường không bắt buộc
+CarSchema.index({ color: 1 }, { sparse: true, name: 'color_sparse' });
 
 export default mongoose.models.Car || mongoose.model<CarDocument>('Car', CarSchema);

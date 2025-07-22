@@ -26,7 +26,12 @@ export function middleware(request: NextRequest) {
   }
   
   // Kiểm tra nếu người dùng đã đăng nhập nhưng truy cập trang đăng nhập/đăng ký
-  if (authRoutes.some(route => pathname.startsWith(route)) && token) {
+  // Chỉ redirect nếu không phải debug routes
+  if (authRoutes.some(route => pathname.startsWith(route)) && token && !pathname.startsWith('/clear-auth')) {
+    // Trong development, cho phép truy cập để debug
+    if (process.env.NODE_ENV === 'development' && request.nextUrl.searchParams.get('debug') === 'true') {
+      return NextResponse.next();
+    }
     return NextResponse.redirect(new URL('/', request.url));
   }
   
@@ -39,5 +44,6 @@ export const config = {
     '/memberships/:path*',
     '/login',
     '/register',
+    '/clear-auth',
   ],
 };
