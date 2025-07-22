@@ -3,32 +3,23 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Search, Menu, X, ShoppingCart, Phone, Mail, Sparkles, ArrowRight } from 'lucide-react';
+import { Menu, X, ShoppingCart, Phone, Mail, Sparkles, ArrowRight } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 import { useCart } from '@/contexts/CartContext';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
   const pathname = usePathname();
   const { totalItems } = useCart();
 
   const navigation = [
     { name: 'Trang chủ', href: '/' },
     { name: 'Xe Honda', href: '/cars' },
-    { name: 'Honda Plus', href: '/premium', isSpecial: true },
     { name: 'API Docs', href: '/api/docs' },
     { name: 'Giới thiệu', href: '/about' },
     { name: 'Liên hệ', href: '/contact' },
   ];
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      window.location.href = `/cars?search=${encodeURIComponent(searchQuery.trim())}`;
-    }
-  };
 
   return (
     <header className="bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100 sticky top-0 z-50">
@@ -80,28 +71,8 @@ const Header: React.FC = () => {
             </Link>
           </div>
 
-          {/* Search bar - Honda Plus Desktop */}
-          <div className="hidden md:flex flex-1 max-w-2xl mx-8">
-            <form onSubmit={handleSearch} className="w-full">
-              <div className="relative group">
-                <input
-                  type="text"
-                  placeholder="Tìm kiếm xe Honda Plus..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-12 pr-24 py-4 bg-gray-50 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-red-500/20 focus:border-red-500 focus:bg-white transition-all duration-300 text-gray-900 placeholder-gray-500 font-medium shadow-inner"
-                />
-                <Search className="absolute left-4 top-4 h-6 w-6 text-gray-400 group-focus-within:text-red-500 transition-colors" />
-                <Button
-                  type="submit"
-                  size="sm"
-                  className="absolute right-2 top-2 h-10 px-6 rounded-xl gradient-primary hover:shadow-lg transition-all duration-300 font-semibold"
-                >
-                  Tìm kiếm
-                </Button>
-              </div>
-            </form>
-          </div>
+          {/* Logo spacer */}
+          <div className="hidden md:block flex-1 max-w-2xl mx-8"></div>
 
           {/* Navigation - Honda Plus Desktop */}
           <nav className="hidden lg:flex items-center space-x-1">
@@ -153,28 +124,7 @@ const Header: React.FC = () => {
           </div>
         </div>
 
-        {/* Mobile search */}
-        <div className="md:hidden pb-4">
-          <form onSubmit={handleSearch}>
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Tìm kiếm xe Honda..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-20 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
-              />
-              <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
-              <Button
-                type="submit"
-                size="sm"
-                className="absolute right-1 top-1 h-8"
-              >
-                Tìm
-              </Button>
-            </div>
-          </form>
-        </div>
+        {/* No mobile search */}
       </div>
 
       {/* Mobile menu - Honda Plus */}
