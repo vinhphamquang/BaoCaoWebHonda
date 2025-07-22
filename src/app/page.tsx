@@ -111,9 +111,11 @@ export default function Home() {
                     <ArrowRight className="ml-3 h-6 w-6" />
                   </Button>
                 </Link>
-                <Button size="lg" variant="outline" className="border-2 border-white/30 text-white hover:bg-white hover:text-gray-900 backdrop-blur-sm bg-white/10 font-semibold px-8 py-4 rounded-2xl text-lg">
-                  Đặt lịch lái thử
-                </Button>
+                <Link href="/test-drive">
+                  <Button size="lg" variant="outline" className="border-2 border-white/30 text-white hover:bg-white hover:text-gray-900 backdrop-blur-sm bg-white/10 font-semibold px-8 py-4 rounded-2xl text-lg">
+                    Đặt lịch lái thử
+                  </Button>
+                </Link>
               </div>
 
               <div className="grid grid-cols-3 gap-8 pt-8">
@@ -237,7 +239,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section - Honda Plus */}
+      {/* Xóa toàn bộ phần CTA Section này */}
+      {/* 
       <section className="py-20 lg:py-32 gradient-primary text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent"></div>
         <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-yellow-400/10 to-transparent"></div>
@@ -289,6 +292,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      */}
     </div>
   );
 }
